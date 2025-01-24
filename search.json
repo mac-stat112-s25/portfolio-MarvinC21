@@ -1,0 +1,111 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "COMP/STAT112 Notebook",
+    "section": "",
+    "text": "Welcome\nWelcome to my online portfolio for COMP/STAT112 course taken at Macalester College. Please, use the side bar on the left for navigation.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "bw/bw-uni.html",
+    "href": "bw/bw-uni.html",
+    "title": "1  Univariate Viz",
+    "section": "",
+    "text": "Use this file to generate a professional looking univariate visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.",
+    "crumbs": [
+      "Best Work",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Univariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "bw/bw-bi.html",
+    "href": "bw/bw-bi.html",
+    "title": "2  Bivariate Viz",
+    "section": "",
+    "text": "Use this file to generate a professional looking bivariate visualization. The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.",
+    "crumbs": [
+      "Best Work",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bivariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "bw/bw-tri.html",
+    "href": "bw/bw-tri.html",
+    "title": "3  Trivariate Viz",
+    "section": "",
+    "text": "Use this file to generate a professional looking trivariate visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.",
+    "crumbs": [
+      "Best Work",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Trivariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "bw/bw-quad.html",
+    "href": "bw/bw-quad.html",
+    "title": "4  Quadvariate Viz",
+    "section": "",
+    "text": "Use this file to generate a professional looking quadvariate visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.",
+    "crumbs": [
+      "Best Work",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Quadvariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "bw/bw-spatial.html",
+    "href": "bw/bw-spatial.html",
+    "title": "5  Spatial Viz",
+    "section": "",
+    "text": "Use this file to generate a professional looking spatial visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.",
+    "crumbs": [
+      "Best Work",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Spatial Viz</span>"
+    ]
+  },
+  {
+    "objectID": "ica/ica-uni.html",
+    "href": "ica/ica-uni.html",
+    "title": "6  Univariate Viz",
+    "section": "",
+    "text": "Use this file for practice with the univariate viz in-class activity. Refer to the class website for details.",
+    "crumbs": [
+      "In-class Activities",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Univariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "ica/ica-bi.html",
+    "href": "ica/ica-bi.html",
+    "title": "7  Bivariate Viz",
+    "section": "",
+    "text": "Use this file for practice with the bivariate viz in-class activity. Refer to the class website for details.",
+    "crumbs": [
+      "In-class Activities",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Bivariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "ica/ica-multi.html",
+    "href": "ica/ica-multi.html",
+    "title": "8  Mulivariate Viz",
+    "section": "",
+    "text": "Use this file for practice with the mulivariate viz in-class activity. Refer to the class website for details.",
+    "crumbs": [
+      "In-class Activities",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mulivariate Viz</span>"
+    ]
+  },
+  {
+    "objectID": "ica/ica-spatial.html",
+    "href": "ica/ica-spatial.html",
+    "title": "9  Spatial Viz",
+    "section": "",
+    "text": "Use this file for practice with the spatial viz in-class activity. Refer to the class website for details.",
+    "crumbs": [
+      "In-class Activities",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Spatial Viz</span>"
+    ]
+  }
+]
