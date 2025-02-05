@@ -242,7 +242,12 @@ Quantitative variables require different viz than categorical variables. Especia
 Let's dig into some details.
 
 -   How many hikes have an elevation between 4500 and 4700 feet?
+
+> About 6
+
 -   How many total hikes have an elevation of at least 5100 feet?
+
+> About 2
 
 #### Part b {.unnumbered}
 
@@ -255,14 +260,15 @@ Now the bigger picture. In general, histograms allow us to examine the following
 
 We must then *translate* this information into the *context* of our analysis, here hikes in the Adirondacks. Addressing each of the features in the above list, summarize below what you learned from the histogram, in context.
 
-
+> There are more lower trails than higher trails, with the most common trail length being between 3900-4100 ft in elevation. There are about 2 trails that exceed 5000 ft in elevation, while the rest of the trails are spread evenly between 3900-4900 ft.
 
 ### Exercise 8: Building Histograms - Part 1 {.unnumbered}
 
 2-MINUTE CHALLENGE: Thinking of the bar chart code, try to *intuit* what line you can tack on to the below frame of `elevation` to add a histogram layer. Don't forget a `+`. If it doesn't come to you within 2 minutes, *no problem* -- all will be revealed in the next exercise.
 
 ```{r}
-ggplot(hikes, aes(x = elevation))
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram()
 ```
 
 
@@ -271,46 +277,46 @@ ggplot(hikes, aes(x = elevation))
 Let's build some histograms. Try each chunk below, *one by one*. In each chunk, make a comment about how both the code and the corresponding plot both changed.
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# Adds histogram bars and bins along the x-axis
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram()
 ```
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# Changes the color between bars for better visual separation
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram(color = "white") 
 ```
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# The fill color is now blue
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram(color = "white", fill = "blue") 
 ```
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# Added labels to x and y-axes
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram(color = "white") +
   labs(x = "Elevation (feet)", y = "Number of hikes")
 ```
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# Merged some of the bins together, i.e. changed the range of a single bin
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram(color = "white", binwidth = 1000) +
   labs(x = "Elevation (feet)", y = "Number of hikes")
 ```
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# Made the binwidth very small, and therefore each bin represents a smaller range of trails
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram(color = "white", binwidth = 5) +
   labs(x = "Elevation (feet)", y = "Number of hikes")
 ```
 
 ```{r}
-# COMMENT on the change in the code and the corresponding change in the plot
+# Each bin now contains trails with a range of 200 ft
 ggplot(hikes, aes(x = elevation)) +
   geom_histogram(color = "white", binwidth = 200) +
   labs(x = "Elevation (feet)", y = "Number of hikes")
@@ -320,11 +326,28 @@ ggplot(hikes, aes(x = elevation)) +
 ### Exercise 10: Histogram Follow-up {.unnumbered}
 
 -   What function added the histogram layer / geometry?
+
+> geom_histogram()
+
 -   What's the difference between `color` and `fill`?
+
+> Color is the outline of a bar and fill is the fill color
+
 -   Why does adding `color = "white"` improve the visualization?
+
+> Allows for visual separation of each individual bin
+
 -   What did `binwidth` do?
+
+> Changed the range of trails each bin encompassed
+
 -   Why does the histogram become ineffective if the `binwidth` is too big (e.g. 1000 feet)?
+
+> Provides no meaningful information
+
 -   Why does the histogram become ineffective if the `binwidth` is too small (e.g. 5 feet)?
+
+> The plot becomes too difficult to read and interpret
 
 
 ### Exercise 11: Density Plots {.unnumbered}
