@@ -2,4 +2,872 @@
 title: "Mulivariate Viz"
 ---
 
-Use this file for practice with the **mulivariate viz** in-class activity.  Refer to the class website for details.
+---
+title: "Multivariate Viz"
+number-sections: true
+execute: 
+  warning: false
+fig-height: 2.75
+fig-width: 4.25
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
+---
+
+
+::: {.callout-caution title="Learning Goals"}
+
+-   Explore how to visualize *relationships* between *more than* 2 variables.
+:::
+
+
+::: {.callout-note title="Additional Resources"}
+
+For more information about the topics covered in this chapter, refer to the resources below:
+
+ - [More ggplot (YouTube)](https://www.youtube.com/watch?v=bkAJ3FAAGqA) by Lisa Lendway
+
+:::
+
+
+
+## Review
+
+Let's review some *univariate* and *bivariate* plotting concepts using some daily weather data from Australia. This is a subset of the data from the `weatherAUS` data in the `rattle` package.
+
+```{r}
+library(tidyverse)
+
+# Import data
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date))  
+
+# Check out the first 6 rows
+# What are the units of observation?
+
+
+# How many data points do we have? 
+
+
+# What type of variables do we have?
+
+```
+
+
+
+### Example 1 {-}
+
+Construct a plot that allows us to examine how `temp3pm` varies.
+
+```{r}
+```
+
+
+
+### Example 2 {-}
+
+Construct 3 plots that address the following research question:
+
+How do afternoon temperatures (`temp3pm`) differ by `location`?
+
+```{r}
+# Plot 1 (no facets & starting from a density plot of temp3pm)
+ggplot(weather, aes(x = temp3pm)) + 
+  geom_density()
+```
+
+```{r}
+# Plot 2 (no facets or densities)
+
+```
+
+```{r}
+# Plot 3 (facets)
+
+```
+
+
+
+#### Reflection {-}
+
+-   Temperatures tend to be highest, and most variable, in Uluru. There, they range from \~10 to \~45 with a typical temp around \~30 degrees.
+-   Temperatures tend to be lowest in Hobart. There, they range from \~5 to \~45 with a typical temp around \~15 degrees.
+-   Wollongong temps are in between and are the least variable from day to day.
+
+
+**SUBTLETIES: Defining `fill` or `color` by a variable**
+
+How we define the `fill` or `color` depends upon whether we're defining it by a named color or by some variable in our dataset. For example:
+
+-   `geom___(fill = "blue")` \
+    *named* colors are defined outside the `aes`thetics and put in quotes
+
+-   `geom___(aes(fill = variable))` or `ggplot(___, aes(fill = variable))` \
+colors/fills defined by a *variable* are defined inside the `aes`thetics
+
+
+### Example 3 {-}
+
+Let's consider Wollongong alone:
+
+```{r}
+# Don't worry about the syntax (we'll learn it soon)
+woll <- weather |>
+  filter(location == "Wollongong") |> 
+  mutate(date = as.Date(date))  
+```
+
+```{r}
+# How often does it raintoday?
+# Fill your geometric layer with the color blue.
+ggplot(woll, aes(x = raintoday))
+```
+
+```{r}
+# If it does raintoday, what does this tell us about raintomorrow?
+# Use your intuition first
+ggplot(woll, aes(x = raintoday))
+```
+
+
+```{r}
+# Now compare different approaches
+
+# Default: stacked bars
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar()
+```
+
+```{r}
+# Side-by-side bars
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "dodge")
+```
+
+```{r}
+# Proportional bars
+# position = "fill" refers to filling the frame, nothing to do with the color-related fill
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "fill")
+```
+
+
+#### Reflection {-}
+
+There's often not one "best plot", but a *combination* of plots that provide a complete picture:
+
+-   The stacked and side-by-side bars reflect that on most days, it does *not* rain.
+-   The proportional / filled bars *lose* that information, but make it easier to compare proportions: it's more likely to rain tomorrow if it also rains today.
+
+
+
+### Example 4 {-}
+
+Construct a plot that illustrates how 3pm temperatures (temp3pm) vary by `date` in Wollongong. Represent each day on the plot and use a curve/line to help highlight the trends.
+
+```{r}
+# THINK: What variable goes on the y-axis?
+# For the curve, try adding span = 0.5 to tweak the curvature
+
+
+
+
+```
+
+```{r}
+# Instead of a curve that captures the general TREND,
+# draw a line that illustrates the movement of RAW temperatures from day to day
+# NOTE: We haven't learned this geom yet! Guess.
+ggplot(woll, aes(y = temp3pm, x = date))
+```
+
+**NOTE:** A line plot isn't always appropriate! It can be useful in situations like this, when our data are chronological.
+
+
+#### Reflection {-}
+
+There's a seasonal / cyclic behavior in temperatures -- they're highest in January (around 23 degrees) and lowest in July (around 16 degrees). There are also some outliers -- some abnormally hot and cold days.
+
+
+## New Stuff
+
+Next, let's consider the entire `weather` data for all 3 locations. The addition of `location` adds a 3rd variable into our research questions:
+
+-   How does the relationship between `raintoday` and `raintomorrow` vary by `location`?
+-   How does the behavior of `temp3pm` over `date` vary by `location`?
+-   And so on.
+
+Thus far, we've focused on the following components of a plot:
+
+-   setting up a **frame**
+-   adding **layers** / geometric elements
+-   splitting the plot into **facets** for different groups / categories
+-   change the **theme**, e.g. axis labels, color, fill
+
+We'll have to think about all of this, along with **scales**. Scales change the color, fill, size, shape, or other properties according to the levels of a new *variable*. This is different than just assigning scale by, for example, `color = "blue"`.
+
+Work on the examples below in your groups. Check in with your intuition! We'll then discuss as a group as relevant.
+
+
+### Example 5 {-}
+
+```{r}
+# Plot temp3pm vs temp9am
+# Change the code in order to indicate the location to which each data point corresponds
+ggplot(weather, aes(y = temp3pm, x = temp9am)) + 
+  geom_point()
+```
+
+```{r}
+# Change the code in order to indicate the location to which each data point corresponds
+# AND identify the days on which it rained / didn't raintoday
+ggplot(weather, aes(y = temp3pm, x = temp9am)) + 
+  geom_point()
+```
+
+```{r}
+# How many ways can you think to make that plot of temp3pm vs temp9am with info about location and rain?
+# Play around!
+
+```
+
+### Example 6 {-}
+
+```{r}
+# Change the code in order to construct a line plot of temp3pm vs date for each separate location (no points!)
+ggplot(weather, aes(y = temp3pm, x = date)) + 
+  geom_line()
+```
+
+
+### Example 7 {-}
+
+```{r}
+# Plot the relationship of raintomorrow & raintoday
+# Change the code in order to indicate this relationship by location
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "fill")
+```
+
+
+::: {.callout-tip title="How to Not Get Overwhelmed?"}
+
+There's no end to the number and type of visualizations you *could* make. And it's important to not just throw spaghetti at the wall until something sticks. [FlowingData](http://flowingdata.com/2017/01/24/one-dataset-visualized-25-ways/) shows that one dataset can be visualized *many* ways, and makes good recommendations for data viz workflow, which we modify and build upon here:
+
+-   **Identify simple research questions.**\
+    What do you want to understand about the variables or the relationships among them?
+
+-   **Start with the basics and work incrementally.**
+    -   Identify what variables you want to include in your plot and what structure these have (eg: categorical, quantitative, dates)
+    -   Start simply. Build a plot of just 1 of these variables, or the relationship between 2 of these variables.
+    -   Set up a plotting frame and add just **one geometric layer at a time**.
+    -   Start tweaking: add whatever new variables you want to examine,
+
+-   **Ask your plot questions.**
+    -   What questions *does* your plot answer? What questions are left *unanswered* by your plot?
+    -   What *new* questions does your plot spark / inspire?
+    -   Do you have the viz tools to answer these questions, or might you learn more?
+
+-   **Focus.**\
+    Reporting a large number of visualizations can overwhelm the audience and obscure your conclusions. Instead, pick out a focused yet comprehensive set of visualizations.
+
+
+:::
+
+
+## Exercises (required)
+
+### The story {-}
+
+Though far from a perfect assessment of academic preparedness, SAT scores have historically been used as one measurement of a state's education system. The `education` dataset contains various education variables for each state:
+
+```{r}
+# Import and check out data
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+head(education)
+```
+
+A codebook is provided by Danny Kaplan who also made these data accessible:
+
+![](https://mac-stat.github.io/images/112/SATcodebook.png)
+
+
+### Exercise 1: SAT scores {-}
+
+#### Part a {-}
+
+Construct a plot of how the average `sat` scores vary from state to state. (Just use 1 variable -- `sat` not `State`!)
+
+```{r}
+ggplot(education, aes(x = sat)) +
+  geom_histogram()
+```
+
+#### Part b {-}
+
+Summarize your observations from the plot. Comment on the basics: range, typical outcomes, shape. (Any theories about what might explain this non-normal shape?)
+
+> The most common average SAT score is around 900. The graph is right-skewed with gaps in between. 
+
+### Exercise 2: SAT Scores vs Per Pupil Spending & SAT Scores vs Salaries {-}
+
+The first question we'd like to answer is: Can the variability in `sat` scores from state to state be partially explained by how much a state spends on education, specifically its per pupil spending (`expend`) and typical teacher `salary`?
+
+#### Part a {-}
+
+```{r}
+# Construct a plot of sat vs expend
+# Include a "best fit linear regression model" (HINT: method = "lm")
+ggplot(education, aes(x = sat, y = expend)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+```{r}
+# Construct a plot of sat vs salary
+# Include a "best fit linear regression model" (HINT: method = "lm")
+ggplot(education, aes(x = sat, y = salary)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+#### Part b {-}
+
+What are the relationship trends between SAT scores and spending? Is there anything that surprises you?
+
+> The trend suggests that higher spending on teacher salary and per pupil is correlated with lower average SAT scores.
+
+### Exercise 3: SAT Scores vs Per Pupil Spending *and* Teacher Salaries {-}
+
+Construct *one* visualization of the relationship of `sat` with `salary` *and* `expend`. HINT: Start with just 2 variables and tweak that code to add the third variable. Try out a few things!
+
+```{r}
+ggplot(education, aes(x = sat, y = salary, alpha = expend)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+
+
+### Exercise 4: Another way to Incorporate Scale {-}
+
+It can be tough to distinguish color scales and size scales for quantitative variables. Another option is to *discretize* a quantitative variable, or basically cut it up into *categories*.
+
+Construct the plot below. Check out the code and think about what's happening here. What happens if you change "2" to "3"?
+
+```{r eval = FALSE}
+ggplot(education, aes(y = sat, x = salary, color = cut(expend, 3))) + 
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm")
+```
+
+Describe the trivariate relationship between `sat`, `salary`, and `expend`.
+
+> States with lower teacher salaries and per pupil spending tend to have lower average SAT scores, and the number decreases as teacher salary increases.
+
+### Exercise 5: Finally an Explanation {-}
+
+It's strange that SAT scores *seem* to decrease with spending. But we're leaving out an important variable from our analysis: the fraction of a state's students that actually take the SAT. The `fracCat` variable indicates this fraction: `low` (under 15% take the SAT), `medium` (15-45% take the SAT), and `high` (at least 45% take the SAT).
+
+#### Part a {-}
+
+Build a univariate viz of `fracCat` to better understand how many states fall into each category.
+
+```{r}
+ggplot(education, aes(x = fracCat)) +
+  geom_bar()
+```
+
+#### Part b {-}
+
+Build 2 bivariate visualizations that demonstrate the relationship between `sat` and `fracCat`. What story does your graphic tell and why does this make contextual sense?
+
+```{r}
+ggplot(education, aes(x = sat)) +
+  geom_histogram() +
+  facet_wrap(~fracCat)
+```
+
+#### Part c {-}
+
+Make a trivariate visualization that demonstrates the relationship of `sat` with `expend` AND `fracCat`. Highlight the differences in `fracCat` groups through color AND unique trend lines. What story does your graphic tell?\
+Does it still seem that SAT scores decrease as spending increases?
+
+```{r}
+ggplot(education, aes(x = expend, y = sat, color = fracCat)) +
+  geom_point() +
+  geom_smooth(se = FALSE, method = "lm")
+```
+
+#### Part d {-}
+
+Putting all of this together, explain this example of **Simpson’s Paradox**. That is, why did it appear that SAT scores decrease as spending increases even though the *opposite* is true?
+
+> It appeared that the scores were lower as spending increased because we didn't account for the percentage of students taking the SAT. A higher number of observations results in a lower average.
+
+## Exercises (optional)
+
+### Exercise 6: Heat Maps {-}
+
+As usual, we've only just scratched the surface! There are lots of other data viz techniques for exploring multivariate relationships. Let's start with a **heat map**.
+
+#### Part a {-}
+
+Run the chunks below. Check out the code, but don't worry about every little detail! NOTES:
+
+-   This is *not* part of the `ggplot()` grammar, making it a bit complicated.
+-   If you're curious about what a line in the plot does, comment it out (`#`) and check out what happens!
+-   In the plot, for each state (row), each variable (column) is scaled to indicate whether the state has a relative high value (yellow), a relatively low value (purple), or something in between (blues/greens).
+-   You can also play with the color scheme. Type `?cm.colors` in the *console* to learn about various options.
+-   We'll improve the plot later, so don't spend too much time trying to learn something from this plot.
+
+```{r eval = FALSE, fig.width = 8, fig.height = 15}
+# Remove the "State" column and use it to label the rows
+# Then scale the variables
+plot_data <- education |> 
+  column_to_rownames("State") |> 
+  data.matrix() |> 
+  scale()
+
+# Load the gplots package needed for heatmaps
+library(gplots)
+
+# Construct heatmap 1
+heatmap.2(plot_data,
+  dendrogram = "none",
+  Rowv = NA, 
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+```{r eval = FALSE, fig.width = 8, fig.height = 15}
+# Construct heatmap 2
+heatmap.2(plot_data,
+  dendrogram = "none",
+  Rowv = TRUE,             ### WE CHANGED THIS FROM NA TO TRUE
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+```{r eval = FALSE, fig.width = 8, fig.height = 15}
+# Construct heatmap 3
+heatmap.2(plot_data,
+  dendrogram = "row",       ### WE CHANGED THIS FROM "none" TO "row"
+  Rowv = TRUE,            
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+#### Part b {-}
+
+In the final two plots, the states (rows) are rearranged by similarity with respect to these education metrics. The *final* plot includes a **dendrogram** which further indicates *clusters* of similar states. In short, states that have a shorter path to connection are more similar than others.
+
+Putting this all together, what insight do you gain about the education trends across U.S. states? Which states are similar? In what ways are they similar? Are there any outliers with respect to 1 or more of the education metrics?
+
+
+
+### Exercise 7: Star plots {-}
+
+Like heat maps, star plots indicate the relative scale of each variable for each state. Thus, we can use star maps to identify similar groups of states, and unusual states!
+
+#### Part a {-}
+
+Construct and check out the star plot below. Note that each state has a "pie", with each segment corresponding to a different variable. The larger a segment, the larger that variable's value is in that state. For example:
+
+-   Check out Minnesota. How does Minnesota's education metrics compare to those in other states? What metrics are relatively high? Relatively low?
+-   What states appear to be similar? Do these observations agree with those that you gained from the heat map?
+
+```{r eval = FALSE, fig.width = 10, fig.height = 20}
+stars(plot_data,
+  flip.labels = FALSE,
+  key.loc = c(10, 1.5),
+  cex = 1, 
+  draw.segments = TRUE
+)
+```
+
+#### Part b {-}
+
+Finally, let's plot the state stars by *geographic* location! What new insight do you gain here?!
+
+```{r eval = FALSE, fig.width = 10, fig.height = 7}
+stars(plot_data,
+  flip.labels = FALSE,
+  locations = data.matrix(as.data.frame(state.center)),  # added external data to arrange by geo location
+  key.loc = c(-110, 28),
+  cex = 1, 
+  draw.segments = TRUE
+)
+```
+
+
+## Solutions
+
+<details>
+
+<summary>Click for Solutions</summary>
+
+```{r}
+library(tidyverse)
+
+# Import data
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date))  
+
+# Check out the first 6 rows
+# What are the units of observation?
+head(weather)
+
+# How many data points do we have? 
+nrow(weather)
+
+# What type of variables do we have?
+str(weather)
+```
+
+
+### Example 1 {-}
+
+```{r}
+ggplot(weather, aes(x = temp3pm)) + 
+  geom_density()
+```
+
+
+### Example 2 {-}
+
+```{r}
+# Plot 1 (no facets & starting from a density plot of temp3pm)
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5)
+```
+
+```{r}
+# Plot 2 (no facets or densities)
+ggplot(weather, aes(y = temp3pm, x = location)) + 
+  geom_boxplot()
+```
+
+```{r}
+# Plot 3 (facets)
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + 
+  facet_wrap(~ location)
+```
+
+
+### Example 3 {-}
+
+```{r}
+# How often does it raintoday?
+# Fill your geometric layer with the color blue.
+ggplot(woll, aes(x = raintoday)) + 
+  geom_bar(fill = "blue")
+```
+
+```{r}
+# If it does raintoday, what does this tell us about raintomorrow?
+# Use your intuition first
+ggplot(woll, aes(x = raintoday)) + 
+  geom_bar(aes(fill = raintomorrow))
+
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar()
+```
+
+```{r}
+# Now compare different approaches
+
+# Default: stacked bars
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar()
+```
+
+```{r}
+# Side-by-side bars
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "dodge")
+```
+
+```{r}
+# Proportional bars
+# position = "fill" refers to filling the frame, nothing to do with the color-related fill
+ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "fill")
+```
+
+### Example 4 {-}
+
+```{r}
+# THINK: What variable goes on the y-axis?
+# For the curve, try adding span = 0.5 to tweak the curvature
+ggplot(woll, aes(y = temp3pm, x = date)) + 
+  geom_point() + 
+  geom_smooth(span = 0.5)
+```
+
+```{r}
+# Instead of a curve that captures the general TREND,
+# draw a line that illustrates the movement of RAW temperatures from day to day
+# NOTE: We haven't learned this geom yet! Guess.
+ggplot(woll, aes(y = temp3pm, x = date)) + 
+  geom_line()
+```
+
+### Example 5 {-}
+
+```{r}
+# Plot temp3pm vs temp9am
+# Change the code in order to indicate the location to which each data point corresponds
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+  geom_point()
+```
+
+```{r}
+# Change the code in order to indicate the location to which each data point corresponds
+# AND identify the days on which it rained / didn't raintoday
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+  geom_point() +
+  facet_wrap(~ raintoday)
+
+```
+
+```{r}
+# How many ways can you think to make that plot of temp3pm vs temp9am with info about location and rain?
+# Play around!
+
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location, shape = raintoday)) + 
+  geom_point()
+```
+
+### Example 6 {-}
+
+```{r}
+# Change the code in order to construct a line plot of temp3pm vs date for each separate location (no points!)
+ggplot(weather, aes(y = temp3pm, x = date, color = location)) + 
+  geom_line()
+```
+
+### Example 7 {-}
+
+```{r}
+# Plot the relationship of raintomorrow & raintoday
+# Change the code in order to indicate this relationship by location
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "fill") + 
+  facet_wrap(~ location)
+```
+
+
+### Exercise 1: SAT scores {-}
+
+#### Part a {-}
+
+```{r}
+# A histogram would work too!
+ggplot(education, aes(x = sat)) + 
+  geom_density()
+```
+
+#### Part b {-}
+
+average SAT scores range from roughly 800 to 1100. They appear bi-modal.
+
+
+### Exercise 2: SAT Scores vs Per Pupil Spending & SAT Scores vs Salaries {-}
+
+#### Part a {-}
+
+```{r}
+# Construct a plot of sat vs expend
+# Include a "best fit linear regression model"
+ggplot(education, aes(y = sat, x = expend)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+```{r}
+# Construct a plot of sat vs salary
+# Include a "best fit linear regression model"
+ggplot(education, aes(y = sat, x = salary)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+#### Part b {-}
+
+The higher the student expenditures and teacher salaries, the worse the SAT performance.
+
+
+### Exercise 3: SAT Scores vs Per Pupil Spending *and* Teacher Salaries {-}
+
+```{r}
+ggplot(education, aes(y = sat, x = salary, color = expend)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+
+### Exercise 4: Another Way to Incorporate Scale {-}
+
+```{r}
+ggplot(education, aes(y = sat, x = salary, color = cut(expend, 2))) + 
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm")
+ggplot(education, aes(y = sat, x = salary, color = cut(expend, 3))) + 
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm")
+```
+
+States with lower salaries and expenditures tend to have higher SAT scores.
+
+
+### Exercise 5: Finally an Explanation {-}
+
+#### Part a {-}
+
+```{r}
+ggplot(education, aes(x = fracCat)) + 
+  geom_bar()
+```
+
+#### Part b {-}
+
+The more students in a state that take the SAT, the lower the average scores tend to be. This is probably related to self-selection.
+
+```{r}
+ggplot(education, aes(x = sat, fill = fracCat)) + 
+  geom_density(alpha = 0.5)
+```
+
+#### Part c {-}
+
+When we control for the fraction of students that take the SAT, SAT scores *increase* with expenditure.
+
+```{r}
+ggplot(education, aes(y = sat, x = expend, color = fracCat)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+```
+
+#### Part d {-}
+
+Student participation tends to be lower among states with lower expenditures (which are likely also the states with higher ed institutions that haven't historically required the SAT). Those same states tend to have higher SAT scores because of the self-selection of who participates.
+
+
+### Exercise 6: Heat Maps {-}
+
+#### Part a {-}
+
+```{r fig.width = 8, fig.height = 15}
+# Remove the "State" column and use it to label the rows
+# Then scale the variables
+plot_data <- education |> 
+  column_to_rownames("State") |> 
+  data.matrix() |> 
+  scale()
+
+# Load the gplots package needed for heatmaps
+library(gplots)
+
+# Construct heatmap 1
+heatmap.2(plot_data,
+  dendrogram = "none",
+  Rowv = NA, 
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+```{r fig.width = 8, fig.height = 15}
+# Construct heatmap 2
+heatmap.2(plot_data,
+  dendrogram = "none",
+  Rowv = TRUE,             ### WE CHANGED THIS FROM NA TO TRUE
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+```{r fig.width = 8, fig.height = 15}
+# Construct heatmap 3
+heatmap.2(plot_data,
+  dendrogram = "row",       ### WE CHANGED THIS FROM "none" TO "row"
+  Rowv = TRUE,            
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+#### Part b {-}
+
+-   Similar values in verbal, math, and sat.
+-   High contrast (an inverse relationship) verbal/math/sat scores and the fraction of students that take the SAT.
+-   Outliers of Utah and California in ratio (more students per teacher).
+-   While grouped, fraction and salary are not as similar to each other as the sat scores; it is also interesting to notice states that have high ratios have generally low expenditures per student.
+
+
+### Exercise 7: Star Plots {-}
+
+#### Part a {-}
+
+MN is high on the SAT performance related metrics and low on everything else. MN is similar to Iowa, Kansas, Mississippi, Missouri, the Dakotas...
+
+```{r fig.width = 10, fig.height = 20}
+stars(plot_data,
+  flip.labels = FALSE,
+  key.loc = c(10, 1.5),
+  cex = 1, 
+  draw.segments = TRUE
+)
+```
+
+#### Part b {-}
+
+When the states are in geographical ordering, we'd notice more easily that states in similar regions of the U.S. have similar patterns of these variables.
+
+```{r fig.width = 10, fig.height = 10}
+stars(plot_data,
+  flip.labels = FALSE,
+  locations = data.matrix(as.data.frame(state.center)),  # added external data to arrange by geo location
+  key.loc = c(-110, 28),
+  cex = 1, 
+  draw.segments = TRUE
+)
+```
+
+</details>

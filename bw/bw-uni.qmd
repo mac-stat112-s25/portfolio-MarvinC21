@@ -365,22 +365,25 @@ ggplot(hikes, aes(x = elevation)) +
 
 -   INTUITION CHECK: Before tweaking the code and thinking back to `geom_bar()` and `geom_histogram()`, how do you *anticipate* the following code will change the plot?
 
-    -   `geom_density(color = "blue")`
-    -   `geom_density(fill = "orange")`
+    -   `geom_density(color = "blue")` This would change the outline color
+    -   `geom_density(fill = "orange")` This would change the color of the inside
 
 -   TRY IT! Test out those lines in the chunk below. Was your intuition correct?
 
 ```{r}
+ggplot(hikes, aes(x = elevation)) +
+  geom_density(fill = 'orange', color = 'blue')
 ```
 
 -   Examine the density plot. How does it compare to the histogram? What does it tell you about the *typical* elevation, *variability / range* in elevations, and *shape* of the distribution of *elevations* within this range?
 
-
+It is slightly harder to interpret as it has less info regarding approximate counts. I can still glean the overall info of the mode being around 4250ft of elevation, the right skew, and the unimodal distribution
 
 ### Exercise 12: Density Plots vs Histograms {.unnumbered}
 
 The histogram and density plot both allow us to visualize the behavior of a quantitative variable: typical outcome, variability / range, shape, and outliers. What are the pros/cons of each? What do you like/not like about each?
 
+The smoother shape of the density plot is more visually appealing. I think that a histogram provides more detailed information.
 
 ### Exercise 13: Code = communication {.unnumbered}
 
