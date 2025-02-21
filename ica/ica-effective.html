@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>11&nbsp; Effective Viz – COMP/STAT112 Notebook</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../ica/quarto-demo.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link rel="stylesheet" href="../style/custom.css">
+</head>
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/ica-uni.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-effective.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Effective Viz</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Your Name Here</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Best Work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-uni.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-tri.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trivariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-quad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quadvariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spatial Viz</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">In-class Activities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-uni.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multivariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Spatial Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/quarto-demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">My first Quarto document</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-effective.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Effective Viz</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#warm-up" id="toc-warm-up" class="nav-link active" data-scroll-target="#warm-up"><span class="header-section-number">11.1</span> Warm-up</a>
+  <ul class="collapse">
+<li><a href="#no-one-right-viz" id="toc-no-one-right-viz" class="nav-link" data-scroll-target="#no-one-right-viz">No One Right Viz</a></li>
+  <li><a href="#ugly-bad-wrong-viz" id="toc-ugly-bad-wrong-viz" class="nav-link" data-scroll-target="#ugly-bad-wrong-viz">Ugly, Bad, Wrong Viz</a></li>
+  <li><a href="#effective-ineffective-viz-examples" id="toc-effective-ineffective-viz-examples" class="nav-link" data-scroll-target="#effective-ineffective-viz-examples">Effective &amp; Ineffective Viz Examples</a></li>
+  <li><a href="#effective-viz" id="toc-effective-viz" class="nav-link" data-scroll-target="#effective-viz">Effective Viz</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">11.2</span> Exercises</a>
+  <ul class="collapse">
+<li><a href="#exercise-1-professionalism" id="toc-exercise-1-professionalism" class="nav-link" data-scroll-target="#exercise-1-professionalism">Exercise 1: Professionalism</a></li>
+  <li><a href="#exercise-2-accessibility" id="toc-exercise-2-accessibility" class="nav-link" data-scroll-target="#exercise-2-accessibility">Exercise 2: Accessibility</a></li>
+  <li><a href="#exercise-3-ethics" id="toc-exercise-3-ethics" class="nav-link" data-scroll-target="#exercise-3-ethics">Exercise 3: Ethics</a></li>
+  <li><a href="#exercise-4-critique" id="toc-exercise-4-critique" class="nav-link" data-scroll-target="#exercise-4-critique">Exercise 4: Critique</a></li>
+  <li><a href="#exercise-5-design-details" id="toc-exercise-5-design-details" class="nav-link" data-scroll-target="#exercise-5-design-details">Exercise 5: Design Details</a></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping up</a></li>
+  </ul>
+</li>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions"><span class="header-section-number">11.3</span> Solutions</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/ica-uni.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-effective.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Effective Viz</span></a></li></ol></nav><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">
+<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Effective Viz</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-caution callout-titled" title="Learning Goals">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Explore the guiding principles of effective visualizations</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Additional Resources">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Additional Resources
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For more information about the topics covered in this chapter, refer to the resources below:</p>
+<ul>
+<li>
+<a href="https://www.urban.org/research/publication/do-no-harm-guide-applying-equity-awareness-data-visualization">Equity Awareness for Data Visualizations (html)</a> by Urban Institute</li>
+<li>
+<a href="https://clauswilke.com/dataviz/telling-a-story.html">Telling a story (Chp 29, html)</a> by Wilke</li>
+</ul>
+</div>
+</div>
+<section id="warm-up" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="warm-up">
+<span class="header-section-number">11.1</span> Warm-up</h2>
+<p><strong>Recall: Benefits of Visualizations</strong></p>
+<ul>
+<li>Understand what we’re working with:
+<ul>
+<li>scales &amp; typical outcomes</li>
+<li>outliers, i.e.&nbsp;unusual cases</li>
+<li>patterns &amp; relationships</li>
+</ul>
+</li>
+<li>Refine research questions &amp; inform next steps of our analysis.</li>
+<li>Communicate our findings and tell a story.</li>
+</ul>
+<section id="no-one-right-viz" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="no-one-right-viz">No One Right Viz</h3>
+<p>There is no one right way to visualize a data set, eg, check out the 100 ways used to visualize one dataset: <a href="https://100.datavizproject.com/" class="uri">https://100.datavizproject.com/</a> The visualized data was featured in <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-02-06/readme.md">this TidyTuesday</a>!</p>
+<section id="activity-plot-critique" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="activity-plot-critique">Activity: Plot Critique</h4>
+<p>In groups:</p>
+<ul>
+<li>Scroll through the plots.</li>
+<li>Identify at least 1 plot that you feel illuminates some important aspect of the data.</li>
+<li>Identify at least 1 plot that does NOT illuminate the data in a good way.</li>
+</ul></section></section><section id="ugly-bad-wrong-viz" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="ugly-bad-wrong-viz">Ugly, Bad, Wrong Viz</h3>
+<p>One way to identify effective viz is to understand what makes a viz <em>in</em>effective. In the <a href="https://clauswilke.com/dataviz/introduction.html">Fundamentals of Data Visualization</a>, Wilke breaks down ineffective viz into 3 categories:</p>
+<ul>
+<li>Wrong<br>
+The viz is “objectively incorrect”, as in the numbers / trends being displayed are wrong.</li>
+<li>Bad<br>
+The viz is “unclear, confusing, overly complicated, or deceiving”.</li>
+<li>Ugly<br>
+The viz correct and clear but The aesthetics are problematic.</li>
+</ul>
+<section id="activity-critical-analysis" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="activity-critical-analysis">Activity: Critical Analysis</h4>
+<p>Let’s try some critical analysis on specific examples. For your assigned viz, identify the following:</p>
+<ul>
+<li>The story the viz is trying to communicate.</li>
+<li>Whether the viz is good, ugly, bad, wrong, or some combination.</li>
+<li>Areas for improvement.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/trilogies.gif" class="img-fluid figure-img" style="width:50.0%" alt="Faceted histograms of Rotten Tomato ratings of triologies, separated by original, sequel, and finale. Median ratings are shown as black points to show decreasing median rating over the series. The lower visual has bars with height corresponding to the Rotten Tomato rating, color green for at least 60% and red for below, faceted by Triology series. Graphic is from Visualize This by Nathan Yau."></p>
+<figcaption>IMAGE 1. Source: N. Yau, <em>Visualize This</em>, 2011, p.&nbsp;223-225.</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/chernoff.png" class="img-fluid figure-img" style="width:60.0%" alt="Chernoff faces of NBA players in 2008-2009 season where the features of the face correspond to player statistics. Players are ordered by most points per game. Graphic is from Visualize This by Nathan Yau."></p>
+<figcaption>IMAGE 2. Source: N. Yau, <em>Visualize This</em>, 2011, p.&nbsp;242.</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change.png" class="img-fluid figure-img" style="width:60.0%" alt="Tweet by National Review of a line plot with time on the x-axis and average annual global temperature on the y-axis with limits from -10 to 110 degrees Farenheit. The tweet says The only #climatechange chart you need to see. Graphic is from National Review Twitter (December 14, 2015)."></p>
+<figcaption>IMAGE 3. Climate change.</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/bad_viz_proportions.png" class="img-fluid figure-img" style="width:60.0%" alt="Radiating pie chart of maternity leave polivies across the world. The length of the piece of the pie is proportional to the length of the maternity leave policy; the width of the piece of pie is proportional to the number of countries in the graphic that have that policy. United States is highlighted without any piece of pie. Graphic is originally from ThinkProgress and found on http://viz.wtf/."></p>
+<figcaption>IMAGE 4. Source: http://viz.wtf/</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/tv-size-by-year1.png" class="img-fluid figure-img" style="width:70.0%" alt="Multiple histograms of TV size from 2002 to 2009, vertically stacked. The median TV size is shown on the right with an arrow up or down if it changed from the previous year.  Graphic is originally from FlowingData in Visualize This by Nathan Yau."></p>
+<figcaption>IMAGE 5. Source: N. Yau, <em>Visualize This</em>, 2011, p.&nbsp;220.</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/bad_viz_coffee.png" class="img-fluid figure-img" style="width:60.0%" alt="Tweet by DAVIDsTEA of caffine amounts on the x-axis for coffee as compared to a variety of tea. The x-axis is not a number line and misrpresented the amount of caffine. The tweet says On a scale of 1 to Engergizer Bunny, how much caffeine do you need today? Please refer to the chart above and plan accordintly. Graphic is from DAVIDsTEA Twitter and reposted on Reddit."></p>
+<figcaption>IMAGE 6. Source: (https://www.reddit.com/r/dataisugly/comments/vlirox/0_1_19_20_39/)</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="follow-up-to-climate-change-plot" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="follow-up-to-climate-change-plot">Follow-up to Climate Change Plot</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change_b.png" class="img-fluid figure-img" style="width:60.0%" alt="Line plot of average global temperature over time with y-axis ranging from 55 to 60 degrees Farenheit. The plot shows that temperatures varied around 57 degrees up until the early 1900's and have steadily increased to 58.5 over the last 100 or so years.  Graphic is a recreation of the climat change graphic with data from NASA/GISS."></p>
+<figcaption>IMAGE 3. Climate change.</figcaption></figure>
+</div>
+</div>
+</div>
+</section></section><section id="effective-ineffective-viz-examples" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="effective-ineffective-viz-examples">Effective &amp; Ineffective Viz Examples</h3>
+<ul>
+<li>Examples of good viz:
+<ul>
+<li><a href="https://flowingdata.com/tag/best-of/">FlowingData’s “Best visualizations of…”</a></li>
+</ul>
+</li>
+<li>Examples of bad viz:
+<ul>
+<li><a href="http://viz.wtf/">WTF Visualizations</a></li>
+<li><a href="https://medium.com/@thomas.ellyatt/bad-data-visualisation-real-life-examples-out-there-in-the-wild-eb5032329aeb">Bad viz in the wild</a></li>
+</ul>
+</li>
+</ul></section><section id="effective-viz" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="effective-viz">Effective Viz</h3>
+<p>You can take a whole course in Data Viz at Mac! The topic of effective viz is too big and nuanced to boil down into a simple list. Here are some basics:</p>
+<section id="professionalism" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="professionalism">Professionalism</h4>
+<p>Once you’re ready to “share out” your viz, it should have…</p>
+<ul>
+<li>meaningful axis labels</li>
+<li>a figure caption (depending upon where the viz will appear)</li>
+</ul></section><section id="accessibility" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="accessibility">Accessibility</h4>
+<p>Once you’re ready to “share out” your viz, it should…</p>
+<ul>
+<li>have “alt text”, a written description of the viz that can be read out by a screen reader (<a href="https://www.youtube.com/watch?v=NvqasTVoW98">video</a>)</li>
+<li>use a color palette that is distinguishable across common forms of color blindness</li>
+</ul></section><section id="design-details" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="design-details">Design Details</h4>
+<p>In designing your viz, think about <em>comparison</em>. Good viz make it easy for people to perceive things that are similar and things that are different.</p>
+</section><section id="ethics" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="ethics">Ethics</h4>
+<p><a href="https://arxiv.org/pdf/1811.07271.pdf">Michael Correll of Tableau Research (pdf)</a> wrote “Data visualizations have a potentially enormous influence on how data are used to make decisions across all areas of human endeavor.” Thus ethics are critical from the data we use, to the plots we build, to the way in which we communicate this work. This is a very broad topic, and we’ll focus here on data visualization alone. Relatedly, and at a minimum:</p>
+<ul>
+<li>Data viz should not mislead, i.e.&nbsp;“wrong” viz are unethical.**</li>
+<li>Yet ethics in data viz goes much deeper. Correll describes three related principles to strive for:
+<ul>
+<li><p><strong>Visibility</strong><br>
+Make the invisible visible. Visualize hidden labor, hidden uncertainty, hidden impacts. Credit your sources, data and otherwise.</p></li>
+<li><p><strong>Privacy</strong><br>
+Collect data with empathy. Encourage small Data, anthropomorphize data, obfuscate data to protect privacy.</p></li>
+<li><p><strong>Power</strong><br>
+Challenge structures of power. Support data due process, act as data advocates, pressure unethical analytical behavior.</p></li>
+</ul>
+</li>
+<li>To this list, <a href="https://data-feminism.mitpress.mit.edu/">Data Feminism</a> authors Catherine D’Ignazio and Lauren F. Klein added:
+<ul>
+<li><p><strong>Emotion &amp; Embodiment</strong><br>
+Value multiple forms of knowledge, including the knowledge that comes from people as living, feeling bodies in the world.</p></li>
+<li><p><strong>Pluralism</strong><br>
+The most complete knowledge comes from synthesizing multiple perspectives</p></li>
+<li><p><strong>Context</strong><br>
+Data are not neutral or objective</p></li>
+</ul>
+</li>
+</ul></section></section></section><section id="exercises" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">11.2</span> Exercises</h2>
+<section id="exercise-1-professionalism" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-1-professionalism">Exercise 1: Professionalism</h3>
+<p>Let’s examine weather in 3 Australian locations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load tidyverse package for plotting and wrangling</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Import the data</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/weather_3_locations.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following plot is fine for things like homework or just playing around. But we’ll make it more “professional” looking below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="408"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="part-a" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a">Part a</h4>
+<p>Replace A, B, C, and D in the code below to:</p>
+<ul>
+<li>Add a short, but descriptive title. Under 10 words.</li>
+<li>Change the x- and y-axis labels, currently just the names of the variables in the dataset. These should be short and include units.</li>
+<li>Change the legend title to “Location” (just for practice, not because it’s better than “location”).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tempurature at 9am (Celsius)"</span>, <span class="at">y =</span> <span class="st">"Temperature at 3pm (Celsius)"</span>, <span class="at">title =</span> <span class="st">"Temperatures at Different Times Throughout Australia"</span>, <span class="at">color =</span> <span class="st">"Location"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="408"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="part-b" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b">Part b</h4>
+<p>When we’re including our plot in an article, paper, book, or other similar outlet, we should (and are expected to) provide a more descriptive figure caption. Typically, this is <em>instead</em> of a title and is more descriptive of what exactly is being plotted.</p>
+<ul>
+<li>Add a figure caption in the top of the chunk.</li>
+<li>Include your x-axis, y-axis, and legend labels from Part a.</li>
+<li>Render your Rmd and check out how the figure caption appears.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature at 9am (C)"</span>, <span class="at">y =</span> <span class="st">"Temperature at 3pm (C)"</span>, <span class="at">color =</span> <span class="st">"Location"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="408"></p>
+<figcaption>Temperatures at 9am and 3pm in the Hobart, Uluru, and Wollongong Regions of Australia</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="408"></p>
+<figcaption>Temperatures at 9am and 3pm in the Hobart, Uluru, and Wollongong Regions of Australia</figcaption></figure>
+</div>
+</div>
+</div>
+<p><br><br><br><br></p>
+</section></section><section id="exercise-2-accessibility" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-2-accessibility">Exercise 2: Accessibility</h3>
+<p>Let’s now make a graphic more accessible.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" alt="???" width="408"></p>
+<figcaption>Density plots of 3pm temperatures in 3 Australian locations.</figcaption></figure>
+</div>
+</div>
+</div>
+<section id="part-a-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-1">Part a</h4>
+<p>Let’s add some alt text that can be picked up by screen readers. This is a <a href="https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81">great resource on writing alt text for data viz</a>. In short, whereas figure captions are quick descriptions which assume that the viz is accessible, alt text is a longer description which assumes the viz is not accessible. Alt text should concisely articulate:</p>
+<ul>
+<li>What your visualization is (e.g.&nbsp;a density plot of 3pm temperatures in Hobart, Uluru, and Wollongong, Australia).</li>
+<li>A 1-sentence description of the most important <em>takeaway</em>.</li>
+<li>A link to your data source if it’s not already in the caption.</li>
+</ul>
+<p>Add appropriate alt text at the top of the chunk, in <code>fig-alt</code>. Then render your qmd, and hover over the image in your rendered html file to check out the alt text.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" alt="???" width="408"></p>
+<figcaption>Density plots of 3pm temperatures in 3 Australian locations.</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="???" width="408"></p>
+<figcaption>Density plots of 3pm temperatures in 3 Australian locations.</figcaption></figure>
+</div>
+</div>
+</div>
+<p><br><br><br><br></p>
+</section><section id="part-b-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-1">Part b</h4>
+<p>Color is another important accessibility consideration. Let’s check out the color accessibility of our density plot.</p>
+<ul>
+<li>Run the <code>ggplot()</code> code from Part a in your console. The viz will pop up in the Plots tab.</li>
+<li>In the Plots tab, click “Export” then “Save as image”. Save the image somewhere.</li>
+<li>Navigate to <a href="https://www.color-blindness.com/coblis-color-blindness-simulator/" class="uri">https://www.color-blindness.com/coblis-color-blindness-simulator/</a>
+</li>
+<li>Above the image of crayons (I think it’s crayons?), click “Choose file” and choose the plot file you just saved.</li>
+<li>Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.</li>
+<li>Summarize what you learn. What impact might our color choices have on one’s ability to interpret the viz?</li>
+</ul></section><section id="part-c" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c">Part c</h4>
+<p>We can change our color schemes! There are many <a href="https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html">color-blind friendly palettes in R</a>. In the future, we’ll set a default, more color-blind friendly color theme at the top of our Rmds. We can also do this individually for any plot that uses color. Run the chunks below to explore various options.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">scale_fill_viridis_d</span>()    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="408"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># In the color scale line:</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># Change "fill" to "color" since we use color in the aes()</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> maxtemp)) <span class="sc">+</span> </span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="408"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br><br><br><br></p>
+</section></section><section id="exercise-3-ethics" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-3-ethics">Exercise 3: Ethics</h3>
+<p>Let’s scratch the surface of ethics in data viz.&nbsp;Central to this discussion is the consideration of <em>impact</em>.</p>
+<section id="part-a-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-2">Part a</h4>
+<p>At a minimum, our data viz should not mislead. Reconsider the climate change example from above. Why is this plot unethical and what impact might it have on policy, public opinion, etc?</p>
+<p><img src="https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change.png" class="img-fluid"></p>
+</section><section id="part-b-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-2">Part b</h4>
+<p>Again, data viz ethical considerations go beyond whether or not a plot is misleading. As described in the warm-up, we need to consider: visibility, privacy, power, emotion &amp; embodiment, pluralism, &amp; context. Depending upon the audience and goals of a data viz, addressing these points might require more nuance. Mainly, the viz tools we’ve learned are a great base or foundation, but aren’t the only approaches to data viz.&nbsp;</p>
+<p>Pick one or more of the following examples of data viz to discuss with your group. How do the approaches taken:</p>
+<ul>
+<li>emphasize one or more of: visibility, privacy, power, emotion, embodiment, pluralism, and/or context?</li>
+<li>improve upon what we might be able to convey with a simpler bar chart, scatterplot, etc?</li>
+</ul>
+<p><br><br></p>
+<p>Example: <strong>W.E.B. Du Bois (1868–1963)</strong></p>
+<p>Du Bois (“Doo Boys”) was a “sociologist, socialist, historian, civil rights activist, Pan-Africanist, author, writer, and editor”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. He was also a <em>pioneer</em> in elevating emotion and embodiment in data visualization. For the Paris World Fair of 1900, Du Bois and his team of students from Atlanta University presented 60 data visualizations of the Black experience in America, less than 50 years after the abolishment of slavery. Du Bois noted: “I wanted to set down its aim and method in some outstanding way which would bring my work to notice by the thinking world.” That is, he wanted to increase the impact of his work by partnering technical visualizations with design that better connects to lived experiences. NOTE: This work uses language common to that time period and addresses the topic of slavery. Check out:</p>
+<ul>
+<li>A <a href="https://speakerdeck.com/ajstarks/du-bois-visualizations-originals">complete set of the data visualizations provided by Anthony Starks</a> (<span class="citation" data-cites="ajstarks">@ajstarks</span>).</li>
+<li>An <a href="https://dataliteracy.com/web-du-bois-story-of-resilience/">article by Allen Hillery</a> (<span class="citation" data-cites="AlDatavizguy">@AlDatavizguy</span>).</li>
+</ul>
+<p><br><br></p>
+<p>Example: <strong>One person’s experience with long COVID</strong></p>
+<p><a href="https://www.nytimes.com/interactive/2023/12/14/opinion/my-life-with-long-covid.html?unlocked_article_code=1.F00.Sz4i.NRF1fZrnwEIh&amp;smid=url-share">NYT article</a></p>
+<p><br><br></p>
+<p>Example: <strong>Decolonizing data viz</strong></p>
+<p><a href="https://stephanieevergreen.com/decolonizing-data-viz/">blog post</a></p>
+<p><br><br></p>
+<p>Example: <strong>Visualizing climate change through art</strong></p>
+<p><a href="https://www.variableprojects.com/#/phase-change/">Futures North with Prof John Kim &amp; Mac students</a> (by Prof Kim, Mac research students)</p>
+<p><br><br></p>
+<p>Example: <strong>Personal data collection</strong></p>
+<p><a href="https://www.dear-data.com/by-week">Dear Data</a></p>
+<p><br><br></p>
+</section><section id="part-c-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-1">Part c</h4>
+<p>For a deeper treatment of similar topics, and more examples, read <a href="https://data-feminism.mitpress.mit.edu/">Data Feminism</a>.</p>
+<p><br><br><br><br></p>
+</section></section><section id="exercise-4-critique" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-4-critique">Exercise 4: Critique</h3>
+<p>Practice critiquing some more complicated data viz listed at <a href="http://mdsr-book.github.io/exercises.html#exercise_25">Modern Data Science with R, Exercise 2.5</a>.</p>
+<p>Think about the following questions:</p>
+<ul>
+<li>What story does the data graphic tell? What is the main message that you take away from it?</li>
+<li>Can the data graphic be described in terms of the Grammar of Graphics (frame, glyphs, aesthetics, facet, scale, guide)? If so, please describe.</li>
+<li>Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Are there things that you would have done differently?</li>
+</ul>
+<p><br><br><br><br></p>
+</section><section id="exercise-5-design-details" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-5-design-details">Exercise 5: Design Details</h3>
+<p>This final exercise is just “food for thought”. It’s more of a discussion than an exercise, and gets into some of the finer design details and data viz theory. Go as deep or not deep as you’d like here.</p>
+<p>In refining the details of our data viz, <a href="https://www.amazon.com/Visualize-This-FlowingData-Visualization-Statistics/dp/0470944889/">Visualize This</a> and <a href="https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257">Storytelling with Data</a> provide some of <em>their</em> guiding principles. But again, every context is different.</p>
+<ul>
+<li>Put yourself in a reader’s shoes. What parts of the data need explanation?</li>
+<li>Shine a light on your data. Try to remove any “chart junk” that distracts from the data.</li>
+<li>Vary color and style to emphasize the viz elements that are most important to the story you’re telling.</li>
+<li>It is easier to judge length than it is to judge area or angles.</li>
+<li>Be thoughtful about how your categories are ordered for categorical data.</li>
+</ul>
+<p>Getting into even more of the nitty gritty, we need to be mindful of what geometric elements and aesthetics we use. The following elements/aesthetics are listed in roughly descending order of human ability to perceive and compare nearby objects:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<ol type="1">
+<li>Position</li>
+<li>Length</li>
+<li>Angle</li>
+<li>Direction</li>
+<li>Shape (but only a very few different shapes)</li>
+<li>Area</li>
+<li>Volume</li>
+<li>Shade</li>
+<li>Color. (Color is the most difficult, because it is a 3-dimensional quantity.)</li>
+</ol>
+<p>Finally, here are some facts to keep in mind about visual perception from <a href="https://www.amazon.com/Now-You-See-Visualization-Quantitative/dp/0970601980">Now You See It</a>.</p>
+<section id="part-a-selectivity" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-selectivity">Part a: Selectivity</h4>
+<p>Visual perception is selective, and our attention is often drawn to contrasts from the norm.</p>
+<p><strong>Implication</strong>: We should design visualizations so that the features we want to highlight stand out in contrast from those that are not worth the audience’s attention.</p>
+<p><strong>Example</strong>: What stands out in this example image? This is originally from C. Ware, <em>Information Visualization: Perception for Design</em>, 2004? Source: S. Few, <em>Now You See It</em>, 2009, p.&nbsp;33.</p>
+<p><img src="https://mac-stat.github.io/images/112/contrast.png" class="img-fluid"></p>
+</section><section id="part-b-familiarity" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-familiarity">Part b: Familiarity</h4>
+<p>Our eyes are drawn to familiar patterns. We observe what we know and expect.</p>
+<p><strong>Implication</strong>: Visualizations work best when they display information as patterns that familiar and easy to spot.</p>
+<p><strong>Example</strong>: Do you notice anything embedded in this rose image from coolbubble.com? Source: S. Few, <em>Now You See It</em>, 2009, p.&nbsp;34.</p>
+<p><img src="https://mac-stat.github.io/images/112/rose1.png" class="img-fluid"></p>
+</section><section id="part-c-revisit" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-revisit">Part c: Revisit</h4>
+<p>Revisit Part b. Do you notice anything in the shadows? Go to <a href="https://mac-stat.github.io/images/112/rose2.png" class="uri">https://mac-stat.github.io/images/112/rose2.png</a> for an image.</p>
+<p><br><br><br><br></p>
+</section></section><section id="wrapping-up" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="wrapping-up">Wrapping up</h3>
+<p>If you finish early:</p>
+<ul>
+<li>Work on homework if not done already</li>
+<li>Complete any activities you haven’t finished yet, eg, spatial viz, the optional but fun exercises in the Multivariate viz and Bivariate viz activities.</li>
+<li>If you’ve done all that, explore some datasets in <a href="https://github.com/rfordatascience/tidytuesday/tree/master">TidyTuesday</a>.</li>
+</ul>
+<p><br><br><br><br></p>
+</section></section><section id="solutions" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="solutions">
+<span class="header-section-number">11.3</span> Solutions</h2>
+<p>The exercises today are discussion based. There are no “solutions”. Happy to chat in office hours about any ideas here!</p>
+
+
+<!-- -->
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>https://en.wikipedia.org/wiki/W._E._B._Du_Bois<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>B. S. Baumer, D. T. Kaplan, and N. J. Horton, <em>Modern Data Science with R</em>, 2017, p.&nbsp;15.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../ica/quarto-demo.html" class="pagination-link" aria-label="My first Quarto document">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">My first Quarto document</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="an">title:</span><span class="co"> "Effective Viz"</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="an">number-sections:</span><span class="co"> true</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">  warning: false</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="an">fig-height:</span><span class="co"> 2.75</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="an">fig-width:</span><span class="co"> 4.25</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="an">fig-env:</span><span class="co"> 'figure'</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="an">fig-pos:</span><span class="co"> 'h'</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="an">fig-align:</span><span class="co"> center</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="an">code-fold:</span><span class="co"> false</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">---</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a>::: {.callout-caution title="Learning Goals"}</span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="ss">-   </span>Explore the guiding principles of effective visualizations</span>
+<span id="cb9-16"><a href="#cb9-16"></a>:::</span>
+<span id="cb9-17"><a href="#cb9-17"></a></span>
+<span id="cb9-18"><a href="#cb9-18"></a>::: {.callout-note title="Additional Resources"}</span>
+<span id="cb9-19"><a href="#cb9-19"></a>For more information about the topics covered in this chapter, refer to the resources below:</span>
+<span id="cb9-20"><a href="#cb9-20"></a></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Equity Awareness for Data Visualizations (html)</span><span class="co">](https://www.urban.org/research/publication/do-no-harm-guide-applying-equity-awareness-data-visualization)</span> by Urban Institute</span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Telling a story (Chp 29, html)</span><span class="co">](https://clauswilke.com/dataviz/telling-a-story.html)</span> by Wilke</span>
+<span id="cb9-23"><a href="#cb9-23"></a>:::</span>
+<span id="cb9-24"><a href="#cb9-24"></a></span>
+<span id="cb9-25"><a href="#cb9-25"></a></span>
+<span id="cb9-26"><a href="#cb9-26"></a></span>
+<span id="cb9-27"><a href="#cb9-27"></a><span class="fu">## Warm-up</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a></span>
+<span id="cb9-29"><a href="#cb9-29"></a>**Recall: Benefits of Visualizations**</span>
+<span id="cb9-30"><a href="#cb9-30"></a></span>
+<span id="cb9-31"><a href="#cb9-31"></a><span class="ss">-   </span>Understand what we’re working with:</span>
+<span id="cb9-32"><a href="#cb9-32"></a><span class="ss">    -   </span>scales &amp; typical outcomes</span>
+<span id="cb9-33"><a href="#cb9-33"></a><span class="ss">    -   </span>outliers, i.e. unusual cases</span>
+<span id="cb9-34"><a href="#cb9-34"></a><span class="ss">    -   </span>patterns &amp; relationships</span>
+<span id="cb9-35"><a href="#cb9-35"></a><span class="ss">-   </span>Refine research questions &amp; inform next steps of our analysis.</span>
+<span id="cb9-36"><a href="#cb9-36"></a><span class="ss">-   </span>Communicate our findings and tell a story.</span>
+<span id="cb9-37"><a href="#cb9-37"></a></span>
+<span id="cb9-38"><a href="#cb9-38"></a><span class="fu">### No One Right Viz {.unnumbered}</span></span>
+<span id="cb9-39"><a href="#cb9-39"></a></span>
+<span id="cb9-40"><a href="#cb9-40"></a>There is no one right way to visualize a data set, eg, check out the 100 ways used to visualize one dataset: <span class="ot">&lt;https://100.datavizproject.com/&gt;</span> The visualized data was featured in <span class="co">[</span><span class="ot">this TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday/blob/master/data/2024/2024-02-06/readme.md)</span>! </span>
+<span id="cb9-41"><a href="#cb9-41"></a></span>
+<span id="cb9-42"><a href="#cb9-42"></a><span class="fu">#### Activity: Plot Critique {.unnumbered}</span></span>
+<span id="cb9-43"><a href="#cb9-43"></a></span>
+<span id="cb9-44"><a href="#cb9-44"></a>In groups: </span>
+<span id="cb9-45"><a href="#cb9-45"></a></span>
+<span id="cb9-46"><a href="#cb9-46"></a><span class="ss">-   </span>Scroll through the plots.</span>
+<span id="cb9-47"><a href="#cb9-47"></a><span class="ss">-   </span>Identify at least 1 plot that you feel illuminates some important aspect of the data.</span>
+<span id="cb9-48"><a href="#cb9-48"></a><span class="ss">-   </span>Identify at least 1 plot that does NOT illuminate the data in a good way.</span>
+<span id="cb9-49"><a href="#cb9-49"></a></span>
+<span id="cb9-50"><a href="#cb9-50"></a><span class="fu">### Ugly, Bad, Wrong Viz {.unnumbered}</span></span>
+<span id="cb9-51"><a href="#cb9-51"></a></span>
+<span id="cb9-52"><a href="#cb9-52"></a>One way to identify effective viz is to understand what makes a viz *in*effective. In the <span class="co">[</span><span class="ot">Fundamentals of Data Visualization</span><span class="co">](https://clauswilke.com/dataviz/introduction.html)</span>, Wilke breaks down ineffective viz into 3 categories:</span>
+<span id="cb9-53"><a href="#cb9-53"></a></span>
+<span id="cb9-54"><a href="#cb9-54"></a><span class="ss">-   </span>Wrong\</span>
+<span id="cb9-55"><a href="#cb9-55"></a>    The viz is "objectively incorrect", as in the numbers / trends being displayed are wrong.</span>
+<span id="cb9-56"><a href="#cb9-56"></a><span class="ss">-   </span>Bad\</span>
+<span id="cb9-57"><a href="#cb9-57"></a>    The viz is "unclear, confusing, overly complicated, or deceiving".</span>
+<span id="cb9-58"><a href="#cb9-58"></a><span class="ss">-   </span>Ugly\</span>
+<span id="cb9-59"><a href="#cb9-59"></a>    The viz correct and clear but The aesthetics are problematic.</span>
+<span id="cb9-60"><a href="#cb9-60"></a></span>
+<span id="cb9-61"><a href="#cb9-61"></a><span class="fu">#### Activity: Critical Analysis {.unnumbered}</span></span>
+<span id="cb9-62"><a href="#cb9-62"></a></span>
+<span id="cb9-63"><a href="#cb9-63"></a>Let's try some critical analysis on specific examples. For your assigned viz, identify the following:</span>
+<span id="cb9-64"><a href="#cb9-64"></a></span>
+<span id="cb9-65"><a href="#cb9-65"></a><span class="ss">-   </span>The story the viz is trying to communicate.</span>
+<span id="cb9-66"><a href="#cb9-66"></a><span class="ss">-   </span>Whether the viz is good, ugly, bad, wrong, or some combination.</span>
+<span id="cb9-67"><a href="#cb9-67"></a><span class="ss">-   </span>Areas for improvement.</span>
+<span id="cb9-68"><a href="#cb9-68"></a></span>
+<span id="cb9-71"><a href="#cb9-71"></a><span class="in">```{r}</span></span>
+<span id="cb9-72"><a href="#cb9-72"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-73"><a href="#cb9-73"></a><span class="co">#| out-width: "50%"</span></span>
+<span id="cb9-74"><a href="#cb9-74"></a><span class="co">#| fig-cap: "IMAGE 1. Source: N. Yau, *Visualize This*, 2011, p. 223-225."</span></span>
+<span id="cb9-75"><a href="#cb9-75"></a><span class="co">#| fig-alt: "Faceted histograms of Rotten Tomato ratings of triologies, separated by original, sequel, and finale. Median ratings are shown as black points to show decreasing median rating over the series. The lower visual has bars with height corresponding to the Rotten Tomato rating, color green for at least 60% and red for below, faceted by Triology series. Graphic is from Visualize This by Nathan Yau."</span></span>
+<span id="cb9-76"><a href="#cb9-76"></a></span>
+<span id="cb9-77"><a href="#cb9-77"></a><span class="co"># IMAGE 1</span></span>
+<span id="cb9-78"><a href="#cb9-78"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/trilogies.gif"</span>)</span>
+<span id="cb9-79"><a href="#cb9-79"></a><span class="in">```</span></span>
+<span id="cb9-80"><a href="#cb9-80"></a></span>
+<span id="cb9-83"><a href="#cb9-83"></a><span class="in">```{r}</span></span>
+<span id="cb9-84"><a href="#cb9-84"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-85"><a href="#cb9-85"></a><span class="co">#| out-width: "60%"</span></span>
+<span id="cb9-86"><a href="#cb9-86"></a><span class="co">#| fig-cap: "IMAGE 2. Source: N. Yau, *Visualize This*, 2011, p. 242."</span></span>
+<span id="cb9-87"><a href="#cb9-87"></a><span class="co">#| fig-alt: "Chernoff faces of NBA players in 2008-2009 season where the features of the face correspond to player statistics. Players are ordered by most points per game. Graphic is from Visualize This by Nathan Yau."</span></span>
+<span id="cb9-88"><a href="#cb9-88"></a></span>
+<span id="cb9-89"><a href="#cb9-89"></a><span class="co"># IMAGE 2</span></span>
+<span id="cb9-90"><a href="#cb9-90"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/chernoff.png"</span>)</span>
+<span id="cb9-91"><a href="#cb9-91"></a><span class="in">```</span></span>
+<span id="cb9-92"><a href="#cb9-92"></a></span>
+<span id="cb9-95"><a href="#cb9-95"></a><span class="in">```{r}</span></span>
+<span id="cb9-96"><a href="#cb9-96"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-97"><a href="#cb9-97"></a><span class="co">#| out-width: "60%"</span></span>
+<span id="cb9-98"><a href="#cb9-98"></a><span class="co">#| fig-cap: "IMAGE 3. Climate change."</span></span>
+<span id="cb9-99"><a href="#cb9-99"></a><span class="co">#| fig-alt: "Tweet by National Review of a line plot with time on the x-axis and average annual global temperature on the y-axis with limits from -10 to 110 degrees Farenheit. The tweet says The only #climatechange chart you need to see. Graphic is from National Review Twitter (December 14, 2015)."</span></span>
+<span id="cb9-100"><a href="#cb9-100"></a></span>
+<span id="cb9-101"><a href="#cb9-101"></a><span class="co"># IMAGE 3</span></span>
+<span id="cb9-102"><a href="#cb9-102"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change.png"</span>)</span>
+<span id="cb9-103"><a href="#cb9-103"></a><span class="in">```</span></span>
+<span id="cb9-104"><a href="#cb9-104"></a></span>
+<span id="cb9-107"><a href="#cb9-107"></a><span class="in">```{r}</span></span>
+<span id="cb9-108"><a href="#cb9-108"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-109"><a href="#cb9-109"></a><span class="co">#| out-width: "60%"</span></span>
+<span id="cb9-110"><a href="#cb9-110"></a><span class="co">#| fig-cap: "IMAGE 4. Source: http://viz.wtf/"</span></span>
+<span id="cb9-111"><a href="#cb9-111"></a><span class="co">#| fig-alt: "Radiating pie chart of maternity leave polivies across the world. The length of the piece of the pie is proportional to the length of the maternity leave policy; the width of the piece of pie is proportional to the number of countries in the graphic that have that policy. United States is highlighted without any piece of pie. Graphic is originally from ThinkProgress and found on http://viz.wtf/."</span></span>
+<span id="cb9-112"><a href="#cb9-112"></a></span>
+<span id="cb9-113"><a href="#cb9-113"></a><span class="co"># IMAGE 4</span></span>
+<span id="cb9-114"><a href="#cb9-114"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/bad_viz_proportions.png"</span>)</span>
+<span id="cb9-115"><a href="#cb9-115"></a><span class="in">```</span></span>
+<span id="cb9-116"><a href="#cb9-116"></a></span>
+<span id="cb9-119"><a href="#cb9-119"></a><span class="in">```{r}</span></span>
+<span id="cb9-120"><a href="#cb9-120"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-121"><a href="#cb9-121"></a><span class="co">#| out-width: "70%"</span></span>
+<span id="cb9-122"><a href="#cb9-122"></a><span class="co">#| fig-cap: "IMAGE 5. Source: N. Yau, *Visualize This*, 2011, p. 220."</span></span>
+<span id="cb9-123"><a href="#cb9-123"></a><span class="co">#| fig-alt: "Multiple histograms of TV size from 2002 to 2009, vertically stacked. The median TV size is shown on the right with an arrow up or down if it changed from the previous year.  Graphic is originally from FlowingData in Visualize This by Nathan Yau."</span></span>
+<span id="cb9-124"><a href="#cb9-124"></a></span>
+<span id="cb9-125"><a href="#cb9-125"></a><span class="co"># IMAGE 5</span></span>
+<span id="cb9-126"><a href="#cb9-126"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/tv-size-by-year1.png"</span>)</span>
+<span id="cb9-127"><a href="#cb9-127"></a><span class="in">```</span></span>
+<span id="cb9-128"><a href="#cb9-128"></a></span>
+<span id="cb9-131"><a href="#cb9-131"></a><span class="in">```{r}</span></span>
+<span id="cb9-132"><a href="#cb9-132"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-133"><a href="#cb9-133"></a><span class="co">#| out-width: "60%"</span></span>
+<span id="cb9-134"><a href="#cb9-134"></a><span class="co">#| fig-cap: "IMAGE 6. Source: (https://www.reddit.com/r/dataisugly/comments/vlirox/0_1_19_20_39/)"</span></span>
+<span id="cb9-135"><a href="#cb9-135"></a><span class="co">#| fig-alt: "Tweet by DAVIDsTEA of caffine amounts on the x-axis for coffee as compared to a variety of tea. The x-axis is not a number line and misrpresented the amount of caffine. The tweet says On a scale of 1 to Engergizer Bunny, how much caffeine do you need today? Please refer to the chart above and plan accordintly. Graphic is from DAVIDsTEA Twitter and reposted on Reddit."</span></span>
+<span id="cb9-136"><a href="#cb9-136"></a></span>
+<span id="cb9-137"><a href="#cb9-137"></a><span class="co"># IMAGE 6</span></span>
+<span id="cb9-138"><a href="#cb9-138"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/bad_viz_coffee.png"</span>)</span>
+<span id="cb9-139"><a href="#cb9-139"></a><span class="in">```</span></span>
+<span id="cb9-140"><a href="#cb9-140"></a></span>
+<span id="cb9-141"><a href="#cb9-141"></a><span class="fu">#### Follow-up to Climate Change Plot {.unnumbered}</span></span>
+<span id="cb9-142"><a href="#cb9-142"></a></span>
+<span id="cb9-145"><a href="#cb9-145"></a><span class="in">```{r}</span></span>
+<span id="cb9-146"><a href="#cb9-146"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-147"><a href="#cb9-147"></a><span class="co">#| out-width: "60%"</span></span>
+<span id="cb9-148"><a href="#cb9-148"></a><span class="co">#| fig-cap: "IMAGE 3. Climate change."</span></span>
+<span id="cb9-149"><a href="#cb9-149"></a><span class="co">#| fig-alt: "Line plot of average global temperature over time with y-axis ranging from 55 to 60 degrees Farenheit. The plot shows that temperatures varied around 57 degrees up until the early 1900's and have steadily increased to 58.5 over the last 100 or so years.  Graphic is a recreation of the climat change graphic with data from NASA/GISS."</span></span>
+<span id="cb9-150"><a href="#cb9-150"></a></span>
+<span id="cb9-151"><a href="#cb9-151"></a><span class="co"># IMAGE 3</span></span>
+<span id="cb9-152"><a href="#cb9-152"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change_b.png"</span>)</span>
+<span id="cb9-153"><a href="#cb9-153"></a><span class="in">```</span></span>
+<span id="cb9-154"><a href="#cb9-154"></a></span>
+<span id="cb9-155"><a href="#cb9-155"></a><span class="fu">### Effective &amp; Ineffective Viz Examples {.unnumbered}</span></span>
+<span id="cb9-156"><a href="#cb9-156"></a></span>
+<span id="cb9-157"><a href="#cb9-157"></a><span class="ss">-   </span>Examples of good viz:</span>
+<span id="cb9-158"><a href="#cb9-158"></a><span class="ss">    -   </span><span class="co">[</span><span class="ot">FlowingData's "Best visualizations of..."</span><span class="co">](https://flowingdata.com/tag/best-of/)</span></span>
+<span id="cb9-159"><a href="#cb9-159"></a><span class="ss">-   </span>Examples of bad viz:</span>
+<span id="cb9-160"><a href="#cb9-160"></a><span class="ss">    -   </span><span class="co">[</span><span class="ot">WTF Visualizations</span><span class="co">](http://viz.wtf/)</span></span>
+<span id="cb9-161"><a href="#cb9-161"></a><span class="ss">    -   </span><span class="co">[</span><span class="ot">Bad viz in the wild</span><span class="co">](https://medium.com/@thomas.ellyatt/bad-data-visualisation-real-life-examples-out-there-in-the-wild-eb5032329aeb)</span></span>
+<span id="cb9-162"><a href="#cb9-162"></a></span>
+<span id="cb9-163"><a href="#cb9-163"></a><span class="fu">### Effective Viz {.unnumbered}</span></span>
+<span id="cb9-164"><a href="#cb9-164"></a></span>
+<span id="cb9-165"><a href="#cb9-165"></a>You can take a whole course in Data Viz at Mac!  The topic of effective viz is too big and nuanced to boil down into a simple list. Here are some basics:</span>
+<span id="cb9-166"><a href="#cb9-166"></a></span>
+<span id="cb9-167"><a href="#cb9-167"></a><span class="fu">#### Professionalism {.unnumbered}</span></span>
+<span id="cb9-168"><a href="#cb9-168"></a></span>
+<span id="cb9-169"><a href="#cb9-169"></a>Once you're ready to "share out" your viz, it should have...</span>
+<span id="cb9-170"><a href="#cb9-170"></a></span>
+<span id="cb9-171"><a href="#cb9-171"></a><span class="ss">-   </span>meaningful axis labels</span>
+<span id="cb9-172"><a href="#cb9-172"></a><span class="ss">-   </span>a figure caption (depending upon where the viz will appear)</span>
+<span id="cb9-173"><a href="#cb9-173"></a></span>
+<span id="cb9-174"><a href="#cb9-174"></a><span class="fu">#### Accessibility {.unnumbered}</span></span>
+<span id="cb9-175"><a href="#cb9-175"></a></span>
+<span id="cb9-176"><a href="#cb9-176"></a>Once you're ready to "share out" your viz, it should...</span>
+<span id="cb9-177"><a href="#cb9-177"></a></span>
+<span id="cb9-178"><a href="#cb9-178"></a><span class="ss">-   </span>have "alt text", a written description of the viz that can be read out by a screen reader (<span class="co">[</span><span class="ot">video</span><span class="co">](https://www.youtube.com/watch?v=NvqasTVoW98)</span>)</span>
+<span id="cb9-179"><a href="#cb9-179"></a><span class="ss">-   </span>use a color palette that is distinguishable across common forms of color blindness</span>
+<span id="cb9-180"><a href="#cb9-180"></a></span>
+<span id="cb9-181"><a href="#cb9-181"></a><span class="fu">#### Design Details {.unnumbered}</span></span>
+<span id="cb9-182"><a href="#cb9-182"></a></span>
+<span id="cb9-183"><a href="#cb9-183"></a>In designing your viz, think about *comparison*. Good viz make it easy for people to perceive things that are similar and things that are different.</span>
+<span id="cb9-184"><a href="#cb9-184"></a></span>
+<span id="cb9-185"><a href="#cb9-185"></a><span class="fu">#### Ethics {.unnumbered}</span></span>
+<span id="cb9-186"><a href="#cb9-186"></a></span>
+<span id="cb9-187"><a href="#cb9-187"></a><span class="co">[</span><span class="ot">Michael Correll of Tableau Research (pdf)</span><span class="co">](https://arxiv.org/pdf/1811.07271.pdf)</span> wrote "Data visualizations have a potentially enormous influence on how data are used to make decisions across all areas of human endeavor." Thus ethics are critical from the data we use, to the plots we build, to the way in which we communicate this work. This is a very broad topic, and we'll focus here on data visualization alone. Relatedly, and at a minimum:</span>
+<span id="cb9-188"><a href="#cb9-188"></a></span>
+<span id="cb9-189"><a href="#cb9-189"></a><span class="ss">-   </span>Data viz should not mislead, i.e. "wrong" viz are unethical.<span class="sc">\*\*</span></span>
+<span id="cb9-190"><a href="#cb9-190"></a><span class="ss">-   </span>Yet ethics in data viz goes much deeper. Correll describes three related principles to strive for:</span>
+<span id="cb9-191"><a href="#cb9-191"></a><span class="ss">    -   </span>**Visibility**\</span>
+<span id="cb9-192"><a href="#cb9-192"></a>        Make the invisible visible. Visualize hidden labor, hidden uncertainty, hidden impacts. Credit your sources, data and otherwise.</span>
+<span id="cb9-193"><a href="#cb9-193"></a></span>
+<span id="cb9-194"><a href="#cb9-194"></a><span class="ss">    -   </span>**Privacy**\</span>
+<span id="cb9-195"><a href="#cb9-195"></a>        Collect data with empathy. Encourage small Data, anthropomorphize data, obfuscate data to protect privacy.</span>
+<span id="cb9-196"><a href="#cb9-196"></a></span>
+<span id="cb9-197"><a href="#cb9-197"></a><span class="ss">    -   </span>**Power**\</span>
+<span id="cb9-198"><a href="#cb9-198"></a>        Challenge structures of power. Support data due process, act as data advocates, pressure unethical analytical behavior.</span>
+<span id="cb9-199"><a href="#cb9-199"></a></span>
+<span id="cb9-200"><a href="#cb9-200"></a><span class="ss">-   </span>To this list, <span class="co">[</span><span class="ot">Data Feminism</span><span class="co">](https://data-feminism.mitpress.mit.edu/)</span> authors Catherine D'Ignazio and Lauren F. Klein added:</span>
+<span id="cb9-201"><a href="#cb9-201"></a><span class="ss">    -   </span>**Emotion &amp; Embodiment**\</span>
+<span id="cb9-202"><a href="#cb9-202"></a>    Value multiple forms of knowledge, including the knowledge that comes from people as living, feeling bodies in the world.</span>
+<span id="cb9-203"><a href="#cb9-203"></a></span>
+<span id="cb9-204"><a href="#cb9-204"></a><span class="ss">    -   </span>**Pluralism**\</span>
+<span id="cb9-205"><a href="#cb9-205"></a>    The most complete knowledge comes from synthesizing multiple perspectives</span>
+<span id="cb9-206"><a href="#cb9-206"></a></span>
+<span id="cb9-207"><a href="#cb9-207"></a><span class="ss">    -   </span>**Context**\</span>
+<span id="cb9-208"><a href="#cb9-208"></a>    Data are not neutral or objective</span>
+<span id="cb9-209"><a href="#cb9-209"></a></span>
+<span id="cb9-210"><a href="#cb9-210"></a><span class="fu">## Exercises</span></span>
+<span id="cb9-211"><a href="#cb9-211"></a></span>
+<span id="cb9-212"><a href="#cb9-212"></a><span class="fu">### Exercise 1: Professionalism {.unnumbered}</span></span>
+<span id="cb9-213"><a href="#cb9-213"></a></span>
+<span id="cb9-214"><a href="#cb9-214"></a>Let's examine weather in 3 Australian locations.</span>
+<span id="cb9-215"><a href="#cb9-215"></a></span>
+<span id="cb9-218"><a href="#cb9-218"></a><span class="in">```{r}</span></span>
+<span id="cb9-219"><a href="#cb9-219"></a><span class="co"># Load tidyverse package for plotting and wrangling</span></span>
+<span id="cb9-220"><a href="#cb9-220"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-221"><a href="#cb9-221"></a></span>
+<span id="cb9-222"><a href="#cb9-222"></a><span class="co"># Import the data</span></span>
+<span id="cb9-223"><a href="#cb9-223"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/weather_3_locations.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-224"><a href="#cb9-224"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date))</span>
+<span id="cb9-225"><a href="#cb9-225"></a><span class="in">```</span></span>
+<span id="cb9-226"><a href="#cb9-226"></a></span>
+<span id="cb9-227"><a href="#cb9-227"></a>The following plot is fine for things like homework or just playing around. But we'll make it more "professional" looking below.</span>
+<span id="cb9-228"><a href="#cb9-228"></a></span>
+<span id="cb9-231"><a href="#cb9-231"></a><span class="in">```{r}</span></span>
+<span id="cb9-232"><a href="#cb9-232"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-233"><a href="#cb9-233"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb9-234"><a href="#cb9-234"></a><span class="in">```</span></span>
+<span id="cb9-235"><a href="#cb9-235"></a></span>
+<span id="cb9-236"><a href="#cb9-236"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb9-237"><a href="#cb9-237"></a></span>
+<span id="cb9-238"><a href="#cb9-238"></a>Replace A, B, C, and D in the code below to:</span>
+<span id="cb9-239"><a href="#cb9-239"></a></span>
+<span id="cb9-240"><a href="#cb9-240"></a><span class="ss">-   </span>Add a short, but descriptive title. Under 10 words.</span>
+<span id="cb9-241"><a href="#cb9-241"></a><span class="ss">-   </span>Change the x- and y-axis labels, currently just the names of the variables in the dataset. These should be short and include units.</span>
+<span id="cb9-242"><a href="#cb9-242"></a><span class="ss">-   </span>Change the legend title to "Location" (just for practice, not because it's better than "location").</span>
+<span id="cb9-243"><a href="#cb9-243"></a></span>
+<span id="cb9-246"><a href="#cb9-246"></a><span class="in">```{r}</span></span>
+<span id="cb9-247"><a href="#cb9-247"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-248"><a href="#cb9-248"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb9-249"><a href="#cb9-249"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tempurature at 9am (Celsius)"</span>, <span class="at">y =</span> <span class="st">"Temperature at 3pm (Celsius)"</span>, <span class="at">title =</span> <span class="st">"Temperatures at Different Times Throughout Australia"</span>, <span class="at">color =</span> <span class="st">"Location"</span>)  </span>
+<span id="cb9-250"><a href="#cb9-250"></a><span class="in">```</span></span>
+<span id="cb9-251"><a href="#cb9-251"></a></span>
+<span id="cb9-252"><a href="#cb9-252"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb9-253"><a href="#cb9-253"></a></span>
+<span id="cb9-254"><a href="#cb9-254"></a>When we're including our plot in an article, paper, book, or other similar outlet, we should (and are expected to) provide a more descriptive figure caption. Typically, this is *instead* of a title and is more descriptive of what exactly is being plotted.</span>
+<span id="cb9-255"><a href="#cb9-255"></a></span>
+<span id="cb9-256"><a href="#cb9-256"></a><span class="ss">-   </span>Add a figure caption in the top of the chunk.</span>
+<span id="cb9-257"><a href="#cb9-257"></a><span class="ss">-   </span>Include your x-axis, y-axis, and legend labels from Part a.</span>
+<span id="cb9-258"><a href="#cb9-258"></a><span class="ss">-   </span>Render your Rmd and check out how the figure caption appears.</span>
+<span id="cb9-261"><a href="#cb9-261"></a><span class="in">```{r}</span></span>
+<span id="cb9-262"><a href="#cb9-262"></a><span class="co">#| fig-cap: "Temperatures at 9am and 3pm in the Hobart, Uluru, and Wollongong Regions of Australia"</span></span>
+<span id="cb9-263"><a href="#cb9-263"></a></span>
+<span id="cb9-264"><a href="#cb9-264"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-265"><a href="#cb9-265"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb9-266"><a href="#cb9-266"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature at 9am (C)"</span>, <span class="at">y =</span> <span class="st">"Temperature at 3pm (C)"</span>, <span class="at">color =</span> <span class="st">"Location"</span>)  </span>
+<span id="cb9-267"><a href="#cb9-267"></a><span class="in">```</span></span>
+<span id="cb9-268"><a href="#cb9-268"></a></span>
+<span id="cb9-271"><a href="#cb9-271"></a><span class="in">```{r}</span></span>
+<span id="cb9-272"><a href="#cb9-272"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-273"><a href="#cb9-273"></a><span class="co">#| fig-cap: "Temperatures at 9am and 3pm in the Hobart, Uluru, and Wollongong Regions of Australia"</span></span>
+<span id="cb9-274"><a href="#cb9-274"></a></span>
+<span id="cb9-275"><a href="#cb9-275"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-276"><a href="#cb9-276"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb9-277"><a href="#cb9-277"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature at 9am (C)"</span>, <span class="at">y =</span> <span class="st">"Temperature at 3pm (C)"</span>, <span class="at">color =</span> <span class="st">"Location"</span>)  </span>
+<span id="cb9-278"><a href="#cb9-278"></a><span class="in">```</span></span>
+<span id="cb9-279"><a href="#cb9-279"></a></span>
+<span id="cb9-280"><a href="#cb9-280"></a>\</span>
+<span id="cb9-281"><a href="#cb9-281"></a>\</span>
+<span id="cb9-282"><a href="#cb9-282"></a>\</span>
+<span id="cb9-283"><a href="#cb9-283"></a>\</span>
+<span id="cb9-284"><a href="#cb9-284"></a></span>
+<span id="cb9-285"><a href="#cb9-285"></a><span class="fu">### Exercise 2: Accessibility {.unnumbered}</span></span>
+<span id="cb9-286"><a href="#cb9-286"></a></span>
+<span id="cb9-287"><a href="#cb9-287"></a>Let's now make a graphic more accessible.</span>
+<span id="cb9-288"><a href="#cb9-288"></a></span>
+<span id="cb9-291"><a href="#cb9-291"></a><span class="in">```{r}</span></span>
+<span id="cb9-292"><a href="#cb9-292"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
+<span id="cb9-293"><a href="#cb9-293"></a><span class="co">#| fig-alt: "???"</span></span>
+<span id="cb9-294"><a href="#cb9-294"></a></span>
+<span id="cb9-295"><a href="#cb9-295"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-296"><a href="#cb9-296"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-297"><a href="#cb9-297"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
+<span id="cb9-298"><a href="#cb9-298"></a><span class="in">```</span></span>
+<span id="cb9-299"><a href="#cb9-299"></a></span>
+<span id="cb9-300"><a href="#cb9-300"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb9-301"><a href="#cb9-301"></a></span>
+<span id="cb9-302"><a href="#cb9-302"></a>Let's add some alt text that can be picked up by screen readers. This is a <span class="co">[</span><span class="ot">great resource on writing alt text for data viz</span><span class="co">](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)</span>. In short, whereas figure captions are quick descriptions which assume that the viz is accessible, alt text is a longer description which assumes the viz is not accessible. Alt text should concisely articulate:</span>
+<span id="cb9-303"><a href="#cb9-303"></a></span>
+<span id="cb9-304"><a href="#cb9-304"></a><span class="ss">-   </span>What your visualization is (e.g. a density plot of 3pm temperatures in Hobart, Uluru, and Wollongong, Australia).</span>
+<span id="cb9-305"><a href="#cb9-305"></a><span class="ss">-   </span>A 1-sentence description of the most important *takeaway*.</span>
+<span id="cb9-306"><a href="#cb9-306"></a><span class="ss">-   </span>A link to your data source if it's not already in the caption.</span>
+<span id="cb9-307"><a href="#cb9-307"></a></span>
+<span id="cb9-308"><a href="#cb9-308"></a>Add appropriate alt text at the top of the chunk, in <span class="in">`fig-alt`</span>. Then render your qmd, and hover over the image in your rendered html file to check out the alt text.</span>
+<span id="cb9-309"><a href="#cb9-309"></a></span>
+<span id="cb9-312"><a href="#cb9-312"></a><span class="in">```{r}</span></span>
+<span id="cb9-313"><a href="#cb9-313"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
+<span id="cb9-314"><a href="#cb9-314"></a><span class="co">#| fig-alt: "???"</span></span>
+<span id="cb9-315"><a href="#cb9-315"></a></span>
+<span id="cb9-316"><a href="#cb9-316"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-317"><a href="#cb9-317"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-318"><a href="#cb9-318"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
+<span id="cb9-319"><a href="#cb9-319"></a><span class="in">```</span></span>
+<span id="cb9-320"><a href="#cb9-320"></a></span>
+<span id="cb9-323"><a href="#cb9-323"></a><span class="in">```{r}</span></span>
+<span id="cb9-324"><a href="#cb9-324"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-325"><a href="#cb9-325"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
+<span id="cb9-326"><a href="#cb9-326"></a><span class="co">#| fig-alt: "???"</span></span>
+<span id="cb9-327"><a href="#cb9-327"></a></span>
+<span id="cb9-328"><a href="#cb9-328"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-329"><a href="#cb9-329"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-330"><a href="#cb9-330"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
+<span id="cb9-331"><a href="#cb9-331"></a><span class="in">```</span></span>
+<span id="cb9-332"><a href="#cb9-332"></a></span>
+<span id="cb9-333"><a href="#cb9-333"></a>\</span>
+<span id="cb9-334"><a href="#cb9-334"></a>\</span>
+<span id="cb9-335"><a href="#cb9-335"></a>\</span>
+<span id="cb9-336"><a href="#cb9-336"></a>\</span>
+<span id="cb9-337"><a href="#cb9-337"></a></span>
+<span id="cb9-338"><a href="#cb9-338"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb9-339"><a href="#cb9-339"></a></span>
+<span id="cb9-340"><a href="#cb9-340"></a>Color is another important accessibility consideration. Let's check out the color accessibility of our density plot.</span>
+<span id="cb9-341"><a href="#cb9-341"></a></span>
+<span id="cb9-342"><a href="#cb9-342"></a><span class="ss">-   </span>Run the <span class="in">`ggplot()`</span> code from Part a in your console. The viz will pop up in the Plots tab.</span>
+<span id="cb9-343"><a href="#cb9-343"></a><span class="ss">-   </span>In the Plots tab, click "Export" then "Save as image". Save the image somewhere.</span>
+<span id="cb9-344"><a href="#cb9-344"></a><span class="ss">-   </span>Navigate to <span class="ot">&lt;https://www.color-blindness.com/coblis-color-blindness-simulator/&gt;</span></span>
+<span id="cb9-345"><a href="#cb9-345"></a><span class="ss">-   </span>Above the image of crayons (I think it's crayons?), click "Choose file" and choose the plot file you just saved.</span>
+<span id="cb9-346"><a href="#cb9-346"></a><span class="ss">-   </span>Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.</span>
+<span id="cb9-347"><a href="#cb9-347"></a><span class="ss">-   </span>Summarize what you learn. What impact might our color choices have on one's ability to interpret the viz?</span>
+<span id="cb9-348"><a href="#cb9-348"></a></span>
+<span id="cb9-349"><a href="#cb9-349"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb9-350"><a href="#cb9-350"></a></span>
+<span id="cb9-351"><a href="#cb9-351"></a>We can change our color schemes! There are many <span class="co">[</span><span class="ot">color-blind friendly palettes in R</span><span class="co">](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html)</span>. In the future, we'll set a default, more color-blind friendly color theme at the top of our Rmds. We can also do this individually for any plot that uses color. Run the chunks below to explore various options.</span>
+<span id="cb9-352"><a href="#cb9-352"></a></span>
+<span id="cb9-355"><a href="#cb9-355"></a><span class="in">```{r}</span></span>
+<span id="cb9-356"><a href="#cb9-356"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb9-357"><a href="#cb9-357"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-358"><a href="#cb9-358"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb9-359"><a href="#cb9-359"></a>  <span class="fu">scale_fill_viridis_d</span>()    </span>
+<span id="cb9-360"><a href="#cb9-360"></a><span class="in">```</span></span>
+<span id="cb9-361"><a href="#cb9-361"></a></span>
+<span id="cb9-364"><a href="#cb9-364"></a><span class="in">```{r}</span></span>
+<span id="cb9-365"><a href="#cb9-365"></a><span class="co"># In the color scale line:</span></span>
+<span id="cb9-366"><a href="#cb9-366"></a><span class="co"># Change "fill" to "color" since we use color in the aes()</span></span>
+<span id="cb9-367"><a href="#cb9-367"></a><span class="co"># Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale</span></span>
+<span id="cb9-368"><a href="#cb9-368"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> maxtemp)) <span class="sc">+</span> </span>
+<span id="cb9-369"><a href="#cb9-369"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-370"><a href="#cb9-370"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb9-371"><a href="#cb9-371"></a>  <span class="fu">scale_color_viridis_c</span>()</span>
+<span id="cb9-372"><a href="#cb9-372"></a><span class="in">```</span></span>
+<span id="cb9-373"><a href="#cb9-373"></a></span>
+<span id="cb9-374"><a href="#cb9-374"></a>\</span>
+<span id="cb9-375"><a href="#cb9-375"></a>\</span>
+<span id="cb9-376"><a href="#cb9-376"></a>\</span>
+<span id="cb9-377"><a href="#cb9-377"></a>\</span>
+<span id="cb9-378"><a href="#cb9-378"></a></span>
+<span id="cb9-379"><a href="#cb9-379"></a><span class="fu">### Exercise 3: Ethics {.unnumbered}</span></span>
+<span id="cb9-380"><a href="#cb9-380"></a></span>
+<span id="cb9-381"><a href="#cb9-381"></a>Let's scratch the surface of ethics in data viz. Central to this discussion is the consideration of *impact*.</span>
+<span id="cb9-382"><a href="#cb9-382"></a></span>
+<span id="cb9-383"><a href="#cb9-383"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb9-384"><a href="#cb9-384"></a></span>
+<span id="cb9-385"><a href="#cb9-385"></a>At a minimum, our data viz should not mislead. Reconsider the climate change example from above. Why is this plot unethical and what impact might it have on policy, public opinion, etc?</span>
+<span id="cb9-386"><a href="#cb9-386"></a></span>
+<span id="cb9-387"><a href="#cb9-387"></a><span class="al">![](https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change.png)</span></span>
+<span id="cb9-388"><a href="#cb9-388"></a></span>
+<span id="cb9-389"><a href="#cb9-389"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb9-390"><a href="#cb9-390"></a></span>
+<span id="cb9-391"><a href="#cb9-391"></a>Again, data viz ethical considerations go beyond whether or not a plot is misleading. As described in the warm-up, we need to consider: visibility, privacy, power, emotion &amp; embodiment, pluralism, &amp; context. Depending upon the audience and goals of a data viz, addressing these points might require more nuance. Mainly, the viz tools we've learned are a great base or foundation, but aren't the only approaches to data viz. </span>
+<span id="cb9-392"><a href="#cb9-392"></a></span>
+<span id="cb9-393"><a href="#cb9-393"></a>Pick one or more of the following examples of data viz to discuss with your group. How do the approaches taken:</span>
+<span id="cb9-394"><a href="#cb9-394"></a></span>
+<span id="cb9-395"><a href="#cb9-395"></a><span class="ss">-   </span>emphasize one or more of: visibility, privacy, power, emotion, embodiment, pluralism, and/or context?</span>
+<span id="cb9-396"><a href="#cb9-396"></a><span class="ss">-   </span>improve upon what we might be able to convey with a simpler bar chart, scatterplot, etc?</span>
+<span id="cb9-397"><a href="#cb9-397"></a></span>
+<span id="cb9-398"><a href="#cb9-398"></a>\</span>
+<span id="cb9-399"><a href="#cb9-399"></a>\</span>
+<span id="cb9-400"><a href="#cb9-400"></a></span>
+<span id="cb9-401"><a href="#cb9-401"></a>Example: **W.E.B. Du Bois (1868–1963)**</span>
+<span id="cb9-402"><a href="#cb9-402"></a></span>
+<span id="cb9-403"><a href="#cb9-403"></a>Du Bois ("Doo Boys") was a "sociologist, socialist, historian, civil rights activist, Pan-Africanist, author, writer, and editor"<span class="ot">[^07-effective-viz-1]</span>. He was also a *pioneer* in elevating emotion and embodiment in data visualization. For the Paris World Fair of 1900, Du Bois and his team of students from Atlanta University presented 60 data visualizations of the Black experience in America, less than 50 years after the abolishment of slavery. Du Bois noted: "I wanted to set down its aim and method in some outstanding way which would bring my work to notice by the thinking world." That is, he wanted to increase the impact of his work by partnering technical visualizations with design that better connects to lived experiences. NOTE: This work uses language common to that time period and addresses the topic of slavery. Check out:</span>
+<span id="cb9-404"><a href="#cb9-404"></a></span>
+<span id="cb9-405"><a href="#cb9-405"></a><span class="ot">[^07-effective-viz-1]: https://en.wikipedia.org/wiki/W.\_E.\_B.\_Du_Bois</span></span>
+<span id="cb9-406"><a href="#cb9-406"></a></span>
+<span id="cb9-407"><a href="#cb9-407"></a><span class="ss">-   </span>A <span class="co">[</span><span class="ot">complete set of the data visualizations provided by Anthony Starks</span><span class="co">](https://speakerdeck.com/ajstarks/du-bois-visualizations-originals)</span> (@ajstarks).</span>
+<span id="cb9-408"><a href="#cb9-408"></a><span class="ss">-   </span>An <span class="co">[</span><span class="ot">article by Allen Hillery</span><span class="co">](https://dataliteracy.com/web-du-bois-story-of-resilience/)</span> (@AlDatavizguy).</span>
+<span id="cb9-409"><a href="#cb9-409"></a></span>
+<span id="cb9-410"><a href="#cb9-410"></a>\</span>
+<span id="cb9-411"><a href="#cb9-411"></a>\</span>
+<span id="cb9-412"><a href="#cb9-412"></a></span>
+<span id="cb9-413"><a href="#cb9-413"></a>Example: **One person's experience with long COVID**</span>
+<span id="cb9-414"><a href="#cb9-414"></a></span>
+<span id="cb9-415"><a href="#cb9-415"></a><span class="co">[</span><span class="ot">NYT article</span><span class="co">](https://www.nytimes.com/interactive/2023/12/14/opinion/my-life-with-long-covid.html?unlocked_article_code=1.F00.Sz4i.NRF1fZrnwEIh&amp;smid=url-share)</span></span>
+<span id="cb9-416"><a href="#cb9-416"></a></span>
+<span id="cb9-417"><a href="#cb9-417"></a>\</span>
+<span id="cb9-418"><a href="#cb9-418"></a>\</span>
+<span id="cb9-419"><a href="#cb9-419"></a></span>
+<span id="cb9-420"><a href="#cb9-420"></a>Example: **Decolonizing data viz**</span>
+<span id="cb9-421"><a href="#cb9-421"></a></span>
+<span id="cb9-422"><a href="#cb9-422"></a><span class="co">[</span><span class="ot">blog post</span><span class="co">](https://stephanieevergreen.com/decolonizing-data-viz/)</span></span>
+<span id="cb9-423"><a href="#cb9-423"></a></span>
+<span id="cb9-424"><a href="#cb9-424"></a>\</span>
+<span id="cb9-425"><a href="#cb9-425"></a>\</span>
+<span id="cb9-426"><a href="#cb9-426"></a></span>
+<span id="cb9-427"><a href="#cb9-427"></a>Example: **Visualizing climate change through art**</span>
+<span id="cb9-428"><a href="#cb9-428"></a></span>
+<span id="cb9-429"><a href="#cb9-429"></a><span class="co">[</span><span class="ot">Futures North with Prof John Kim &amp; Mac students</span><span class="co">](https://www.variableprojects.com/#/phase-change/)</span> (by Prof Kim, Mac research students)</span>
+<span id="cb9-430"><a href="#cb9-430"></a></span>
+<span id="cb9-431"><a href="#cb9-431"></a>\</span>
+<span id="cb9-432"><a href="#cb9-432"></a>\</span>
+<span id="cb9-433"><a href="#cb9-433"></a></span>
+<span id="cb9-434"><a href="#cb9-434"></a>Example: **Personal data collection**</span>
+<span id="cb9-435"><a href="#cb9-435"></a></span>
+<span id="cb9-436"><a href="#cb9-436"></a><span class="co">[</span><span class="ot">Dear Data</span><span class="co">](https://www.dear-data.com/by-week)</span></span>
+<span id="cb9-437"><a href="#cb9-437"></a></span>
+<span id="cb9-438"><a href="#cb9-438"></a>\</span>
+<span id="cb9-439"><a href="#cb9-439"></a>\</span>
+<span id="cb9-440"><a href="#cb9-440"></a></span>
+<span id="cb9-441"><a href="#cb9-441"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb9-442"><a href="#cb9-442"></a></span>
+<span id="cb9-443"><a href="#cb9-443"></a>For a deeper treatment of similar topics, and more examples, read <span class="co">[</span><span class="ot">Data Feminism</span><span class="co">](https://data-feminism.mitpress.mit.edu/)</span>.</span>
+<span id="cb9-444"><a href="#cb9-444"></a></span>
+<span id="cb9-445"><a href="#cb9-445"></a>\</span>
+<span id="cb9-446"><a href="#cb9-446"></a>\</span>
+<span id="cb9-447"><a href="#cb9-447"></a>\</span>
+<span id="cb9-448"><a href="#cb9-448"></a>\</span>
+<span id="cb9-449"><a href="#cb9-449"></a></span>
+<span id="cb9-450"><a href="#cb9-450"></a><span class="fu">### Exercise 4: Critique {.unnumbered}</span></span>
+<span id="cb9-451"><a href="#cb9-451"></a></span>
+<span id="cb9-452"><a href="#cb9-452"></a>Practice critiquing some more complicated data viz listed at <span class="co">[</span><span class="ot">Modern Data Science with R, Exercise 2.5</span><span class="co">](http://mdsr-book.github.io/exercises.html#exercise_25)</span>.</span>
+<span id="cb9-453"><a href="#cb9-453"></a></span>
+<span id="cb9-454"><a href="#cb9-454"></a>Think about the following questions:</span>
+<span id="cb9-455"><a href="#cb9-455"></a></span>
+<span id="cb9-456"><a href="#cb9-456"></a><span class="ss">-   </span>What story does the data graphic tell? What is the main message that you take away from it?</span>
+<span id="cb9-457"><a href="#cb9-457"></a><span class="ss">-   </span>Can the data graphic be described in terms of the Grammar of Graphics (frame, glyphs, aesthetics, facet, scale, guide)? If so, please describe.</span>
+<span id="cb9-458"><a href="#cb9-458"></a><span class="ss">-   </span>Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Are there things that you would have done differently?</span>
+<span id="cb9-459"><a href="#cb9-459"></a></span>
+<span id="cb9-460"><a href="#cb9-460"></a>\</span>
+<span id="cb9-461"><a href="#cb9-461"></a>\</span>
+<span id="cb9-462"><a href="#cb9-462"></a>\</span>
+<span id="cb9-463"><a href="#cb9-463"></a>\</span>
+<span id="cb9-464"><a href="#cb9-464"></a></span>
+<span id="cb9-465"><a href="#cb9-465"></a><span class="fu">### Exercise 5: Design Details {.unnumbered}</span></span>
+<span id="cb9-466"><a href="#cb9-466"></a></span>
+<span id="cb9-467"><a href="#cb9-467"></a>This final exercise is just "food for thought".  It's more of a discussion than an exercise, and gets into some of the finer design details and data viz theory. Go as deep or not deep as you'd like here.</span>
+<span id="cb9-468"><a href="#cb9-468"></a></span>
+<span id="cb9-469"><a href="#cb9-469"></a>In refining the details of our data viz, <span class="co">[</span><span class="ot">Visualize This</span><span class="co">](https://www.amazon.com/Visualize-This-FlowingData-Visualization-Statistics/dp/0470944889/)</span> and <span class="co">[</span><span class="ot">Storytelling with Data</span><span class="co">](https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257)</span> provide some of *their* guiding principles. But again, every context is different.</span>
+<span id="cb9-470"><a href="#cb9-470"></a></span>
+<span id="cb9-471"><a href="#cb9-471"></a><span class="ss">-   </span>Put yourself in a reader's shoes. What parts of the data need explanation?</span>
+<span id="cb9-472"><a href="#cb9-472"></a><span class="ss">-   </span>Shine a light on your data. Try to remove any "chart junk" that distracts from the data.</span>
+<span id="cb9-473"><a href="#cb9-473"></a><span class="ss">-   </span>Vary color and style to emphasize the viz elements that are most important to the story you're telling.</span>
+<span id="cb9-474"><a href="#cb9-474"></a><span class="ss">-   </span>It is easier to judge length than it is to judge area or angles.</span>
+<span id="cb9-475"><a href="#cb9-475"></a><span class="ss">-   </span>Be thoughtful about how your categories are ordered for categorical data.</span>
+<span id="cb9-476"><a href="#cb9-476"></a></span>
+<span id="cb9-477"><a href="#cb9-477"></a>Getting into even more of the nitty gritty, we need to be mindful of what geometric elements and aesthetics we use. The following elements/aesthetics are listed in roughly descending order of human ability to perceive and compare nearby objects:<span class="ot">[^07-effective-viz-2]</span></span>
+<span id="cb9-478"><a href="#cb9-478"></a></span>
+<span id="cb9-479"><a href="#cb9-479"></a><span class="ot">[^07-effective-viz-2]: </span>B. S. Baumer, D. T. Kaplan, and N. J. Horton, *Modern Data Science with R*, 2017, p. 15.</span>
+<span id="cb9-480"><a href="#cb9-480"></a></span>
+<span id="cb9-481"><a href="#cb9-481"></a><span class="ss">1.  </span>Position</span>
+<span id="cb9-482"><a href="#cb9-482"></a><span class="ss">2.  </span>Length</span>
+<span id="cb9-483"><a href="#cb9-483"></a><span class="ss">3.  </span>Angle</span>
+<span id="cb9-484"><a href="#cb9-484"></a><span class="ss">4.  </span>Direction</span>
+<span id="cb9-485"><a href="#cb9-485"></a><span class="ss">5.  </span>Shape (but only a very few different shapes)</span>
+<span id="cb9-486"><a href="#cb9-486"></a><span class="ss">6.  </span>Area</span>
+<span id="cb9-487"><a href="#cb9-487"></a><span class="ss">7.  </span>Volume</span>
+<span id="cb9-488"><a href="#cb9-488"></a><span class="ss">8.  </span>Shade</span>
+<span id="cb9-489"><a href="#cb9-489"></a><span class="ss">9.  </span>Color. (Color is the most difficult, because it is a 3-dimensional quantity.)</span>
+<span id="cb9-490"><a href="#cb9-490"></a></span>
+<span id="cb9-491"><a href="#cb9-491"></a>Finally, here are some facts to keep in mind about visual perception from <span class="co">[</span><span class="ot">Now You See It</span><span class="co">](https://www.amazon.com/Now-You-See-Visualization-Quantitative/dp/0970601980)</span>.</span>
+<span id="cb9-492"><a href="#cb9-492"></a></span>
+<span id="cb9-493"><a href="#cb9-493"></a><span class="fu">#### Part a: Selectivity {.unnumbered}</span></span>
+<span id="cb9-494"><a href="#cb9-494"></a></span>
+<span id="cb9-495"><a href="#cb9-495"></a>Visual perception is selective, and our attention is often drawn to contrasts from the norm.</span>
+<span id="cb9-496"><a href="#cb9-496"></a></span>
+<span id="cb9-497"><a href="#cb9-497"></a>**Implication**: We should design visualizations so that the features we want to highlight stand out in contrast from those that are not worth the audience's attention.</span>
+<span id="cb9-498"><a href="#cb9-498"></a></span>
+<span id="cb9-499"><a href="#cb9-499"></a>**Example**: What stands out in this example image? This is originally from C. Ware, *Information Visualization: Perception for Design*, 2004? Source: S. Few, *Now You See It*, 2009, p. 33.</span>
+<span id="cb9-500"><a href="#cb9-500"></a></span>
+<span id="cb9-501"><a href="#cb9-501"></a><span class="al">![](https://mac-stat.github.io/images/112/contrast.png)</span></span>
+<span id="cb9-502"><a href="#cb9-502"></a></span>
+<span id="cb9-503"><a href="#cb9-503"></a><span class="fu">#### Part b: Familiarity {.unnumbered}</span></span>
+<span id="cb9-504"><a href="#cb9-504"></a></span>
+<span id="cb9-505"><a href="#cb9-505"></a>Our eyes are drawn to familiar patterns. We observe what we know and expect.</span>
+<span id="cb9-506"><a href="#cb9-506"></a></span>
+<span id="cb9-507"><a href="#cb9-507"></a>**Implication**: Visualizations work best when they display information as patterns that familiar and easy to spot.</span>
+<span id="cb9-508"><a href="#cb9-508"></a></span>
+<span id="cb9-509"><a href="#cb9-509"></a>**Example**: Do you notice anything embedded in this rose image from coolbubble.com? Source: S. Few, *Now You See It*, 2009, p. 34.</span>
+<span id="cb9-510"><a href="#cb9-510"></a></span>
+<span id="cb9-511"><a href="#cb9-511"></a><span class="al">![](https://mac-stat.github.io/images/112/rose1.png)</span></span>
+<span id="cb9-512"><a href="#cb9-512"></a></span>
+<span id="cb9-513"><a href="#cb9-513"></a><span class="fu">#### Part c: Revisit {.unnumbered}</span></span>
+<span id="cb9-514"><a href="#cb9-514"></a></span>
+<span id="cb9-515"><a href="#cb9-515"></a>Revisit Part b. Do you notice anything in the shadows? Go to <span class="ot">&lt;https://mac-stat.github.io/images/112/rose2.png&gt;</span> for an image.</span>
+<span id="cb9-516"><a href="#cb9-516"></a></span>
+<span id="cb9-517"><a href="#cb9-517"></a>\</span>
+<span id="cb9-518"><a href="#cb9-518"></a>\</span>
+<span id="cb9-519"><a href="#cb9-519"></a>\</span>
+<span id="cb9-520"><a href="#cb9-520"></a>\</span>
+<span id="cb9-521"><a href="#cb9-521"></a></span>
+<span id="cb9-522"><a href="#cb9-522"></a><span class="fu">### Wrapping up {.unnumbered}</span></span>
+<span id="cb9-523"><a href="#cb9-523"></a></span>
+<span id="cb9-524"><a href="#cb9-524"></a>If you finish early:</span>
+<span id="cb9-525"><a href="#cb9-525"></a></span>
+<span id="cb9-526"><a href="#cb9-526"></a><span class="ss">-   </span>Work on homework if not done already</span>
+<span id="cb9-527"><a href="#cb9-527"></a><span class="ss">-   </span>Complete any activities you haven't finished yet, eg, spatial viz, the optional but fun exercises in the Multivariate viz and Bivariate viz activities.</span>
+<span id="cb9-528"><a href="#cb9-528"></a><span class="ss">-   </span>If you've done all that, explore some datasets in <span class="co">[</span><span class="ot">TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master)</span>.</span>
+<span id="cb9-529"><a href="#cb9-529"></a></span>
+<span id="cb9-530"><a href="#cb9-530"></a>\</span>
+<span id="cb9-531"><a href="#cb9-531"></a>\</span>
+<span id="cb9-532"><a href="#cb9-532"></a>\</span>
+<span id="cb9-533"><a href="#cb9-533"></a>\</span>
+<span id="cb9-534"><a href="#cb9-534"></a></span>
+<span id="cb9-535"><a href="#cb9-535"></a><span class="fu">## Solutions</span></span>
+<span id="cb9-536"><a href="#cb9-536"></a></span>
+<span id="cb9-537"><a href="#cb9-537"></a>The exercises today are discussion based. There are no "solutions". Happy to chat in office hours about any ideas here!</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
