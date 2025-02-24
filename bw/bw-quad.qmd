@@ -2,4 +2,31 @@
 title: "Quadvariate Viz"
 ---
 
-Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+data("diamonds")
+```
+
+```{r}
+#|fig-cap: "Visualization created by Marvin C., 2025 using RStudio's sample dataset"
+#|fig-alt: "A facet-wrapped scatterplot relating the price of diamonds to three categories: cut, color, and weight. The graph shows that as weight increases, price also increases, and that higher color grades and better cuts scale faster in price."
+
+diamonds %>%
+  ggplot(aes(y = price, x = carat, color = color)) +
+  geom_point(alpha = 0.5, size = 0.7) +
+  facet_wrap(~cut) +
+  scale_color_viridis_d(option = "rocket") +
+  labs(x = "Diamond Weight (Carats)", 
+       y = "Price ($)", 
+       color = "Color Grade",
+       title = "Price of Diamonds Related to its Weight, Cut and Color") +
+  theme_bw() +
+  scale_y_continuous(expand = c(0, 0), 
+                     limits = c(0, 20000)) + 
+  guides(color = guide_legend(override.aes = list(size = 5, alpha = 1))) 
+```
+

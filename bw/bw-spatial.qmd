@@ -2,4 +2,59 @@
 title: "Spatial Viz"
 ---
 
-Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(openintro)
+library(mosaic)
+```
+
+```{r}
+# Import starbucks location data
+starbucks <- read.csv("https://mac-stat.github.io/data/starbucks.csv")
+
+starbucks_us_by_state <- starbucks |>
+  filter(Country == "US") |>
+  count(State.Province) |>
+  mutate(state_name = str_to_lower(abbr2state(State.Province)))
+
+census_pop_est_2018 <- read_csv("https://mac-stat.github.io/data/us_census_2018_state_pop_est.csv") |>
+  separate(state, into = c("dot", "state"), extra = "merge") |>
+  select(-dot) |>
+  mutate(state = str_to_lower(state))
+
+starbucks_with_2018_pop_est <-
+  starbucks_us_by_state |>
+  left_join(census_pop_est_2018,
+    by = c("state_name" = "state")
+  ) |>
+  mutate(starbucks_per_10000 = (n / est_pop_2018) * 10000)
+
+states_map <- map_data("state")
+
+starbucks_contiguous_us <- starbucks |>
+  filter(Country == "US", State.Province != "AK", State.Province != "HI")
+```
+
+```{r}
+#| fig-cap: "Visualization Created by Marvin C, 2025"
+#| fig-alt: "A map of the United States detailing the number of Starbucks per 10,000 people using 2018 census data through a color gradient. Black dots are used to plot the locations of all Starbucks in the US. Clearly, the more populated areas of the US have a higher number of Starbucks, while simultaneously having a low ratio of Starbucks per 10,000 people."
+
+starbucks_with_2018_pop_est %>%
+ggplot(aes(map_id = state_name, fill = starbucks_per_10000)) +
+  geom_map(map = states_map) +
+  geom_point(
+    data =  starbucks_contiguous_us,
+    aes(x = Longitude, y = Latitude),
+    inherit.aes = FALSE,
+    alpha = 0.2,
+    size = 0.05
+  ) +
+  expand_limits(x = states_map$long, y = states_map$lat) +
+  theme_map() +
+  scale_fill_viridis_c(option = "magma", direction = -1) +
+  labs(title = " The Number of Starbucks per 10,000 People in the US Using 2018 Census Data", fill = "Starbucks per 10,000 People")
+```

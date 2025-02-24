@@ -3,26 +3,27 @@ title: "Univariate Viz"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
-Use this file to generate a professional looking **univariate** visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
-
-```{r, echo=FALSE}
+```{r}
 library(tidyverse)
 library(palmerpenguins)
 data(penguins)
 ```
 
-```{r, echo=FALSE}
+```{r}
 #|fig-cap: "Distribution of Sexes Throughout Penguins Observed in the Palmer Penguins Dataset. (Marvin C., 2025)"
 #|fig-alt: "A bar chart depicting the distribution of sexes in a group of penguins observed in a 2014 study conducted by Dr.Kristen Gorman and the Palmer Station in Antarctica. The figure shows an even level of male and female penguins. There were approximately 169 male penguins, 165 female penguins and 11 penguins whose sex could not be confirmed."
 
 penguins %>%
   ggplot(aes(x = sex)) +
   geom_bar(fill = 'darkblue') +
-  labs(x = "Sex of Penguins Observed", title = "Distribution of Penguin Sexes in the Palmer Penguin Study") +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 180),breaks = seq(0,180, by = 20)) +
+  labs(x = "Sex of Penguins Observed", 
+       title = "Distribution of Penguin Sexes in the Palmer Penguin Study") +
+  scale_y_continuous(expand = c(0, 0), 
+                     limits = c(0, 180),
+                     breaks = seq(0,180, by = 20)) +
   theme_bw()
 ```
 

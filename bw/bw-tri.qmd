@@ -2,4 +2,34 @@
 title: "Trivariate Viz"
 ---
 
-Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+election <- read_csv("https://raw.githubusercontent.com/MarvinC21/2018_election_data/main/Election.csv")
+```
+
+```{r}
+#|fig-alt: "A scatterplot depicting the relationship between the foreign-born population and the Republican vote margin of every US county in the 2016 presidential election, using data collected in 2018. The Republican vote margin is data that represents the percentage of votes that led to a Republican victory in the county. The graph shows a clear negative correlation, although weak, indicating that a higher foreign-born population is associated with a lower Republican vote margin, to the point of a Republican loss in some counties."
+#|fig-cap: "Visualization created by Marvin C., c. 2024."
+
+election %>%
+  mutate(RepWon16 = factor(RepWon16)) %>%
+  ggplot(aes(x = foreignborn_pct, y = Repmargin16)) +
+  geom_point(aes(color = RepWon16), alpha = 0.5) +
+  scale_color_manual(values=c("#2e76e8", "#f21844"), labels=c("No", "Yes")) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  geom_hline(yintercept = 0) +
+  theme_minimal() +
+  labs(x = "Foreign-born Population (%)", 
+       y = "Republican Vote Margin (%)", 
+       color = "Republican Win",
+       title = "Foreign-born Population and Republican Vote Margin of Each County")+ 
+  guides(color = guide_legend(override.aes = list(size = 5, alpha = 1))) 
+```
+

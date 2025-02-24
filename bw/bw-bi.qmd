@@ -2,6 +2,30 @@
 title: "Bivariate Viz"
 ---
 
-Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
 
+```{r}
+library(tidyverse)
+```
+
+```{r}
+bikes <- read_csv("https://mac-stat.github.io/data/bikeshare.csv")
+```
+
+```{r}
+#|fig-cap: "Visualization created by Marvin C., c. 2024"
+#|fig-alt: "A boxplot depicting the number of bike riders registered in a rideshare program in Central Park, divided by season. The plot shows close to 4000 riders for spring and autumn, with a slight increase in the summer, and a sharp decrease during the winter of around 2000 riders."
+
+bikes %>%
+  ggplot(aes(y = riders_registered, x = season)) +
+  geom_boxplot() +
+  labs(x = "Season", 
+       y = "Total Riders Registered", 
+       title = "Number of Bike Rides Registered per Season in Central Park") +
+  theme_bw() +
+  scale_y_continuous(expand = c(0, 0), 
+                     limits = c(0, 6600))
+```
 
