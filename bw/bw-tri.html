@@ -255,7 +255,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </header><div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -270,7 +269,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>election <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/MarvinC21/2018_election_data/main/Election.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 3111 Columns: 40
 ── Column specification ────────────────────────────────────────────────────────
@@ -283,21 +281,6 @@ dbl (35): fips, trump16, trump16_pct, clinton16, clinton16_pct, otherpres16,...
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#|fig-alt: "A scatterplot depicting the relationship between the foreign-born population and the Republican vote margin of every US county in the 2016 presidential election, using data collected in 2018. The Republican vote margin is data that represents the percentage of votes that led to a Republican victory in the county. The graph shows a clear negative correlation, although weak, indicating that a higher foreign-born population is associated with a lower Republican vote margin, to the point of a Republican loss in some counties."</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#|fig-cap: "Visualization created by Marvin C., c. 2024."</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a>election <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">mutate</span>(<span class="at">RepWon16 =</span> <span class="fu">factor</span>(RepWon16)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> foreignborn_pct, <span class="at">y =</span> Repmargin16)) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> RepWon16)) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#2e76e8"</span>, <span class="st">"#f21844"</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Foreign-born Population (%)"</span>, </span>
-<span id="cb5-13"><a href="#cb5-13"></a>       <span class="at">y =</span> <span class="st">"Republican Vote Margin (%)"</span>, </span>
-<span id="cb5-14"><a href="#cb5-14"></a>       <span class="at">color =</span> <span class="st">"Republican Win"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15"></a>       <span class="at">title =</span> <span class="st">"Foreign-born Population and Republican Vote Margin of Each County"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -943,36 +926,39 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">---</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="an">title:</span><span class="co"> "Trivariate Viz"</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">---</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="in">```{r}</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="in">```</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="in">```{r}</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>election <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/MarvinC21/2018_election_data/main/Election.csv"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="in">```</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a></span>
-<span id="cb7-19"><a href="#cb7-19"></a><span class="in">```{r}</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#|fig-alt: "A scatterplot depicting the relationship between the foreign-born population and the Republican vote margin of every US county in the 2016 presidential election, using data collected in 2018. The Republican vote margin is data that represents the percentage of votes that led to a Republican victory in the county. The graph shows a clear negative correlation, although weak, indicating that a higher foreign-born population is associated with a lower Republican vote margin, to the point of a Republican loss in some counties."</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a><span class="co">#|fig-cap: "Visualization created by Marvin C., c. 2024."</span></span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a>election <span class="sc">%&gt;%</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>  <span class="fu">mutate</span>(<span class="at">RepWon16 =</span> <span class="fu">factor</span>(RepWon16)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> foreignborn_pct, <span class="at">y =</span> Repmargin16)) <span class="sc">+</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> RepWon16)) <span class="sc">+</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#2e76e8"</span>, <span class="st">"#f21844"</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)) <span class="sc">+</span></span>
-<span id="cb7-28"><a href="#cb7-28"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb7-29"><a href="#cb7-29"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb7-30"><a href="#cb7-30"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb7-31"><a href="#cb7-31"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Foreign-born Population (%)"</span>, </span>
-<span id="cb7-32"><a href="#cb7-32"></a>       <span class="at">y =</span> <span class="st">"Republican Vote Margin (%)"</span>, </span>
-<span id="cb7-33"><a href="#cb7-33"></a>       <span class="at">color =</span> <span class="st">"Republican Win"</span>,</span>
-<span id="cb7-34"><a href="#cb7-34"></a>       <span class="at">title =</span> <span class="st">"Foreign-born Population and Republican Vote Margin of Each County"</span>)</span>
-<span id="cb7-35"><a href="#cb7-35"></a><span class="in">```</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="an">title:</span><span class="co"> "Trivariate Viz"</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="in">knitr::opts_chunk$set(echo = TRUE)</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="in">```</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="in">```</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="in">election &lt;- read_csv("https://raw.githubusercontent.com/MarvinC21/2018_election_data/main/Election.csv")</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="in">```</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="in">#|fig-alt: "A scatterplot depicting the relationship between the foreign-born population and the Republican vote margin of every US county in the 2016 presidential election, using data collected in 2018. The Republican vote margin is data that represents the percentage of votes that led to a Republican victory in the county. The graph shows a clear negative correlation, although weak, indicating that a higher foreign-born population is associated with a lower Republican vote margin, to the point of a Republican loss in some counties."</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="in">#|fig-cap: "Visualization created by Marvin C., c. 2024."</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="in">election %&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="in">  mutate(RepWon16 = factor(RepWon16)) %&gt;%</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="in">  ggplot(aes(x = foreignborn_pct, y = Repmargin16)) +</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="in">  geom_point(aes(color = RepWon16)) +</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="in">  scale_color_manual(values=c("#2e76e8", "#f21844"), labels=c("No", "Yes")) +</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="in">  geom_smooth(method = "lm", se = FALSE, color = "black") +</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="in">  geom_hline(yintercept = 0) +</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="in">  labs(x = "Foreign-born Population (%)", </span></span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="in">       y = "Republican Vote Margin (%)", </span></span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="in">       color = "Republican Win",</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="in">       title = "Foreign-born Population and Republican Vote Margin of Each County")</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

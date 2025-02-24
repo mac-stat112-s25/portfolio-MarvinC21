@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>2&nbsp; Bivariate Viz – COMP/STAT112 Notebook</title>
 <style>
 code{white-space: pre-wrap;}
@@ -56,7 +53,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,18 +97,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../style/custom.css">
+}</script><link rel="stylesheet" href="../style/custom.css">
 </head>
-
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -124,13 +113,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Marvin C.</a> 
         <div class="sidebar-tools-main">
@@ -150,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -164,8 +149,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bw/bw-uni.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
@@ -196,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -205,8 +190,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ica/quarto-demo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">My first Quarto document</span></span></a>
@@ -243,21 +228,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-bi.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Viz</span></a></li></ol></nav>
-<div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Viz</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-bi.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Viz</span></a></li></ol></nav><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Viz</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -271,17 +254,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header>
+</header><div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 731 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (5): season, month, day_of_week, holiday, weather_cat
+dbl  (8): year, temp_actual, temp_feel, humidity, windspeed, riders_casual, ...
+lgl  (1): weekend
+date (1): date
 
-
-<p>Use this file to generate a professional looking <strong>bivariate</strong> visualization. The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.</p>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#|fig-cap: "Visualization created by Marvin C., c. 2024"</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#|fig-alt: "A boxplot depicting the number of bike riders registered in a rideshare program in Central Park, divided by season. The plot shows close to 4000 riders for spring and autumn, with a slight increase in the summer, and a sharp decrease during the winter of around 2000 riders."</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>bikes <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> riders_registered, <span class="at">x =</span> season)) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Season"</span>, </span>
+<span id="cb3-8"><a href="#cb3-8"></a>       <span class="at">y =</span> <span class="st">"Total Riders Registered"</span>, </span>
+<span id="cb3-9"><a href="#cb3-9"></a>       <span class="at">title =</span> <span class="st">"Number of Bike Rides Registered per Season in Central Park"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="bw-bi_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
 
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -900,9 +924,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../bw/bw-uni.html" class="pagination-link" aria-label="Univariate Viz">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span>
       </a>          
@@ -913,15 +935,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Bivariate Viz"</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">---</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="an">title:</span><span class="co"> "Bivariate Viz"</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="in">knitr::opts_chunk$set(echo = TRUE)</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="in">```</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="in">```</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="in">bikes &lt;- read_csv("https://mac-stat.github.io/data/bikeshare.csv")</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="in">```</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="in">```{r}</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#|fig-cap: "Visualization created by Marvin C., c. 2024"</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#|fig-alt: "A boxplot depicting the number of bike riders registered in a rideshare program in Central Park, divided by season. The plot shows close to 4000 riders for spring and autumn, with a slight increase in the summer, and a sharp decrease during the winter of around 2000 riders."</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a></span>
+<span id="cb4-23"><a href="#cb4-23"></a>bikes <span class="sc">%&gt;%</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> riders_registered, <span class="at">x =</span> season)) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Season"</span>, </span>
+<span id="cb4-27"><a href="#cb4-27"></a>       <span class="at">y =</span> <span class="st">"Total Riders Registered"</span>, </span>
+<span id="cb4-28"><a href="#cb4-28"></a>       <span class="at">title =</span> <span class="st">"Number of Bike Rides Registered per Season in Central Park"</span>) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-
 
 
 
