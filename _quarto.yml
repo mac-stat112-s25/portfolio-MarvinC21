@@ -42,6 +42,7 @@ book:
       - ica/ica-wrangling.qmd
       - ica/ica-dates.qmd
       - ica/ica-reshaping.qmd
+      - ica/ica-joining.qmd
 
 format:
   html:

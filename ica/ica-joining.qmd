@@ -1,0 +1,951 @@
+---
+title: "Joining"
+number-sections: true
+execute: 
+  warning: false
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
+---
+
+
+::: {.callout-caution title="Learning Goals"}
+
+Understand how to *join* different datasets:
+
+- mutating joins: `left_join()`, `inner_join()` and `full_join()` 
+- filtering joins: `semi_join()`, `anti_join()`
+
+:::
+
+::: {.callout-note title="Additional Resources"}
+
+For more information about the topics covered in this chapter, refer to the resources below:
+
+-   [Demonstration of joining data (YouTube)](https://www.youtube.com/watch?v=MJDHRtwZhoM&feature=youtu.be) by Lisa Lendway
+-   [Joings](https://r4ds.hadley.nz/joins) by Wickham, Çetinkaya-Rundel, & Grolemund
+-   [Data wrangling on multiple tables](https://mdsr-book.github.io/mdsr2e/ch-join.html) by Baumer, Kaplan, and Horton
+
+:::
+
+
+
+## Review
+
+**Where are we? Data preparation**
+
+![](https://mac-stat.github.io/images/112/legos.png)
+
+Thus far, we've learned how to:
+
+-   `arrange()` our data in a meaningful order
+-   subset the data to only `filter()` the rows and `select()` the columns of interest
+-   `mutate()` existing variables and define new variables
+-   `summarize()` various aspects of a variable, both overall and by group (`group_by()`)
+-   reshape our data to fit the task at hand (`pivot_longer()`, `pivot_wider()`)
+
+
+
+## Motivation
+
+In practice, we often have to collect and combine data from various sources in order to address our research questions. Example:
+
+-   What are the best predictors of album sales?\
+    Combine:
+    -   Spotify data on individual songs (eg: popularity, genre, characteristics)
+    -   sales data on individual songs
+-   What are the best predictors of flight delays?\
+    Combine:
+    -   data on individual flights including airline, starting airport, and destination airport
+    -   data on different airlines (eg: ticket prices, reliability, etc)
+    -   data on different airports (eg: location, reliability, etc)
+
+
+### Example 1 {-}
+
+Consider the following (made up) data on students and course enrollments:
+
+```{r}
+students_1 <- data.frame(
+  student = c("A", "B", "C"),
+  class = c("STAT 101", "GEOL 101", "ANTH 101")
+)
+
+# Check it out
+students_1
+```
+
+```{r}
+enrollments_1 <- data.frame(
+  class = c("STAT 101", "ART 101", "GEOL 101"),
+  enrollment = c(18, 17, 24)
+)
+
+# Check it out
+enrollments_1
+```
+
+Our goal is to *combine* or *join* these datasets into one. For reference, here they are side by side:
+
+![](https://mac-stat.github.io/images/112/join_1.png){width="50%"}
+
+First, consider the following:
+
+-   What variable or **key** do these datasets have in common? Thus by what information can we *match* the observations in these datasets?
+
+> The class variable
+
+-   Relative to this key, what info does `students_1` have that `enrollments_1` doesn't?
+
+> Individual students
+
+-   Relative to this key, what info does `enrollments_1` have that `students_1` doesn't?
+
+> Total student enrollment
+
+
+## Mutating Joins: `left`, `inner`, `full`
+
+### Example 2 {-}
+
+There are various ways to join these datasets:
+
+![](https://mac-stat.github.io/images/112/join_1.png){width="50%"}
+
+Let's learn by doing. First, try the `left_join()` function:
+
+```{r}
+library(tidyverse)
+students_1 |> 
+  left_join(enrollments_1)
+```
+
+-   What did this do? What are the roles of `students_1` (the *left* table) and `enrollments_1` (the *right* table)?
+
+> Added additional data to the left table from the right table but only available info
+
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+
+> Perhaps we'd have the stats, geo, and arts class and one NA variable since we don't have a student enrolled in art class
+
+```{r}
+enrollments_1 |>
+  left_join(students_1)
+```
+
+### Example 3 {-}
+
+Next, explore how our datasets are joined using `inner_join()`:
+
+![](https://mac-stat.github.io/images/112/join_1.png){width="50%"}
+
+```{r}
+students_1 |> 
+  inner_join(enrollments_1)
+```
+
+-   What did this do? What are the roles of `students_1` (the *left* table) and `enrollments_1` (the *right* table)?
+
+> It only includes observation for which we have information from all 3 categories covered by the two tables
+
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+
+> Probably nothing
+
+```{r}
+enrollments_1 |>
+  inner_join(students_1)
+```
+
+### Example 4 {-}
+
+Next, explore how our datasets are joined using `full_join()`:
+
+![](https://mac-stat.github.io/images/112/join_1.png){width="50%"}
+
+```{r}
+students_1 |> 
+  full_join(enrollments_1)
+```
+
+-   What did this do? What are the roles of `students_1` (the *left* table) and `enrollments_1` (the *right* table)?
+
+> Included every observation regardless of availabilty of info
+
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+
+> Again, probably nothing
+
+```{r}
+enrollments_1 |>
+  full_join(students_1)
+```
+
+### Summary 
+
+Mutating joins add new variables (columns) to the left data table from matching observations in the right table:
+
+`left_data |> mutating_join(right_data)`
+
+The most common mutating joins are:
+
+-   `left_join()`\
+    Keeps *all* observations from the left, but discards any observations in the right that do not have a match in the left.[^11-joining-data-1]
+
+-   `inner_join()`\
+    Keeps *only* the observations from the left with a match in the right.
+
+-   `full_join()`\
+    Keeps *all* observations from the left *and* the right. (This is less common than `left_join()` and `inner_join()`).
+
+[^11-joining-data-1]: There is also a `right_join()` that adds variables in the reverse direction from the left table to the right table, but we do not really need it as we can always switch the roles of the two tables.︎
+
+NOTE: When an observation in the left table has *multiple* matches in the right table, these mutating joins produce a *separate* observation in the new table for each match.
+
+## Filtering Joins: `semi`, `anti`
+
+*Mutating* joins *combine* information, thus increase the number of columns in a dataset (like `mutate()`). *Filtering* joins keep only certain observations in one dataset (like `filter()`), not based on rules related to any variables in the dataset, but on the observations that exist in another dataset. This is useful when we merely care about the membership or non-membership of an observation in the other dataset, not the raw data itself.
+
+### Example 5 {-}
+
+In our example data, suppose `enrollments_1` only included courses being taught in the Theater building:
+
+![](https://mac-stat.github.io/images/112/join_1.png){width="50%"}
+
+```{r}
+students_1 |> 
+  semi_join(enrollments_1)
+```
+
+-   What did this do? What info would it give us?
+
+> Gave us Information from the left table such that there exists information for that observation in the right table
+
+-   How does `semi_join()` differ from `inner_join()`?
+
+> It does not include new variables from the right table
+
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+
+> It would only iclude enrollment numbers and the classes but no students, however they would be the same classes
+
+```{r}
+enrollments_1 |>
+  semi_join(students_1)
+```
+
+### Example 6 {-}
+
+Let's try another filtering join for our example data:
+
+![](https://mac-stat.github.io/images/112/join_1.png){width="50%"}
+
+```{r}
+students_1 |> 
+  anti_join(enrollments_1)
+```
+
+-   What did this do? What info would it give us?
+
+> Exact opposite of semi-join. Gives us only information in the left table such that there exists *no* new info for that variable in the right table.
+
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+
+> It would probably only have the art class
+
+```{r}
+enrollments_1 |>
+  anti_join(students_1)
+```
+
+
+### Summary
+
+Filtering joins keep specific observations from the left table based on whether they match an observation in the right table.
+
+-   `semi_join()`\
+    Discards any observations in the left table that *do not* have a match in the right table. If there are multiple matches of right cases to a left case, it keeps just one copy of the left case.
+
+-   `anti_join()`\
+    Discards any observations in the left table that *do* have a match in the right table.
+
+
+## Summary of All Joins
+
+![](https://mac-stat.github.io/images/112/join_summary.png)
+
+
+
+## Exercises
+
+### Exercise 1: Where are my keys? {.unnumbered}
+
+#### Part a {.unnumbered}
+
+Define two new datasets, with different students and courses:
+
+```{r}
+students_2 <- data.frame(
+  student = c("D", "E", "F"),
+  class = c("COMP 101", "BIOL 101", "POLI 101")
+)
+
+# Check it out
+students_2
+
+enrollments_2 <- data.frame(
+  course = c("ART 101", "BIOL 101", "COMP 101"),
+  enrollment = c(18, 20, 19)
+)
+
+# Check it out
+enrollments_2
+```
+
+To connect the course enrollments to the students' courses, try do a `left_join()`. You get an error! Identify the problem by reviewing the error message and the datasets we're trying to join.
+
+```{r eval = FALSE}
+# eval = FALSE: don't evaluate this chunk when knitting. it produces an error.
+students_2 |> 
+  left_join(enrollments_2)
+```
+
+#### Part b {.unnumbered}
+
+The problem is that course name, the **key** or variable that links these two datasets, is labeled differently: `class` in the `students_2` data and `course` in the `enrollments_2` data. Thus we have to specify these keys in our code:
+
+```{r}
+students_2 |> 
+  left_join(enrollments_2, join_by(class == course))
+```
+
+```{r eval = FALSE}
+# The order of the keys is important:
+# by = c("left data key" = "right data key")
+# The order is mixed up here, thus we get an error:
+students_2 |> 
+  left_join(enrollments_2, join_by(course == class))
+```
+
+#### Part c {.unnumbered}
+
+Define another set of fake data which adds grade information:
+
+```{r}
+# Add student grades in each course
+students_3 <- data.frame(
+  student = c("Y", "Y", "Z", "Z"),
+  class = c("COMP 101", "BIOL 101", "POLI 101", "COMP 101"),
+  grade = c("B", "S", "C", "A")
+)
+
+# Check it out
+students_3
+
+# Add average grades in each course
+enrollments_3 <- data.frame(
+  class = c("ART 101", "BIOL 101","COMP 101"),
+  grade = c("B", "A", "A-"),
+  enrollment = c(20, 18, 19)
+)
+
+# Check it out
+enrollments_3
+```
+
+Try doing a `left_join()` to link the students' classes to their enrollment info. Did this work? Try and figure out the culprit by examining the output.
+
+```{r}
+students_3 |> 
+  left_join(enrollments_3)
+```
+
+#### Part d {.unnumbered}
+
+The issue here is that our datasets have *2* column names in common: `class` and `grade`. BUT `grade` is measuring 2 different things here: individual student grades in `students_3` and average student grades in `enrollments_3`. Thus it doesn't make sense to try to join the datasets with respect to this variable. We can again solve this by specifying that we want to join the datasets using the `class` variable or *key*. What are `grade.x` and `grade.y`?
+
+```{r}
+students_3 |> 
+  left_join(enrollments_3, by = c("class" = "class"))
+```
+
+
+### Exercise 2: More small practice {.unnumbered}
+
+Before applying these ideas to bigger datasets, let's practice identifying which join is appropriate in different scenarios. Define the following fake data on `voters` (people who *have* voted) and `contact` info for voting age adults (people who *could* vote):
+
+```{r}
+# People who have voted
+voters <- data.frame(
+  id = c("A", "D", "E", "F", "G"),
+  times_voted = c(2, 4, 17, 6, 20)
+)
+
+voters
+
+# Contact info for voting age adults
+contact <- data.frame(
+  name = c("A", "B", "C", "D"),
+  address = c("summit", "grand", "snelling", "fairview"),
+  age = c(24, 89, 43, 38)
+)
+
+contact
+```
+
+Use the appropriate join for each prompt below. In each case, think before you type:
+
+-   What dataset goes on the left?
+-   What do you want the resulting dataset to look like? How many rows and columns will it have?
+
+```{r}
+# 1. We want contact info for people who HAVEN'T voted
+contact |>
+  anti_join(voters, join_by(name == id))
+
+# 2. We want contact info for people who HAVE voted
+contact |>
+  inner_join(voters, join_by(name == id))
+
+# 3. We want any data available on each person
+voters |>
+  full_join(contact, join_by(id == name)) |>
+  arrange(id)
+
+# 4. When possible, we want to add contact info to the voting roster
+voters |>
+  left_join(contact, join_by(id == name))
+
+```
+
+
+
+### Exercise 3: Bigger datasets {.unnumbered}
+
+Let's apply these ideas to some bigger datasets. In `grades`, each row is a student-class pair with information on:
+
+-   `sid` = student ID
+-   `grade` = student's grade
+-   `sessionID` = an identifier of the class section
+
+```{r}
+#| echo: false
+
+# Get rid of some duplicate rows!
+grades <- read.csv("https://mac-stat.github.io/data/grades.csv") |> 
+  distinct(sid, sessionID, .keep_all = TRUE)
+head(grades)
+```
+
+In `courses`, each row corresponds to a class section with information on:
+
+-   `sessionID` = an identifier of the class section
+-   `dept` = department
+-   `level` = course level (eg: 100)
+-   `sem` = semester
+-   `enroll` = enrollment (number of students)
+-   `iid` = instructor ID
+
+```{r}
+#| echo: false
+
+courses <- read.csv("https://mac-stat.github.io/data/courses.csv")
+head(courses)
+```
+
+Use R code to take a quick glance at the data.
+
+```{r}
+# How many observations (rows) and variables (columns) are there in the grades data?
+nrow(grades)
+ncol(grades)
+
+# How many observations (rows) and variables (columns) are there in the courses data?
+nrow(courses)
+ncol(courses)
+```
+
+
+
+### Exercise 4: Class size {.unnumbered}
+
+How big are the classes?
+
+#### Part a {.unnumbered}
+
+Before digging in, note that some courses are listed twice in the `courses` data:
+
+```{r}
+courses |> 
+  count(sessionID) |> 
+  filter(n > 1)
+```
+
+If we pick out just 1 of these, we learn that some courses are cross-listed in multiple departments:
+
+```{r eval = FALSE}
+courses |> 
+  filter(sessionID == "session2047")
+```
+
+For our class size exploration, obtain the *total* enrollments in each `sessionID`, combining any cross-listed sections. Save this as `courses_combined`. NOTE: There's no joining to do here!
+
+```{r}
+courses_combined <- courses |>
+  group_by(sessionID) |>
+  summarize(enroll = sum(enroll))
+
+# Check that this has 1695 rows and 2 columns
+dim(courses_combined)
+```
+
+#### Part b {.unnumbered}
+
+Let's first examine the question of class size from the *administration*'s viewpoint. To this end, calculate the median class size across all class sections. (The median is the *middle* or 50th percentile. Unlike the *mean*, it's not skewed by outliers.) THINK FIRST:
+
+-   Which of the 2 datasets do you need to answer this question? One? Both?
+-   If you need course information, use `courses_combined` not `courses`.
+-   Do you have to do any joining? If so, which dataset will go on the left, i.e. which dataset includes your primary observations of interest? Which join function will you need?
+
+```{r}
+courses_combined |>
+  summarize(median(enroll))
+```
+
+#### Part c {.unnumbered}
+
+But how big are classes from the student perspective? To this end, calculate the median class size for each individual student. Once you have the correct output, store it as `student_class_size`. THINK FIRST:
+
+-   Which of the 2 datasets do you need to answer this question? One? Both?
+-   If you need course information, use `courses_combined` not `courses`.
+-   Do you have to do any joining? If so, which dataset will go on the left, i.e. which dataset includes your primary observations of interest? Which join function will you need?
+
+```{r}
+student_class_size <- grades |>
+ left_join(courses_combined) |>
+  group_by(sid) |>
+  summarize(median_class_size = median(enroll))
+
+head(student_class_size)
+```
+
+#### Part d {.unnumbered}
+
+The median class size varies from student to student. To get a sense for the typical student experience and range in student experiences, construct and discuss a histogram of the median class sizes experienced by the students.
+
+```{r}
+ggplot(student_class_size, aes(x = median_class_size)) + 
+  geom_histogram()
+```
+
+
+
+### Exercise 5: Narrowing in on classes {.unnumbered}
+
+#### Part a {.unnumbered}
+
+Show data on the students that enrolled in `session1986`. THINK FIRST: Which of the 2 datasets do you need to answer this question? One? Both?
+
+```{r}
+grades |>
+  filter(sessionID == "session1986")
+```
+
+#### Part b {.unnumbered}
+
+Below is a dataset with all courses in department E:
+
+```{r}
+dept_E <- courses |> 
+  filter(dept == "E")
+```
+
+What students enrolled in classes in department E? (We just want info on the students, not the classes.)
+
+```{r}
+grades |>
+  semi_join(dept_E) 
+```
+
+
+
+### Exercise 6: All the wrangling {.unnumbered}
+
+Use all of your wrangling skills to answer the following prompts! THINK FIRST:
+
+-   Think about what tables you might need to join (if any). Identify the corresponding variables to match.
+-   You'll need an extra table to convert grades to grade point averages:
+
+```{r}
+gpa_conversion <- tibble(
+  grade = c("A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "NC", "AU", "S"), 
+  gp = c(4.3, 4, 3.7, 3.3, 3, 2.7, 2.3, 2, 1.7, 1.3, 1, 0.7, 0, NA, NA)
+)
+
+gpa_conversion
+```
+
+#### Part a {.unnumbered}
+
+How many total student enrollments are there in each department? Order from high to low.
+
+```{r}
+courses |>
+  group_by(dept) |>
+  summarize(total_enroll = n()) |>
+  arrange(desc(total_enroll))
+```
+
+#### Part b {.unnumbered}
+
+What's the grade-point average (GPA) for each student?
+
+```{r}
+grades |>
+  left_join(gpa_conversion) |>
+  group_by(sid) |>
+  summarize(mean(gp, na.rm = TRUE))
+```
+
+#### Part c {.unnumbered}
+
+What's the median GPA across all students?
+
+```{r}
+grades |>
+  left_join(gpa_conversion) |>
+  group_by(sid) |>
+  summarize(gpa = mean(gp, na.rm = TRUE)) |>
+  summarize(median(gpa))
+```
+
+#### Part d {.unnumbered}
+
+What fraction of grades are below B+?
+
+```{r}
+grades |>
+  left_join(gpa_conversion) |>
+  mutate(under_b_plus = gp < 3.3) |>
+  group_by(under_b_plus) |>
+  summarize(count = n()) |>
+  mutate(total_grades = sum(count)) |>
+  mutate(percentage = (count / total_grades) * 100)
+```
+
+#### Part e {.unnumbered}
+
+What's the grade-point average for each instructor? Order from low to high.
+
+```{r}
+grades |>
+  left_join(courses) |>
+  left_join(gpa_conversion) |>
+  group_by(iid) |>
+  summarize(instructor_gpa = mean(gp, na.rm = TRUE)) |>
+  arrange(instructor_gpa)
+```
+
+#### Part f {.unnumbered}
+
+CHALLENGE: Estimate the grade-point average for each department, and sort from low to high. NOTE: Don't include cross-listed courses. Students in cross-listed courses could be enrolled under either department, and we do not know which department to assign the grade to. HINT: You'll need to do multiple joins.
+
+```{r}
+courses |>
+  semi_join(courses_combined) |>
+  left_join(grades) |>
+  left_join(gpa_conversion) |>
+  group_by(dept) |>
+  summarize(mean(gp, na.rm = TRUE))
+```
+
+
+### Exercise 7: HOMEWORK PRACTICE {.unnumbered}
+
+This exercise is on Homework 4, thus no solutions are provided. In Homework 4, you'll be working with the `Birthdays` data:
+
+```{r}
+library(mosaic)
+data("Birthdays")
+head(Birthdays)
+```
+
+You'll also be exploring how the number of daily births is (or isn't!) related to holidays. To this end, import data on U.S. federal holidays [here](data/US-Holidays.csv). NOTE: `lubridate::dmy()` converts the character-string date stored in the CSV to a "POSIX" date-number.
+
+```{r}
+holidays <- read.csv("https://mac-stat.github.io/data/US-Holidays.csv") |>
+  mutate(date = as.POSIXct(lubridate::dmy(date)))
+```
+
+#### Part a {.unnumbered}
+
+Create a new dataset, `daily_births_1980`, which:
+
+-   keeps only `daily_births` related to **1980**
+-   adds a variable called `is_holiday` which is `TRUE` when the day is a holiday, and `FALSE` otherwise. NOTE: `!is.na(x)` is `TRUE` if column `x` is *not* NA, and `FALSE` if it is NA.
+
+Print out the first 6 rows and confirm that your dataset has 366 rows (1 per day in 1980) and 7 columns. HINT: You'll need to combine 2 different datasets.
+
+```{r}
+# Define daily_births_1980
+
+
+# Check out the first 6 rows
+
+
+# Confirm that daily_births_1980 has 366 rows and 7 columns
+
+
+```
+
+#### Part b {.unnumbered}
+
+Plot the total number of babies born (y-axis) per day (x-axis) in 1980. Color each date according to its day of the week, and `shape` each date according to whether or not it's a holiday. (This is a modified version of 3c!)
+
+```{r}
+```
+
+#### Part c {.unnumbered}
+
+Discuss your observations. For example: To what degree does the theory that there tend to be fewer births on holidays hold up? What holidays stand out the most?
+
+#### Part d (OPTIONAL) {.unnumbered}
+
+Some holidays stand out more than others. It would be helpful to label them. Use `geom_text` to add labels to each of the holidays. NOTE: You can set the orientation of a label with the `angle` argument; e.g., `geom_text(angle = 40, ...)`.
+
+
+
+## Solutions
+
+<details>
+
+<summary>Click for Solutions</summary>
+
+### Example 1 {-}
+
+a.  class
+b.  a student that took ANTH 101
+c.  data on ART 101
+
+
+### Example 2 {-}
+
+-   What did this do? Linked course info to all students in `students_1`
+-   Which observations from `students_1` (the *left* table) were retained? All of them.
+-   Which observations from `enrollments_1` (the *right* table) were retained? Only STAT and GEOL, those that matched the students.
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try. We retain the courses, not students.
+
+```{r}
+enrollments_1 |> 
+  left_join(students_1)
+```
+
+
+### Example 3 {-}
+
+-   Which observations from `students_1` (the *left* table) were retained? A and B, only those with enrollment info.
+
+-   Which observations from `enrollments_1` (the *right* table) were retained? STAT and GEOL, only those with studen info.
+
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try. Same info, different column order.
+
+```{r}
+enrollments_1 |> 
+    inner_join(students_1)
+```
+
+### Example 4 {-}
+
+-   Which observations from `students_1` (the *left* table) were retained? All
+-   Which observations from `enrollments_1` (the *right* table) were retained? All
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try. Same data, different order.
+
+```{r}
+enrollments_1 |> 
+    full_join(students_1)
+
+```
+
+### Example 5 {-}
+
+-   Which observations from `students_1` (the *left* table) were retained? Only those with enrollment info.
+-   Which observations from `enrollments_1` (the *right* table) were retained? None.
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try. Same data, different order.
+
+```{r}
+enrollments_1 |> 
+  semi_join(students_1)
+```
+
+### Example 6 {-}
+
+-   Which observations from `students_1` (the *left* table) were retained? Only C, the one *without* enrollment info.
+-   Which observations from `enrollments_1` (the *right* table) were retained? None.
+-   What, if anything, would change if we reversed the order of the data tables? Think about it, then try. Retain only ART 101, the course with no student info.
+
+```{r}
+enrollments_1 |> 
+  anti_join(students_1)
+```
+
+
+### Exercise 2: More small practice {.unnumbered}
+
+```{r}
+# 1. We want contact info for people who HAVEN'T voted
+contact |> 
+  anti_join(voters, by = c("name" = "id"))
+
+# 2. We want contact info for people who HAVE voted
+contact |> 
+  semi_join(voters, by = c("name" = "id"))
+
+# 3. We want any data available on each person
+contact |> 
+  full_join(voters, by = c("name" = "id"))
+voters |> 
+  full_join(contact, by = c("id" = "name"))
+
+# 4. We want to add contact info, when possible, to the voting roster
+voters |> 
+  left_join(contact, by = c("id" = "name"))
+```
+
+
+### Exercise 3: Bigger datasets {.unnumbered}
+
+```{r}
+# How many observations (rows) and variables (columns) are there in the grades data?
+dim(grades)
+
+# How many observations (rows) and variables (columns) are there in the courses data?
+dim(courses)
+
+```
+
+
+### Exercise 4: Class size {.unnumbered}
+
+#### Part a {.unnumbered}
+
+```{r}
+courses_combined <- courses |>
+  group_by(sessionID) |>
+  summarize(enroll = sum(enroll))
+
+# Check that this has 1695 rows and 2 columns
+dim(courses_combined)
+```
+
+#### Part b {.unnumbered}
+
+```{r eval = FALSE}
+courses_combined |> 
+  summarize(median(enroll))
+```
+
+#### Part c {.unnumbered}
+
+```{r eval = FALSE}
+student_class_size <- grades |> 
+  left_join(courses_combined) |> 
+  group_by(sid) |> 
+  summarize(med_class = median(enroll))
+
+head(student_class_size)
+```
+
+#### Part d {.unnumbered}
+
+```{r eval = FALSE}
+ggplot(student_class_size, aes(x = med_class)) +
+  geom_histogram(color = "white")
+```
+
+
+### Exercise 5: Narrowing in on classes {.unnumbered}
+
+#### Part a {.unnumbered}
+
+```{r eval = FALSE}
+grades |> 
+  filter(sessionID == "session1986")
+```
+
+#### Part b {.unnumbered}
+
+```{r eval = FALSE}
+grades |> 
+  semi_join(dept_E)
+```
+
+
+### Exercise 6: All the wrangling {.unnumbered}
+
+#### Part a {.unnumbered}
+
+```{r eval = FALSE}
+courses |> 
+  group_by(dept) |> 
+  summarize(total = sum(enroll)) |> 
+  arrange(desc(total))
+```
+
+#### Part b {.unnumbered}
+
+```{r eval = FALSE}
+grades |> 
+  left_join(gpa_conversion) |> 
+  group_by(sid) |> 
+  summarize(mean(gp, na.rm = TRUE))
+```
+
+#### Part c {.unnumbered}
+
+```{r eval = FALSE}
+grades |> 
+  left_join(gpa_conversion) |> 
+  group_by(sid) |> 
+  summarize(gpa = mean(gp, na.rm = TRUE)) |> 
+  summarize(median(gpa))
+```
+
+#### Part d {.unnumbered}
+
+```{r eval = FALSE}
+# There are lots of approaches here!
+grades |> 
+  left_join(gpa_conversion) |> 
+  mutate(below_b_plus = (gp < 3.3)) |> 
+  summarize(mean(below_b_plus, na.rm = TRUE))
+```
+
+#### Part e {.unnumbered}
+
+```{r eval = FALSE}
+grades |> 
+  left_join(gpa_conversion) |> 
+  left_join(courses) |> 
+  group_by(iid) |> 
+  summarize(gpa = mean(gp, na.rm = TRUE)) |> 
+  arrange(gpa)
+```
+
+#### Part f {.unnumbered}
+
+```{r eval = FALSE}
+cross_listed <- courses |> 
+  count(sessionID) |> 
+  filter(n > 1)
+
+grades |> 
+  anti_join(cross_listed) |> 
+  inner_join(courses) |> 
+  left_join(gpa_conversion) |> 
+  group_by(dept) |> 
+  summarize(gpa = mean(gp, na.rm = TRUE)) |> 
+  arrange(gpa)
+```
+
+</details>
