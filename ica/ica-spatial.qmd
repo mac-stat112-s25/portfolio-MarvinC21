@@ -1,8 +1,5 @@
 ---
 title: "Spatial Viz"
----
----
-title: "Spatial Viz"
 number-sections: true
 execute: 
   warning: false

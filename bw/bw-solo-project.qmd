@@ -1,0 +1,127 @@
+---
+title: "Solo Project"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(rnaturalearth)
+
+states <- ne_states(country = "united states of america", returnclass = 'sf')
+```
+
+```{r}
+congress <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/refs/heads/master/congress-demographics/data_aging_congress.csv")
+
+congress_bipart <- congress |>
+  filter(party_code %in% c(100, 200), # Only republican (200) and democrat (100) congresspeople
+         congress == 118, # Viewing data on members of the 118th (most recent before current) congress
+         !(state_abbrev %in% c("HI", "AK"))) |>  # Excluding Hawaii and Alaska for a cleaner map
+  mutate(party = if_else(party_code == 100, "dem", "rep")) |> # Adding party labels
+  select(-party_code, -start_date, -bioguide_id, -cmltv_cong, -cmltv_chamber, -congress, -age_days) # Pruning unnecessary data
+```
+
+```{r}
+senate_bipart <- congress_bipart |> 
+  filter(chamber == "Senate") |> # only senators 
+  select(-chamber)
+
+house_bipart <- congress_bipart |> 
+  filter(chamber == "House") |> # only members of the house 
+  select(-chamber)
+```
+
+```{r}
+# Summaries of ages of congress members by state
+congress_bipart |>
+  group_by(state_abbrev) |>
+  summarize(total = n(),
+            mean_age = mean(age_years),
+            max_age = max(age_years),
+            min_age = min(age_years),
+            median_age = median(age_years))
+
+# Summaries of ages of congress members by party
+congress_bipart |>
+  group_by(party) |>
+  summarize(total = n(),
+            mean_age = mean(age_years),
+            max_age = max(age_years),
+            min_age = min(age_years),
+            median_age = median(age_years))
+
+# Age summaries of the senate by party
+senate_bipart |>
+  group_by(party) |>
+  summarize(total = n(),
+            mean_age = mean(age_years),
+            max_age = max(age_years),
+            min_age = min(age_years),
+            median_age = median(age_years))
+
+# Age summaries of the house by party
+house_bipart |>
+  group_by(party) |>
+  summarize(total = n(),
+            mean_age = mean(age_years),
+            max_age = max(age_years),
+            min_age = min(age_years),
+            median_age = median(age_years))
+```
+
+```{r}
+dem_ages_by_state <- congress_bipart |> # Average ages of Democrat congress members by state
+  filter(party == "dem") |>
+  group_by(state_abbrev) |>
+  summarize(dem_avg_age = mean(age_years))
+
+rep_ages_by_state <- congress_bipart |> # Average ages of Republican congress members by state
+  filter(party == "rep") |>
+  group_by(state_abbrev) |>
+  summarize(rep_avg_age = mean(age_years))
+
+all_ages_by_state <- congress_bipart |> # Average ages of all congress members by state
+  group_by(state_abbrev) |>
+  summarize(avg_age = mean(age_years))
+```
+
+
+```{r}
+ggplot() +
+  geom_sf(data = states |> 
+            filter(!(postal %in% c("HI", "AK"))) |>
+            left_join(all_ages_by_state, join_by("postal" == "state_abbrev")),  # Contiguous US
+          aes(fill = avg_age),
+          color = 'white') +
+  scale_fill_gradient(low = 'lavenderblush2', high = 'orchid4') +
+  theme_void() +
+  labs(title = "Average Age of Congress Members in the 118th Congress by State", fill = "Average Age (yrs)")
+```
+
+```{r}
+ggplot() +
+  geom_sf(data = states |> 
+            left_join(dem_ages_by_state, join_by("postal" == "state_abbrev")) |>
+            filter(!(postal %in% c("HI", "AK"))), # Contiguous US
+          aes(fill = dem_avg_age),
+          color = 'white') +
+  scale_fill_gradient(low = 'lightsteelblue1', high = 'royalblue4') +
+  theme_void() +
+  labs(title = "Average Age of Congress Democrats in the 118th Congress by State", fill = "Average Age (yrs)")
+```
+
+```{r}
+ggplot() +
+  geom_sf(data = states |> 
+            left_join(rep_ages_by_state, join_by("postal" == "state_abbrev")) |>
+            filter(!(postal %in% c("HI", "AK"))), # Contiguous US
+          aes(fill = rep_avg_age),
+          color = 'white') +
+  scale_fill_gradient(low = 'lightpink', high = 'firebrick4') +
+  theme_void() +
+  labs(title = "Average Age of Congress Republicans in the 118th Congress by State", fill = "Average Age (yrs)")
+```
+
+# Summary
+
+The maps above represent the average ages of the congress members of the 118th congress with individual representations by party and as a whole. The maps tell us that the states which contain only Republican congress members have a higher average age. Similarly, overall the overall average age of congress members is in the range of 50-60 years. Averages above this range are less likely by state. Also there are fewer states that have Democratic congress members than there are states that have Republican congress members. 

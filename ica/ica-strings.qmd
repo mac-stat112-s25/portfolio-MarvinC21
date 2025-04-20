@@ -1,0 +1,616 @@
+---
+title: "Strings"
+number-sections: true
+execute: 
+  warning: false
+fig-env: 'figure'
+fig-pos: 'h'
+fig-align: center
+code-fold: false
+---
+
+
+
+::: {.callout-caution title="Learning Goals"}
+-   Learn some fundamentals of working with strings of text data.
+-   Learn functions to search and replace, detect patterns, locate patterns, extract patterns, and separate text with the `stringr` package.
+:::
+
+::: {.callout-note title="Additional Resources"}
+For more information about the topics covered in this chapter, refer to the resources below:
+
+-   [Working with strings (YouTube)](https://www.youtube.com/watch?v=__pJ_u94LZg&t=52s) by Lisa Lendway
+-   [strings cheat sheet (pdf)](https://raw.githubusercontent.com/rstudio/cheatsheets/main/strings.pdf)
+-   [Strings (html)](https://r4ds.hadley.nz/strings.html) by Wickham, Çetinkaya-Rundel, & Grolemund
+-   [Regular expressions (html)](https://mdsr-book.github.io/mdsr2e/ch-text.html#regular-expressions-using-macbeth) by Baumer, Kaplan, and Horton
+-   [RegExplain RStudio addin tool (html)](https://www.garrickadenbuie.com/project/regexplain/) (Garrick Aden-Buie)
+-   [regexr exploration tool (html)](https://regexr.com/)
+:::
+
+
+
+
+## Review
+
+**WHERE ARE WE?**
+
+We're in the *last day* of our "data preparation" unit:
+
+![](https://mac-stat.github.io/images/112/legos.png)
+
+## Strings
+
+In the previous class, we started discussing some considerations in working with special types of "categorical" variables: *characters* and *factors* which are:
+
+1.  **Converting characters to factors (and factors to meaningful factors)**--last time\
+    When categorical information is stored as a *character* variable, the categories of interest might not be labeled or ordered in a meaningful way. We can fix that!
+
+2.  **Strings**--today!\
+    When working with character strings, we might want to detect, replace, or extract certain *patterns*. For example, recall our data on `courses`:
+
+```{r echo = FALSE}
+courses_old <- read.csv("https://mac-stat.github.io/data/courses.csv")
+
+# Check out the data
+head(courses_old)
+
+# Check out the structure of each variable
+# Many of these are characters!
+str(courses_old)
+```
+
+Focusing on just the `sem` character variable, we might want to...
+
+- change `FA` to `fall_` and `SP` to `spring_`
+- keep only courses taught in fall
+- split the variable into 2 new variables: `semester` (`FA` or `SP`) and `year`
+
+
+3.  Much more!--maybe in your projects or COMP/STAT 212\
+    There are a lot of ways to process character variables. For example, we might have a variable that records the text for a sample of news articles. We might want to analyze things like the articles' *sentiments*, word counts, typical word lengths, most common words, etc.
+
+### Essential Functions {-}
+
+The `stringr` package within `tidyverse` contains lots of functions to help process strings. We'll focus on the most common. Letting `x` be a string variable...
+
+| function            | arguments                 | returns           |
+|:--------------------|:--------------------------|:------------------|
+| `str_replace()`     | `x, pattern, replacement` | a modified string |
+| `str_replace_all()` | `x, pattern, replacement` | a modified string |
+| `str_to_lower()`    | `x`                       | a modified string |
+| `str_sub()`         | `x, start, end`           | a modified string |
+| `str_length()`      | `x`                       | a number          |
+| `str_detect()`      | `x, pattern`              | TRUE/FALSE        |
+
+### Example 1 {-}
+
+Consider the following data with string variables :
+
+```{r}
+library(tidyverse)
+
+classes <- data.frame(
+  sem        = c("SP2023", "FA2023", "SP2024"),
+  area       = c("History", "Math", "Anthro"),
+  enroll     = c("30 - people", "20 - people", "25 - people"),
+  instructor = c("Ernesto Capello", "Lori Ziegelmeier", "Arjun Guneratne")
+)
+
+classes
+```
+
+Using only your intuition, use our `str_` functions to complete the following. NOTE: You might be able to use other wrangling verbs in some cases, but focus on the new functions here.
+
+```{r}
+# Define a new variable "num" that adds up the number of characters in the area label
+
+
+```
+
+```{r}
+# Change the areas to "history", "math", "anthro" instead of "History", "Math", "Anthro"
+
+
+```
+
+```{r}
+# Create a variable that id's which courses were taught in spring
+
+
+```
+
+```{r}
+# Change the semester labels to "fall2023", "spring2024", "spring2023"
+
+```
+
+```{r}
+# In the enroll variable, change all e's to 3's (just because?)
+
+```
+
+```{r}
+# Use sem to create 2 new variables, one with only the semester (SP/FA) and 1 with the year
+
+```
+
+### Summary {-}
+
+Here's what we learned about each function:
+
+-   `str_replace(x, pattern, replacement)` finds the *first* part of `x` that matches the `pattern` and replaces it with `replacement`
+
+-   `str_replace_all(x, pattern, replacement)` finds *all* instances in `x` that matches the `pattern` and replaces it with `replacement`
+
+-   `str_to_lower(x)` converts all upper case letters in `x` to lower case
+
+-   `str_sub(x, start, end)` only keeps a subset of characters in `x`, from `start` (a number indexing the first letter to keep) to `end` (a number indexing the last letter to keep)
+
+-   `str_length(x)` records the number of characters in `x`
+
+-   `str_detect(x, pattern)` is TRUE if `x` contains the given `pattern` and FALSE otherwise
+
+### Example 2
+
+Suppose we *only* want the spring courses:
+
+```{r}
+# How can we do this after mutating?
+classes |> 
+  mutate(spring = str_detect(sem, "SP"))
+```
+
+```{r}
+# We don't have to mutate first!
+classes |> 
+  filter(str_detect(sem, "SP"))
+```
+
+```{r}
+# Yet another way
+classes |> 
+  filter(!str_detect(sem, "FA"))
+```
+
+### Example 3
+
+Suppose we wanted to get separate columns for the first and last names of each course instructor in `classes`. Try doing this using `str_sub()`. But don't try too long! Explain what trouble you ran into.
+
+### Example 4
+
+In general, when we want to split a column into 2+ new columns, we can often use `separate()`:
+
+```{r}
+classes |> 
+  separate(instructor, c("first", "last"), sep = " ")
+```
+
+```{r}
+# Sometimes the function can "intuit" how we want to separate the variable
+classes |> 
+  separate(instructor, c("first", "last"))
+```
+
+a.  Separate enroll into 2 separate columns: `students` and `people`. (These columns don't make sense this is just practice).
+
+```{r}
+# classes |> 
+#   separate(___, c(___, ___), sep = "___")
+```
+
+b.  We separated `sem` into semester and year above using `str_sub()`. Why would this be hard using `separate()`?
+
+c.  When we want to split a column into 2+ new columns (or do other types of string processing), but there's no consistent pattern by which to do this, we can use *regular expressions* (an optional topic):
+
+```{r}
+# (?<=[SP|FA]): any character *before* the split point is a "SP" or "FA"
+# (?=2): the first character *after* the split point is a 2
+classes |> 
+  separate(sem, 
+          c("semester", "year"),
+          "(?<=[SP|FA])(?=2)")
+```
+
+```{r}
+# More general:
+# (?<=[a-zA-Z]): any character *before* the split point is a lower or upper case letter
+# (?=[0-9]): the first character *after* the split point is number
+classes |> 
+  separate(sem, 
+          c("semester", "year"),
+          "(?<=[A-Z])(?=[0-9])")
+```
+
+
+
+## Exercises
+
+### Exercise 1: Time slots {.unnumbered}
+
+The `courses` data includes *actual* data scraped from Mac's [class schedule](https://macadmsys.macalester.edu/macssb/customPage/page/classSchedule). (Thanks to Prof Leslie Myint for the scraping code!!)
+
+If you want to learn how to scrape data, take COMP/STAT 212, Intermediate Data Science! NOTE: For simplicity, I removed classes that had "TBA" for the `days`.
+
+```{r}
+courses <- read.csv("https://mac-stat.github.io/data/registrar.csv")
+
+# Check it out
+head(courses)
+```
+
+Use our more familiar wrangling tools to warm up.
+
+```{r}
+# Construct a table that indicates the number of classes offered in each day/time slot
+# Print only the 6 most popular time slots
+
+
+
+```
+
+
+
+### Exercise 2: Prep the data {.unnumbered}
+
+So that we can analyze it later, we want to wrangle the `courses` data:
+
+-   Let's get some enrollment info:
+    -   Split `avail_max` into 2 separate variables: `avail` and `max`.
+    -   Use `avail` and `max` to define a new variable called `enroll`. HINT: You'll need `as.numeric()`
+-   Split the course `number` into 3 separate variables: `dept`, `number`, and `section`. HINT: You can use `separate()` to split a variable into 3, not just 2 new variables.
+
+Store this as `courses_clean` so that you can use it later.
+
+```{r}
+```
+
+
+
+### Exercise 3: Courses by department {.unnumbered}
+
+Using `courses_clean`...
+
+```{r}
+# Identify the 6 departments that offered the most sections
+
+
+# Identify the 6 departments with the longest average course titles
+
+```
+
+
+
+### Exercise 4: STAT courses {.unnumbered}
+
+#### Part a {.unnumbered}
+
+Get a subset of `courses_clean` that only includes courses taught by Alicia Johnson.
+
+```{r}
+```
+
+#### Part b {.unnumbered}
+
+Create a new dataset from `courses_clean`, named `stat`, that only includes STAT sections. In this dataset:
+
+-   In the course names:
+
+    -   Remove "Introduction to" from any name.
+    -   Shorten "Statistical" to "Stat" where relevant.
+
+-   Define a variable that records the `start_time` for the course.
+
+-   Keep only the `number, name, start_time, enroll` columns.
+
+-   The result should have 19 rows and 4 columns.
+
+```{r}
+```
+
+
+
+### Exercise 5: More cleaning {.unnumbered}
+
+In the next exercises, we'll dig into enrollments. Let's get the data ready for that analysis here. Make the following changes to the `courses_clean` data. Because they have different enrollment structures, and we don't want to compare apples and oranges, *remove* the following:
+
+-   all sections in `PE` and `INTD` (interdisciplinary studies courses)
+
+-   all music ensembles and dance practicums, i.e. all MUSI and THDA classes with numbers less than 100. HINT: `!(dept == "MUSI" & as.numeric(number) < 100)`
+
+-   all lab sections. Be careful which variable you use here. For example, you don't want to search by "Lab" and accidentally eliminate courses with words such as "Labor".
+
+Save the results as `enrollments` (don't overwrite `courses_clean`).
+
+```{r}
+```
+
+
+
+### Exercise 6: Enrollment & departments {.unnumbered}
+
+Explore enrollments by department. *You* decide what research questions to focus on. Use both visual and numerical summaries.
+
+
+
+### Exercise 7: Enrollment & faculty {.unnumbered}
+
+Let's now explore enrollments by instructor. In doing so, we have to be cautious of cross-listed courses that are listed under multiple different departments. Uncomment the code lines in the chunk below for an example.
+
+::: {.callout-tip title="Commenting/Uncommenting Code"}
+
+To comment/uncomment several lines of code at once, highlight them then click <kbd>ctrl/cmd+shift+c</kbd>.
+
+:::
+
+```{r}
+# enrollments |>
+#   filter(dept %in% c("STAT", "COMP"), number == 112, section == "01")
+```
+
+Notice that these are the exact same section! In order to not double count an instructor's enrollments, we can keep only the courses that have `distinct()` *combinations* of `days, time, instructor` values.  Uncomment the code lines in the chunk below.
+
+```{r}
+# enrollments_2 <- enrollments |> 
+#   distinct(days, time, instructor, .keep_all = TRUE)
+
+# NOTE: By default this keeps the first department alphabetically
+# That's fine because we won't use this to analyze department enrollments!
+# enrollments_2 |> 
+#   filter(instructor == "Brianna Heggeseth", name == "Introduction to Data Science")
+```
+
+*Now*, explore enrollments by instructor. *You* decide what research questions to focus on. Use both visual and numerical summaries.
+
+CAVEAT: The above code doesn't deal with *co-taught* courses that have more than one instructor. Thus instructors that co-taught are recorded as a pair, and their co-taught enrollments aren't added to their total enrollments. This is tough to get around with how the data were scraped as the instructor names are smushed together, not separated by a comma!
+
+```{r}
+```
+
+
+
+### Optional extra practice {.unnumbered}
+
+```{r}
+# Make a bar plot showing the number of night courses by day of the week
+# Use courses_clean
+
+
+```
+
+
+
+### Dig Deeper: regex {.unnumbered}
+
+Example 4 gave 1 small example of a regular expression.
+
+These are handy when we want process a string variable, but there's no consistent pattern by which to do this. You must think about the structure of the string and how you can use regular expressions to capture the patterns you want (and exclude the patterns you don't want).
+
+For example, how would you describe the pattern of a 10-digit phone number? Limit yourself to just a US phone number for now.
+
+-   The first 3 digits are the area code.
+-   The next 3 digits are the exchange code.
+-   The last 4 digits are the subscriber number.
+
+Thus, a regular expression for a US phone number could be:
+
+-   `[:digit:]{3}-[:digit:]{3}-[:digit:]{4}` which limits you to XXX-XXX-XXXX pattern or
+-   `\\([:digit:]{3}\\) [:digit:]{3}-[:digit:]{4}` which limits you to (XXX) XXX-XXXX pattern or
+-   `[:digit:]{3}\\.[:digit:]{3}\\.[:digit:]{4}` which limits you to XXX.XXX.XXXX pattern
+
+The following would include the three patterns above in addition to the XXXXXXXXXX pattern (no dashes or periods): - `[\\(]*[:digit:]{3}[-.\\)]*[:digit:]{3}[-.]*[:digit:]{4}`
+
+In order to write a regular expression, you first need to consider what patterns you want to include and exclude.
+
+Work through the following examples, and the tutorial after them to learn about the syntax.
+
+**EXAMPLES**
+
+```{r}
+# Define some strings to play around with
+example <- "The quick brown fox jumps over the lazy dog."
+```
+
+```{r}
+str_replace(example, "quick", "really quick")
+```
+
+```{r}
+str_replace_all(example, "(fox|dog)", "****") # | reads as OR
+```
+
+```{r}
+str_replace_all(example, "(fox|dog).", "****") # "." for any character
+```
+
+```{r}
+str_replace_all(example, "(fox|dog)\\.$", "****") # at end of sentence only, "\\." only for a period
+```
+
+```{r}
+str_replace_all(example, "the", "a") # case-sensitive only matches one
+```
+
+```{r}
+str_replace_all(example, "[Tt]he", "a") # # will match either t or T; could also make "a" conditional on capitalization of t
+```
+
+```{r}
+str_replace_all(example, "[Tt]he", "a") # first match only
+```
+
+```{r}
+# More examples
+example2 <- "Two roads diverged in a yellow wood, / And sorry I could not travel both / And be one traveler, long I stood / And looked down one as far as I could"
+example3 <- "This is a test"
+
+# Store the examples in 1 place
+examples <- c(example, example2, example3)
+```
+
+```{r}
+pat <- "[^aeiouAEIOU ]{3}" # Regular expression for three straight consonants. Note that I've excluded spaces as well
+
+str_detect(examples, pat) # TRUE/FALSE if it detects pattern
+```
+
+```{r}
+str_subset(examples, pat) # Pulls out those that detects pattern
+```
+
+```{r}
+pat2 <- "[^aeiouAEIOU ][aeiouAEIOU]{2}[^aeiouAEIOU ]{1}" # consonant followed by two vowels followed by a consonant
+
+str_extract(example2, pat2) # extract first match
+```
+
+```{r}
+str_extract_all(example2, pat2, simplify = TRUE) # extract all matches
+```
+
+**TUTORIAL**
+
+Try out this [interactive tutorial](https://regexone.com/). Note that neither the tutorial nor regular expressions more generally are specific to `R`, but it still illustrates the main ideas of regular expressions.
+
+
+
+## Solutions
+
+<details>
+
+<summary>Click for Solutions</summary>
+
+### Example 1
+
+```{r}
+# Define a new variable "num" that adds up the number of characters in the area label
+classes |> 
+  mutate(num = str_length(area))
+
+# Change the areas to "history", "math", "anthro"
+classes |> 
+  mutate(area = str_to_lower(area))
+
+# Create a variable that id's which courses were taught in spring 
+classes |> 
+  mutate(spring = str_detect(sem, "SP"))
+
+# Change the semester labels to "fall2023", "spring2024", "spring2023"
+classes |> 
+  mutate(sem = str_replace(sem, "SP", "spring")) |> 
+  mutate(sem = str_replace(sem, "FA", "fall"))
+
+# In the enroll variable, change all e's to 3's (just because?)
+classes |> 
+  mutate(enroll = str_replace_all(enroll, "e", "3"))
+
+# Use sem to create 2 new variables, one with only the semester (SP/FA) and 1 with the year
+classes |> 
+  mutate(semester = str_sub(sem, 1, 2),
+         year = str_sub(sem, 3, 6))
+```
+
+### Example 2
+
+```{r}
+# How can we do this after mutating?
+classes |> 
+  mutate(spring = str_detect(sem, "SP")) |> 
+  filter(spring == TRUE)
+```
+
+
+### Exercise 1: Popular time slots {.unnumbered}
+
+```{r}
+# Construct a table that indicates the number of classes offered in each day/time slot
+# Print only the 6 most popular time slots
+courses |> 
+  count(days, time) |> 
+  arrange(desc(n)) |> 
+  head()
+```
+
+
+
+### Exercise 2: Prep the data {.unnumbered}
+
+```{r}
+courses_clean <- courses |> 
+  separate(avail_max, c("avail", "max"), sep = " / ") |> 
+  mutate(enroll = as.numeric(max) - as.numeric(avail)) |> 
+  separate(number, c("dept", "number", "section"))
+  
+head(courses_clean)
+```
+
+
+
+### Exercise 3: Courses offered by department {.unnumbered}
+
+```{r}
+# Identify the 6 departments that offered the most sections
+courses_clean |> 
+  count(dept) |> 
+  arrange(desc(n)) |> 
+  head()
+
+# Identify the 6 departments with the longest average course titles
+courses_clean |> 
+  mutate(length = str_length(name)) |> 
+  group_by(dept) |> 
+  summarize(avg_length = mean(length)) |> 
+  arrange(desc(avg_length)) |> 
+  head()
+```
+
+### Exercise 4: STAT courses {.unnumbered}
+
+#### Part a {.unnumbered}
+
+```{r}
+courses_clean |> 
+  filter(str_detect(instructor, "Alicia Johnson")) 
+```
+
+#### Part b {.unnumbered}
+
+```{r}
+stat <- courses_clean |> 
+  filter(dept == "STAT") |> 
+  mutate(name = str_replace(name, "Introduction to ", "")) |>
+  mutate(name = str_replace(name, "Statistical", "Stat")) |> 
+  mutate(start_time = str_sub(time, 1, 5)) |> 
+  select(number, name, start_time, enroll)
+
+stat
+
+dim(stat)
+```
+
+
+
+### Exercise 5: More cleaning {.unnumbered}
+
+```{r}
+enrollments <- courses_clean |> 
+  filter(dept != "PE", dept != "INTD") |> 
+  filter(!(dept == "MUSI" & as.numeric(number) < 100)) |> 
+  filter(!(dept == "THDA" & as.numeric(number) < 100)) |> 
+  filter(!str_detect(section, "L"))
+  
+head(enrollments)
+```
+
+
+
+### Optional extra practice {.unnumbered}
+
+```{r}
+# Make a bar plot showing the number of night courses by day of the week.
+courses_clean |> 
+  filter(str_detect(time, "7:00")) |> 
+  ggplot(aes(x = days)) + 
+    geom_bar()
+```
+
+</details>
