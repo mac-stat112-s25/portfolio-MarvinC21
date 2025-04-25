@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>21&nbsp; Data Import – COMP/STAT112 Notebook</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../ica/ica-strings.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link rel="stylesheet" href="../style/custom.css">
+</head>
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/quarto-demo.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-data-import.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Data Import</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Marvin C.</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Best Work</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-uni.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bivariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-tri.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trivariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-quad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quadvariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spatial Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-exam-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exam 1 Visualizations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-exam-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">bw-exam-2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bw/bw-solo-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Solo Project</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">In-class Activities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/quarto-demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">My first Quarto document</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-uni.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Review</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Multivariate Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Spatial Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-effective.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Effective Viz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wrangling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-dates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dates</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-reshaping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Reshaping</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-joining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Joining</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-strings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Strings</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ica/ica-data-import.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Data Import</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">21.1</span> Review</a></li>
+  <li>
+<a href="#data-import" id="toc-data-import" class="nav-link" data-scroll-target="#data-import"><span class="header-section-number">21.2</span> Data Import</a>
+  <ul class="collapse">
+<li><a href="#starting-data-project" id="toc-starting-data-project" class="nav-link" data-scroll-target="#starting-data-project">Starting Data Project</a></li>
+  <li><a href="#file-formats" id="toc-file-formats" class="nav-link" data-scroll-target="#file-formats">File Formats</a></li>
+  <li><a href="#step-1-find-data" id="toc-step-1-find-data" class="nav-link" data-scroll-target="#step-1-find-data">STEP 1: Find Data</a></li>
+  <li><a href="#step-2-save-data-locally" id="toc-step-2-save-data-locally" class="nav-link" data-scroll-target="#step-2-save-data-locally">STEP 2: Save Data Locally</a></li>
+  <li><a href="#step-3-import-data-to-rstudio" id="toc-step-3-import-data-to-rstudio" class="nav-link" data-scroll-target="#step-3-import-data-to-rstudio">STEP 3: Import Data to RStudio</a></li>
+  <li><a href="#step-4-check-clean-data" id="toc-step-4-check-clean-data" class="nav-link" data-scroll-target="#step-4-check-clean-data">STEP 4: Check &amp; Clean Data</a></li>
+  <li><a href="#step-5-understand-data" id="toc-step-5-understand-data" class="nav-link" data-scroll-target="#step-5-understand-data">STEP 5: Understand Data</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">21.3</span> Exercises</a>
+  <ul class="collapse">
+<li><a href="#exercise-1-save-data-locally" id="toc-exercise-1-save-data-locally" class="nav-link" data-scroll-target="#exercise-1-save-data-locally">Exercise 1: Save Data Locally</a></li>
+  <li><a href="#exercise-2-import-data-to-rstudio" id="toc-exercise-2-import-data-to-rstudio" class="nav-link" data-scroll-target="#exercise-2-import-data-to-rstudio">Exercise 2: Import Data to RStudio</a></li>
+  <li><a href="#exercise-3-check-data" id="toc-exercise-3-check-data" class="nav-link" data-scroll-target="#exercise-3-check-data">Exercise 3: Check Data</a></li>
+  <li><a href="#exercise-4-clean-data-factor-variables-1" id="toc-exercise-4-clean-data-factor-variables-1" class="nav-link" data-scroll-target="#exercise-4-clean-data-factor-variables-1">Exercise 4: Clean Data: Factor Variables 1</a></li>
+  <li><a href="#exercise-5-clean-data-factor-variables-2" id="toc-exercise-5-clean-data-factor-variables-2" class="nav-link" data-scroll-target="#exercise-5-clean-data-factor-variables-2">Exercise 5: Clean Data: Factor Variables 2</a></li>
+  <li><a href="#exercise-6-clean-data-missing-data-1" id="toc-exercise-6-clean-data-missing-data-1" class="nav-link" data-scroll-target="#exercise-6-clean-data-missing-data-1">Exercise 6: Clean Data: Missing Data 1</a></li>
+  <li><a href="#exercise-7-clean-data-missing-data-2" id="toc-exercise-7-clean-data-missing-data-2" class="nav-link" data-scroll-target="#exercise-7-clean-data-missing-data-2">Exercise 7: Clean Data: Missing Data 2</a></li>
+  <li><a href="#exercise-8-new-data-projects" id="toc-exercise-8-new-data-projects" class="nav-link" data-scroll-target="#exercise-8-new-data-projects">Exercise 8: New Data + Projects</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions"><span class="header-section-number">21.4</span> Solutions</a>
+  <ul class="collapse">
+<li><a href="#exercise-3-check-data-1" id="toc-exercise-3-check-data-1" class="nav-link" data-scroll-target="#exercise-3-check-data-1">Exercise 3: Check Data</a></li>
+  <li><a href="#exercise-4-clean-data-factor-variables-1-1" id="toc-exercise-4-clean-data-factor-variables-1-1" class="nav-link" data-scroll-target="#exercise-4-clean-data-factor-variables-1-1">Exercise 4: Clean Data: Factor Variables 1</a></li>
+  <li><a href="#exercise-5-clean-data-factor-variables-2-1" id="toc-exercise-5-clean-data-factor-variables-2-1" class="nav-link" data-scroll-target="#exercise-5-clean-data-factor-variables-2-1">Exercise 5: Clean Data: Factor Variables 2</a></li>
+  <li><a href="#exercise-6-clean-data-missing-data-1-1" id="toc-exercise-6-clean-data-missing-data-1-1" class="nav-link" data-scroll-target="#exercise-6-clean-data-missing-data-1-1">Exercise 6: Clean Data: Missing Data 1</a></li>
+  <li><a href="#exercise-7-clean-missing-data-2" id="toc-exercise-7-clean-missing-data-2" class="nav-link" data-scroll-target="#exercise-7-clean-missing-data-2">Exercise 7: Clean: Missing Data 2</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/quarto-demo.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-data-import.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Data Import</span></a></li></ol></nav><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">
+<span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Data Import</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-caution callout-titled" title="Learning Goals">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Get a glimpse into how to…</p>
+<ul>
+<li>find existing data sets</li>
+<li>save data sets locally</li>
+<li>load data into RStudio</li>
+<li>do some preliminary data checking and cleaning steps before further wrangling / visualization:
+<ul>
+<li>make sure variables are properly formatted</li>
+<li>deal with missing values</li>
+</ul>
+</li>
+</ul>
+<p><strong>NOTE:</strong> These skills are best learned through practice. We’ll just scratch the surface here.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Additional Resources">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Additional Resources
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>
+<a href="https://www.youtube.com/watch?v=GtCsjtZBNp4">Using the import wizard (YouTube)</a> by Lisa Lendway</li>
+<li>
+<a href="https://github.com/rstudio/cheatsheets/raw/main/data-import.pdf">data import cheat sheet (pdf)</a><br>
+</li>
+<li><a href="https://readr.tidyverse.org/"><code>readr</code> documentation (html)</a></li>
+<li>
+<a href="https://r4ds.hadley.nz/data-import.html">Data import (html)</a> by Wickham and Grolemund</li>
+<li>
+<a href="https://r4ds.hadley.nz/missing-values.html">Missing data (html)</a> by Wickham and Grolemund</li>
+<li>
+<a href="https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-intake">Data intake (html)</a> by Baumer, Kaplan, and Horton</li>
+</ul>
+</div>
+</div>
+<section id="review" class="level2" data-number="21.1"><h2 data-number="21.1" class="anchored" data-anchor-id="review">
+<span class="header-section-number">21.1</span> Review</h2>
+<p><strong>WHERE ARE WE?</strong></p>
+<p>We’ve thus far focused on data preparation and visualization:</p>
+<p><img src="https://mac-stat.github.io/images/112/legos.png" class="img-fluid"></p>
+<p>What’s coming up?</p>
+<ul>
+<li><p>In the last few weeks we’ll focus on data storytelling through the completion of a course project.</p></li>
+<li><p>This week we’ll address the other gaps in the workflow: data collection and analysis. We’ll do so in the context of starting a data project…</p></li>
+</ul></section><section id="data-import" class="level2" data-number="21.2"><h2 data-number="21.2" class="anchored" data-anchor-id="data-import">
+<span class="header-section-number">21.2</span> Data Import</h2>
+<section id="starting-data-project" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="starting-data-project">Starting Data Project</h3>
+<p>Any data science project consists of two phases:</p>
+<ol type="1">
+<li>
+<p>Data Collection<br>
+A data project starts with data! Thus far, you’ve either been given data, or used TidyTuesday data. In this unit:</p>
+<ul>
+<li>We <em>WILL</em> explore how to find data, save data, import this data into RStudio, and do some preliminary data cleaning.</li>
+<li>We will <em>NOT</em> discuss how to collect data from scratch (e.g.&nbsp;via experiment, observational study, or survey).</li>
+</ul>
+</li>
+<li>
+<p>Data Analysis<br>
+Once we have data, we need to do some analysis. In this unit…</p>
+<ul>
+<li>We <em>WILL</em> bring together our wrangling &amp; visualization tools to discuss <strong>exploratory data analysis (EDA)</strong>. EDA is the process of getting to know our data, obtaining insights from data, and using these insights to formulate, refine, and explore research questions.</li>
+<li>We will <em>NOT</em> explore other types of analysis, such as modeling &amp; prediction–if interested, take STAT 155 and 253 to learn more about these topics.</li>
+</ul>
+</li>
+</ol>
+<p><strong>NOTE:</strong> These skills are best learned through practice. We’ll just scratch the surface here.</p>
+</section><section id="file-formats" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="file-formats">File Formats</h3>
+<p>Before exploring how to find, store, import, check, and clean data, it’s important to recognize that <strong>data can be stored in various formats</strong>. We’ve been working with <code>.csv</code> files. In the background, these have “comma-separated values” (csv):</p>
+<p><img src="https://mac-stat.github.io/images/112/bikes_csv.png" class="img-fluid" style="width:50.0%"></p>
+<p>But there are many other common file types. For example, the following are compatible with R:</p>
+<ul>
+<li>Excel files: <code>.xls</code>, <code>.xlsx</code>
+</li>
+<li>R “data serialization” files: <code>.rds</code>
+</li>
+<li>files with tab-separated values: <code>.tsv</code>
+</li>
+</ul>
+<p><img src="https://mac-stat.github.io/images/112/bikes_tsv.png" class="img-fluid" style="width:50.0%"></p>
+</section><section id="step-1-find-data" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="step-1-find-data">STEP 1: Find Data</h3>
+<p>Check the <a href="99-data-repo.qmd">Datasets</a> page for information about how to find a dataset that fits your needs.</p>
+</section><section id="step-2-save-data-locally" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="step-2-save-data-locally">STEP 2: Save Data Locally</h3>
+<p>Unless we’re just doing a quick, one-off data analysis, it’s important to store a local copy of a data file, i.e.&nbsp;save the data file to our own machine.</p>
+<p>Mainly, we shouldn’t rely on another person / institution to store a data file online, in the same place, forever!</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Recommendations when Saving Data">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Recommendations when Saving Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When saving your data, make sure they are</p>
+<ul>
+<li>in a nice format, eg, a <code>csv</code> file format</li>
+<li>where you’ll be able to find it again</li>
+<li>ideally, within a folder that’s <em>dedicated</em> to the related project / assignment</li>
+<li>alongside the qmd file(s) where you’ll record your analysis of the data</li>
+</ul>
+</div>
+</div>
+</section><section id="step-3-import-data-to-rstudio" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="step-3-import-data-to-rstudio">STEP 3: Import Data to RStudio</h3>
+<p>Once we have a local copy of our data file, we need to get it into RStudio! This process depends on 2 things: (1) the file <em>type</em> (e.g.&nbsp;.csv); and (2) the file <em>location</em>, i.e.&nbsp;where it’s stored on your computer.</p>
+<p><strong>1. FILE TYPE</strong></p>
+<p>The file type indicates which <em>function</em> we’ll need to import it. The table below lists some common import functions and when to use them.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead><tr class="header">
+<th>Function</th>
+<th>Data file type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>read_csv()</code></td>
+<td>.csv - you can save Excel files and Google Sheets as .csv</td>
+</tr>
+<tr class="even">
+<td><code>read_delim()</code></td>
+<td>other delimited formats (tab, space, etc.)</td>
+</tr>
+<tr class="odd">
+<td><code>read_sheet()</code></td>
+<td>Google Sheet</td>
+</tr>
+<tr class="even">
+<td><code>st_read()</code></td>
+<td>spatial data shapefile</td>
+</tr>
+</tbody>
+</table>
+<p>NOTE: In comparison to <code>read.csv</code>, <code>read_csv</code> is faster when importing large data files and can more easily parse complicated datasets, eg, with dates, times, percentages.</p>
+<p><strong>2. FILE LOCATION</strong></p>
+<p>To import the data, we apply the appropriate function from above to the <strong>file path</strong>.</p>
+<p>A file path is an address to where the file is stored on our computer or the web.</p>
+<p>Consider “1600 Grand Ave, St.&nbsp;Paul, MN 55105”. Think about how different parts of the address give increasingly more specific information about the location. “St.&nbsp;Paul, MN 55105” tells us the city and smaller region within the city, “Grand Ave” tells us the street, and “1600” tells us the specific location on the street.</p>
+<p>In the example below, the file path is <strong>absolute</strong> where it tells us the location giving more and more specific information as you read it from left to right.</p>
+<ul>
+<li>“~”, on an Apple computer, tells you that you are looking in the user’s home directory.</li>
+<li>“Desktop” tells you to go to the Desktop within that home directory.</li>
+<li>“112” tells you that you are looking in the 112 folder on the Desktop.</li>
+<li>“data” tells you to next go in the data folder in the 112 folder.</li>
+<li>“my_data.csv” tells you that you are looking for a file called my_data.csv location within the data folder.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>my_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Desktop/112/data/my_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Absolute file paths should <em>only</em> be used when reading files hosted on the web. Otherwise, <strong>relative</strong> file paths should be used. <strong>Relative</strong> file paths as the name suggest is relative to the file where the data file is read.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># assume the code containing this script is under a folder called /src which</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># is at the same level of the /data folder</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>my_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/my_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-4-check-clean-data" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="step-4-check-clean-data">STEP 4: Check &amp; Clean Data</h3>
+<p>Once the data is loaded, ask yourself a few questions:</p>
+<p>What’s the structure of the data?</p>
+<ul>
+<li>Use <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> to learn about the numbers of variables and observations as well as the classes or types of variables (date, location, string, factor, number, boolean, etc.)</li>
+<li>Use <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> to view the top of the data table</li>
+<li>Use <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> to view the data in a spreadsheet-like viewer, use this command in the Console but don’t include it in your <code>qmd</code> files since it will prevent your project from rendering.</li>
+</ul>
+<p>Is there anything goofy that we need to clean before we can analyze the data?</p>
+<ul>
+<li>Is it in a tidy format?</li>
+<li>How many rows are there? What does the row mean? What is an observation?</li>
+<li>Is there consistent formatting for categorical variables?</li>
+<li>Is there missing data that needs to be addressed?</li>
+</ul></section><section id="step-5-understand-data" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="step-5-understand-data">STEP 5: Understand Data</h3>
+<p>Start by understanding the data that is available to you. If you have a codebook, you have struck gold! If not (the more common case), you’ll need to do some detective work that often involves talking to people.</p>
+<p>At this stage, ask yourself:</p>
+<ul>
+<li>Where does my data come from? How was it collected?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+</li>
+<li>Is there a codebook? If not, how can I learn more about it?</li>
+<li>Are there people I can reach out to who have experience with this data?</li>
+</ul></section></section><section id="exercises" class="level2" data-number="21.3"><h2 data-number="21.3" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">21.3</span> Exercises</h2>
+<p>Suppose our goal is to work with data on movie reviews, and that we’ve already gone through the work to find a dataset. The <code>imdb_5000_messy.csv</code> file is posted on Moodle. Let’s work with it!</p>
+<section id="exercise-1-save-data-locally" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-1-save-data-locally">Exercise 1: Save Data Locally</h3>
+<section id="part-a" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a">Part a</h4>
+<p>On your laptop:</p>
+<ul>
+<li>Download the “imdb_5000_messy.csv” file from Moodle</li>
+<li>Move it to the <em>data</em> folder in your portfolio repository</li>
+</ul></section><section id="part-b" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b">Part b</h4>
+<p>Hot tip: After saving your data file, it’s important to record appropriate citations and info in either a new qmd (eg: “imdb_5000_messy_README.qmd”) or in the qmd where you’ll analyze the data. These citations should include:</p>
+<ul>
+<li>the data <em>source</em>, i.e.&nbsp;where you <em>found</em> the data</li>
+<li>the data <em>creator</em>, i.e.&nbsp;who / what group <em>collected</em> the original data</li>
+<li>possibly a data <em>codebook</em>, i.e.&nbsp;descriptions of the data variables</li>
+</ul>
+<p>To this end, check out where we originally got our IMDB data:</p>
+<p>https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata</p>
+<p>After visiting that website, take some quick notes here on the data <em>source</em> and <em>creator</em>.</p>
+<blockquote class="blockquote">
+<p>The data was collected from TMDb by the reviewers at Kaggle.com.</p>
+</blockquote>
+</section></section><section id="exercise-2-import-data-to-rstudio" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-2-import-data-to-rstudio">Exercise 2: Import Data to RStudio</h3>
+<p>Now that we have a local copy of our data file, let’s get it into RStudio! Remember that this process depends on 2 things: the file <em>type</em> and <em>location</em>. Since our file <em>type</em> is a csv, we can import it using <code>read_csv()</code>. But we have to supply the file <em>location</em> through a file path. To this end, we can either use an <strong>absolute file path</strong> or a <strong>relative file path</strong>.</p>
+<section id="part-a-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-1">Part a</h4>
+<p>An absolute file path describes the location of a file starting from the root or home directory. How we refer to the user root directory depends upon your machine:</p>
+<ul>
+<li>On a Mac: <code>~</code>
+</li>
+<li>On Windows: typically <code>C:\</code>
+</li>
+</ul>
+<p>Then the complete file path to the IMDB data file in the data folder, depending on your machine an where you created your portfolio project, can be:</p>
+<ul>
+<li>On a Mac: <code>~/Desktop/portfolio/data/imdb_5000_messy.csv</code>
+</li>
+<li>On Windows: <code>C:\Desktop\portfolio\data\imdb_5000_messy.csv</code> or <code>C:\\Desktop\\portfolio\\data\\imdb_5000_messy.csv</code>
+</li>
+</ul>
+<p>Putting this together, use <code>read_csv()</code> with the appropriate absolute file path to import your data into RStudio. Save this as <code>imdb_messy</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>imdb_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"..</span><span class="sc">\\</span><span class="st">data</span><span class="sc">\\</span><span class="st">imdb_5000_messy.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="part-b-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-1">Part b</h4>
+<p>Absolute file paths can get really long, depending upon our number of sub-folders, and they should not be used when sharing code with other and instead <strong>relative file paths</strong> should be used. A <strong>relative file path</strong> describes the location of a file from the current “working directory”, i.e.&nbsp;where RStudio would currently look for on your computer. Check what your working directory is <em>inside this qmd</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># This should be the folder where you stored this qmd!</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/dwmjc/Desktop/School/Spring 2025/COMP112/portfolio-MarvinC21/ica"</code></pre>
+</div>
+</div>
+<p>Next, check what the working directory is for the <em>console</em> by typing <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> in the <em>console</em>. This is probably different, meaning that the relative file paths that will work in your qmd won’t work in the console! You can either exclusively work inside your qmd, or change the working directory in your console, by navigating to the following in the upper toolbar: Session &gt; Set Working Directory &gt; To Source File location.</p>
+</section><section id="part-c" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c">Part c</h4>
+<p>As a good practice, we created a <code>data</code> folder and saved our data file (<code>imdb_5000_messy.csv</code>) into.</p>
+<p>Since our .qmd analysis and .csv data live in the same project, we don’t have to write out <em>absolute file paths</em> that go all the way to the root directory. We can use <em>relative file paths</em> that start from where our code file exists to where the data file exist:</p>
+<ul>
+<li>On a Mac: <code>../data/imdb_5000_messy.csv</code>
+</li>
+<li>On Windows: <code>..\data\imdb_5000_messy.csv</code> or <code>..\\data\\imdb_5000_messy.csv</code>
+</li>
+</ul>
+<p><strong>NOTE</strong>: <code>..</code> means go up one level in the file hierarchy, ie, go to the parent folder/directory.</p>
+<p>Putting this together, use <code>read_csv()</code> with the appropriate relative file path to import your data into RStudio. Save this as <code>imdb_temp</code> (<code>temp</code> for “temporary”). Convince yourself that this worked, i.e.&nbsp;you get the same dataset as <code>imdb_messy</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>imdb_temp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"C:/Users/dwmjc/Desktop/School/Spring 2025/COMP112/portfolio-MarvinC21/data/imdb_5000_messy.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="File Paths">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+File Paths
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Absolute file paths should be used when referring to files hosed on the web, eg, <code>https://mac-stat.github.io/data/kiva_partners2.csv</code>. In all other instances, relative file paths should be used.</p>
+</div>
+</div>
+</section><section id="part-d-optional" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-d-optional">Part d: OPTIONAL</h4>
+<p>Sometimes, we don’t want to import the <em>entire</em> dataset. For example, we might want to…</p>
+<ul>
+<li>skips some rows, eg, if they’re just “filler”</li>
+<li>only import the <em>first</em> “n” rows, eg, if the dataset is really large</li>
+<li>only import a <em>random</em> subset of “n” rows, eg, if the dataset is really large</li>
+</ul>
+<p>The “data import cheat sheet” at the top of this qmd, or Google, are handy resources here. As one example…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Try importing only the first 5 rows</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">read_csv</span>(<span class="st">"../data/imdb_5000_messy.csv"</span>, <span class="at">n_max =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 29
+   ...1 color director_name     num_critic_for_reviews duration
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                              &lt;dbl&gt;    &lt;dbl&gt;
+1     1 Color James Cameron                        723      178
+2     2 Color Gore Verbinski                       302      169
+3     3 Color Sam Mendes                           602      148
+4     4 Color Christopher Nolan                    813      164
+5     5 &lt;NA&gt;  Doug Walker                           NA       NA
+# ℹ 24 more variables: director_facebook_likes &lt;dbl&gt;,
+#   actor_3_facebook_likes &lt;dbl&gt;, actor_2_name &lt;chr&gt;,
+#   actor_1_facebook_likes &lt;dbl&gt;, gross &lt;dbl&gt;, genres &lt;chr&gt;,
+#   actor_1_name &lt;chr&gt;, movie_title &lt;chr&gt;, num_voted_users &lt;dbl&gt;,
+#   cast_total_facebook_likes &lt;dbl&gt;, actor_3_name &lt;chr&gt;,
+#   facenumber_in_poster &lt;dbl&gt;, plot_keywords &lt;chr&gt;, movie_imdb_link &lt;chr&gt;,
+#   num_user_for_reviews &lt;dbl&gt;, language &lt;chr&gt;, country &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Commenting/Uncommenting Code">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Commenting/Uncommenting Code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To comment/uncomment several lines of code at once, highlight them then click <kbd>ctrl/cmd+shift+c</kbd>.</p>
+</div>
+</div>
+</section></section><section id="exercise-3-check-data" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-3-check-data">Exercise 3: Check Data</h3>
+<p>After importing new data into RStudio, you MUST do some quick checks of the data. Here are two first steps that are especially useful.</p>
+<section id="part-a-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-2">Part a</h4>
+<p>Open <code>imdb_messy</code> in the spreadsheet-like viewer by typing <code>View(imdb_messy)</code> in the console. Sort this “spreadsheet” by different variables by clicking on the arrows next to the variable names. Do you notice anything unexpected?</p>
+</section><section id="part-b-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-2">Part b</h4>
+<p>Do a quick <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> of each variable in the dataset. <em>One</em> way to do this is below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span>  <span class="co"># convert characters to factors in order to summarize</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ...1                  color               director_name 
+ Min.   :   1   B&amp;W            :  10   Steven Spielberg:  26  
+ 1st Qu.:1262   Black and White: 199   Woody Allen     :  22  
+ Median :2522   color          :  30   Clint Eastwood  :  20  
+ Mean   :2522   Color          :4755   Martin Scorsese :  20  
+ 3rd Qu.:3782   COLOR          :  30   Ridley Scott    :  17  
+ Max.   :5043   NA's           :  19   (Other)         :4834  
+                                       NA's            : 104  
+ num_critic_for_reviews    duration     director_facebook_likes
+ Min.   :  1.0          Min.   :  7.0   Min.   :    0.0        
+ 1st Qu.: 50.0          1st Qu.: 93.0   1st Qu.:    7.0        
+ Median :110.0          Median :103.0   Median :   49.0        
+ Mean   :140.2          Mean   :107.2   Mean   :  686.5        
+ 3rd Qu.:195.0          3rd Qu.:118.0   3rd Qu.:  194.5        
+ Max.   :813.0          Max.   :511.0   Max.   :23000.0        
+ NA's   :50             NA's   :15      NA's   :104            
+ actor_3_facebook_likes          actor_2_name  actor_1_facebook_likes
+ Min.   :    0.0        Morgan Freeman :  20   Min.   :     0        
+ 1st Qu.:  133.0        Charlize Theron:  15   1st Qu.:   614        
+ Median :  371.5        Brad Pitt      :  14   Median :   988        
+ Mean   :  645.0        James Franco   :  11   Mean   :  6560        
+ 3rd Qu.:  636.0        Meryl Streep   :  11   3rd Qu.: 11000        
+ Max.   :23000.0        (Other)        :4959   Max.   :640000        
+ NA's   :23             NA's           :  13   NA's   :7             
+     gross                            genres             actor_1_name 
+ Min.   :      162   Drama               : 236   Robert De Niro:  49  
+ 1st Qu.:  5340988   Comedy              : 209   Johnny Depp   :  41  
+ Median : 25517500   Comedy|Drama        : 191   Nicolas Cage  :  33  
+ Mean   : 48468408   Comedy|Drama|Romance: 187   J.K. Simmons  :  31  
+ 3rd Qu.: 62309438   Comedy|Romance      : 158   Bruce Willis  :  30  
+ Max.   :760505847   Drama|Romance       : 152   (Other)       :4852  
+ NA's   :884         (Other)             :3910   NA's          :   7  
+                    movie_title   num_voted_users   cast_total_facebook_likes
+ Ben-Hur&nbsp;                 :   3   Min.   :      5   Min.   :     0           
+ Halloween&nbsp;               :   3   1st Qu.:   8594   1st Qu.:  1411           
+ Home&nbsp;                    :   3   Median :  34359   Median :  3090           
+ King Kong&nbsp;               :   3   Mean   :  83668   Mean   :  9699           
+ Pan&nbsp;                     :   3   3rd Qu.:  96309   3rd Qu.: 13756           
+ The Fast and the Furious&nbsp;:   3   Max.   :1689764   Max.   :656730           
+ (Other)                  :5025                                              
+         actor_3_name  facenumber_in_poster
+ Ben Mendelsohn:   8   Min.   : 0.000      
+ John Heard    :   8   1st Qu.: 0.000      
+ Steve Coogan  :   8   Median : 1.000      
+ Anne Hathaway :   7   Mean   : 1.371      
+ Jon Gries     :   7   3rd Qu.: 2.000      
+ (Other)       :4982   Max.   :43.000      
+ NA's          :  23   NA's   :13          
+                                                                           plot_keywords 
+ based on novel                                                                   :   4  
+ 1940s|child hero|fantasy world|orphan|reference to peter pan                     :   3  
+ alien friendship|alien invasion|australia|flying car|mother daughter relationship:   3  
+ animal name in title|ape abducts a woman|gorilla|island|king kong                :   3  
+ assistant|experiment|frankenstein|medical student|scientist                      :   3  
+ (Other)                                                                          :4874  
+ NA's                                                                             : 153  
+                                             movie_imdb_link
+ http://www.imdb.com/title/tt0077651/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt0232500/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt0360717/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt1976009/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt2224026/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt2638144/?ref_=fn_tt_tt_1:   3  
+ (Other)                                             :5025  
+ num_user_for_reviews     language       country       content_rating
+ Min.   :   1.0       English :4704   USA    :3807   R        :2118  
+ 1st Qu.:  65.0       French  :  73   UK     : 448   PG-13    :1461  
+ Median : 156.0       Spanish :  40   France : 154   PG       : 701  
+ Mean   : 272.8       Hindi   :  28   Canada : 126   Not Rated: 116  
+ 3rd Qu.: 326.0       Mandarin:  26   Germany:  97   G        : 112  
+ Max.   :5060.0       (Other) : 160   (Other): 406   (Other)  : 232  
+ NA's   :21           NA's    :  12   NA's   :   5   NA's     : 303  
+     budget            title_year   actor_2_facebook_likes   imdb_score   
+ Min.   :2.180e+02   Min.   :1916   Min.   :     0         Min.   :1.600  
+ 1st Qu.:6.000e+06   1st Qu.:1999   1st Qu.:   281         1st Qu.:5.800  
+ Median :2.000e+07   Median :2005   Median :   595         Median :6.600  
+ Mean   :3.975e+07   Mean   :2002   Mean   :  1652         Mean   :6.442  
+ 3rd Qu.:4.500e+07   3rd Qu.:2011   3rd Qu.:   918         3rd Qu.:7.200  
+ Max.   :1.222e+10   Max.   :2016   Max.   :137000         Max.   :9.500  
+ NA's   :492         NA's   :108    NA's   :13                            
+  aspect_ratio   movie_facebook_likes
+ Min.   : 1.18   Min.   :     0      
+ 1st Qu.: 1.85   1st Qu.:     0      
+ Median : 2.35   Median :   166      
+ Mean   : 2.22   Mean   :  7526      
+ 3rd Qu.: 2.35   3rd Qu.:  3000      
+ Max.   :16.00   Max.   :349000      
+ NA's   :329                         </code></pre>
+</div>
+</div>
+<p>Follow-up:</p>
+<ul>
+<li>What type of info is provided on quantitative variables?</li>
+</ul>
+<blockquote class="blockquote">
+<p>Numerical summaries</p>
+</blockquote>
+<ul>
+<li>What type of info is provided on categorical variables?</li>
+</ul>
+<blockquote class="blockquote">
+<p>All categories and counts for each category</p>
+</blockquote>
+<ul>
+<li>What stands out to you in these summaries? Is there anything you’d need to clean before using this data?</li>
+</ul></section></section><section id="exercise-4-clean-data-factor-variables-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-4-clean-data-factor-variables-1">Exercise 4: Clean Data: Factor Variables 1</h3>
+<p>If you didn’t already in Exercise 3, check out the <code>color</code> variable in the <code>imdb_messy</code> dataset.</p>
+<ul>
+<li>What’s goofy about this / what do we need to fix?</li>
+<li>More specifically, what different categories does the <code>color</code> variable take, and how many movies fall into each of these categories?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">select</span>(color) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             color     
+ B&amp;W            :  10  
+ Black and White: 199  
+ color          :  30  
+ Color          :4755  
+ COLOR          :  30  
+ NA's           :  19  </code></pre>
+</div>
+</div>
+</section><section id="exercise-5-clean-data-factor-variables-2" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-5-clean-data-factor-variables-2">Exercise 5: Clean Data: Factor Variables 2</h3>
+<p>When working with categorical variables like <code>color</code>, the categories must be “clean”, i.e.&nbsp;consistent and in the correct format. Let’s make that happen.</p>
+<section id="part-a-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-3">Part a</h4>
+<p>We <em>could</em> open the .csv file in, say, Excel or Google sheets, clean up the <code>color</code> variable, save a clean copy, and then reimport that into RStudio. BUT that would be the wrong thing to do. Why is it important to use R code, which we then save inside this qmd, to clean our data?</p>
+<blockquote class="blockquote">
+<p>To not modify anyone’s work at the source</p>
+</blockquote>
+</section><section id="part-b-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-3">Part b</h4>
+<p>Let’s use R code to change the <code>color</code> variable so that it appropriately combines the various categories into only 2: <code>Color</code> and <code>Black_White</code>. We’ve learned a couple sets of string-related tools that could be handy here. First, starting with the <code>imdb_messy</code> data, change the <code>color</code> variable using one of the functions we learned in the <strong>Factors</strong> lesson.</p>
+<p><code>fct_relevel()</code>, <code>fct_recode()</code>, <code>fct_reorder()</code></p>
+<p>Store your results in <code>imdb_temp</code> (don’t overwrite <code>imdb_messy</code>). To check your work, print out a <code>count()</code> table of the <code>color</code> variable in <code>imdb_temp</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">fct_recode</span>(color, </span>
+<span id="cb13-3"><a href="#cb13-3"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"color"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"COLOR"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"B&amp;W"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"Black and White"</span>)) </span>
+<span id="cb13-7"><a href="#cb13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="fu">count</span>(imdb_temp, color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  color           n
+  &lt;fct&gt;       &lt;int&gt;
+1 Black_White   209
+2 Color        4815
+3 &lt;NA&gt;           19</code></pre>
+</div>
+</div>
+</section><section id="part-c-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-1">Part c</h4>
+<p>Repeat Part b using one of our string functions from the <strong>String</strong> lesson:</p>
+<p><code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_to_lower()</code>, <code>str_sub()</code>, <code>str_length()</code>, <code>str_detect()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"color"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb15-3"><a href="#cb15-3"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"COLOR"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb15-4"><a href="#cb15-4"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"B&amp;W"</span>, <span class="st">"Black_White"</span>),</span>
+<span id="cb15-5"><a href="#cb15-5"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"Black and White"</span>, <span class="st">"Black_White"</span>))</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="fu">count</span>(imdb_temp, color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  color           n
+  &lt;chr&gt;       &lt;int&gt;
+1 Black_White   209
+2 Color        4815
+3 &lt;NA&gt;           19</code></pre>
+</div>
+</div>
+</section></section><section id="exercise-6-clean-data-missing-data-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-6-clean-data-missing-data-1">Exercise 6: Clean Data: Missing Data 1</h3>
+<p>Throughout these exercises, you’ve probably noticed that there’s a bunch of missing data. This is encoded as <code>NA</code> (not available) in R. There are a few questions to address about missing data:</p>
+<ul>
+<li>
+<em>How many</em> values are missing data? What’s the volume of the missingness?</li>
+<li>
+<em>Why</em> are some values missing?</li>
+<li>
+<em>What</em> should we do about the missing values?</li>
+</ul>
+<p>Let’s consider the first 2 questions in this exercise.</p>
+<section id="part-a-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-4">Part a</h4>
+<p>As a first step, let’s simply understand the <em>volume</em> of NAs. Specifically:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Count the total number of rows in imdb_messy</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">nrow</span>(imdb_messy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5043</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Then count the number of NAs in each column</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(imdb_messy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     ...1                     color             director_name 
+                        0                        19                       104 
+   num_critic_for_reviews                  duration   director_facebook_likes 
+                       50                        15                       104 
+   actor_3_facebook_likes              actor_2_name    actor_1_facebook_likes 
+                       23                        13                         7 
+                    gross                    genres              actor_1_name 
+                      884                         0                         7 
+              movie_title           num_voted_users cast_total_facebook_likes 
+                        0                         0                         0 
+             actor_3_name      facenumber_in_poster             plot_keywords 
+                       23                        13                       153 
+          movie_imdb_link      num_user_for_reviews                  language 
+                        0                        21                        12 
+                  country            content_rating                    budget 
+                        5                       303                       492 
+               title_year    actor_2_facebook_likes                imdb_score 
+                      108                        13                         0 
+             aspect_ratio      movie_facebook_likes 
+                      329                         0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Then count the number of NAs in a specific column</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co">#imdb_messy |&gt; </span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co">#  ___(___(is.na(actor_1_facebook_likes)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="part-b-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-4">Part b</h4>
+<p>As a second step, let’s think about <em>why</em> some values are missing. Study the individual observations with NAs carefully. Why do you think they are missing? Are certain films more likely to have more NAs than others?</p>
+</section><section id="part-c-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-2">Part c</h4>
+<p>Consider a more specific example. Obtain a dataset of movies that are missing data on <code>actor_1_facebook_likes</code>. Then explain why you think there are NAs. HINT: <code>is.na(___)</code></p>
+</section></section><section id="exercise-7-clean-data-missing-data-2" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-7-clean-data-missing-data-2">Exercise 7: Clean Data: Missing Data 2</h3>
+<p>Next, let’s think about what to <em>do</em> about the missing values. There is no perfect or universal approach here. Rather, we must think carefully about…</p>
+<ul>
+<li>Why the values are missing?</li>
+<li>What we want to do with our data?</li>
+<li>What is the impact of removing or replacing missing data on our work / conclusions?</li>
+</ul>
+<section id="part-a-5" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-5">Part a</h4>
+<p>Calculate the average duration of a film. THINK: How can we deal with the NA’s?</p>
+<p>Follow-up:</p>
+<p>How are the NAs dealt with here? Did we have to create and save a new dataset in order to do this analysis?</p>
+</section><section id="part-b-5" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-5">Part b</h4>
+<p>Try out the <code>drop_na()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># imdb_temp &lt;- drop_na(imdb_messy)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Follow-up questions:</p>
+<ul>
+<li>What did <code>drop_na()</code> do? How many data points are left?</li>
+<li>In what situations might this function be a good idea?</li>
+<li>In what situations might this function be a bad idea?</li>
+</ul></section><section id="part-c-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-3">Part c</h4>
+<p><code>drop_na()</code> removes data points that have <em>any</em> NA values, even if we don’t care about the variable(s) for which data is missing. This can result in losing a lot of data points that <em>do</em> have data on the variables we actually care about! For example, suppose we only want to explore the relationship between film <code>duration</code> and whether it’s in <code>color</code>. Check out a plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># ggplot(imdb_messy, aes(x = duration, fill = color)) + </span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="co">#   geom_density()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Follow-up:</p>
+<ul>
+<li>Create a new dataset with <em>only</em> and <em>all</em> movies that have complete info on <code>duration</code> and <code>color</code>. HINT: You could use <code>!is.na(___)</code> or <code>drop_na()</code> (differently than above)</li>
+<li>Use this new dataset to create a new and improved plot.</li>
+<li>How many movies remain in your new dataset? Hence why this is better than using the dataset from part b?</li>
+</ul></section><section id="part-d" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-d">Part d</h4>
+<p>In some cases, missing data is more <em>non</em>-data than <em>unknown</em> data. For example, the films with NAs for <code>actor_1_facebook_likes</code> actually have <em>0</em> Facebook likes–they don’t even have actors! In these cases, we can <em>replace</em> the NAs with a 0. Use the <code>replace_na()</code> function to create a new dataset (<code>imdb_temp</code>) that replaces the NAs in <code>actor_1_facebook_likes</code> with 0. You’ll have to check out the help file for this function.</p>
+</section></section><section id="exercise-8-new-data-projects" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-8-new-data-projects">Exercise 8: New Data + Projects</h3>
+<p>Let’s practice the above ideas while also planting some seeds for the course project. Each group will pick and analyze their own dataset. The people you’re sitting with today aren’t necessarily your project groups! BUT do some brainstorming together:</p>
+<ul>
+<li><p>Share with each other: What are some personal hobbies or passions or things you’ve been thinking about or things you’d like to learn more about? Don’t think too hard about this! Just share what’s at the top of mind today.</p></li>
+<li><p>Each individual: Find a dataset online that’s related to one of the topics you shared in the above prompt.</p></li>
+<li><p>Discuss what data you found with your group!</p></li>
+<li><p>Load the data into RStudio, perform some basic checks, and perform some preliminary cleaning, as necessary.</p></li>
+</ul></section></section><section id="solutions" class="level2" data-number="21.4"><h2 data-number="21.4" class="anchored" data-anchor-id="solutions">
+<span class="header-section-number">21.4</span> Solutions</h2>
+<details><summary>
+Click for Solutions
+</summary><section id="exercise-3-check-data-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-3-check-data-1">Exercise 3: Check Data</h3>
+<section id="part-b-6" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-6">Part b</h4>
+<p>There are many NA’s, the <code>color</code> variable is goofy…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span>  <span class="co"># convert characters to factors in order to summarize</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ...1                  color               director_name 
+ Min.   :   1   B&amp;W            :  10   Steven Spielberg:  26  
+ 1st Qu.:1262   Black and White: 199   Woody Allen     :  22  
+ Median :2522   color          :  30   Clint Eastwood  :  20  
+ Mean   :2522   Color          :4755   Martin Scorsese :  20  
+ 3rd Qu.:3782   COLOR          :  30   Ridley Scott    :  17  
+ Max.   :5043   NA's           :  19   (Other)         :4834  
+                                       NA's            : 104  
+ num_critic_for_reviews    duration     director_facebook_likes
+ Min.   :  1.0          Min.   :  7.0   Min.   :    0.0        
+ 1st Qu.: 50.0          1st Qu.: 93.0   1st Qu.:    7.0        
+ Median :110.0          Median :103.0   Median :   49.0        
+ Mean   :140.2          Mean   :107.2   Mean   :  686.5        
+ 3rd Qu.:195.0          3rd Qu.:118.0   3rd Qu.:  194.5        
+ Max.   :813.0          Max.   :511.0   Max.   :23000.0        
+ NA's   :50             NA's   :15      NA's   :104            
+ actor_3_facebook_likes          actor_2_name  actor_1_facebook_likes
+ Min.   :    0.0        Morgan Freeman :  20   Min.   :     0        
+ 1st Qu.:  133.0        Charlize Theron:  15   1st Qu.:   614        
+ Median :  371.5        Brad Pitt      :  14   Median :   988        
+ Mean   :  645.0        James Franco   :  11   Mean   :  6560        
+ 3rd Qu.:  636.0        Meryl Streep   :  11   3rd Qu.: 11000        
+ Max.   :23000.0        (Other)        :4959   Max.   :640000        
+ NA's   :23             NA's           :  13   NA's   :7             
+     gross                            genres             actor_1_name 
+ Min.   :      162   Drama               : 236   Robert De Niro:  49  
+ 1st Qu.:  5340988   Comedy              : 209   Johnny Depp   :  41  
+ Median : 25517500   Comedy|Drama        : 191   Nicolas Cage  :  33  
+ Mean   : 48468408   Comedy|Drama|Romance: 187   J.K. Simmons  :  31  
+ 3rd Qu.: 62309438   Comedy|Romance      : 158   Bruce Willis  :  30  
+ Max.   :760505847   Drama|Romance       : 152   (Other)       :4852  
+ NA's   :884         (Other)             :3910   NA's          :   7  
+                    movie_title   num_voted_users   cast_total_facebook_likes
+ Ben-Hur&nbsp;                 :   3   Min.   :      5   Min.   :     0           
+ Halloween&nbsp;               :   3   1st Qu.:   8594   1st Qu.:  1411           
+ Home&nbsp;                    :   3   Median :  34359   Median :  3090           
+ King Kong&nbsp;               :   3   Mean   :  83668   Mean   :  9699           
+ Pan&nbsp;                     :   3   3rd Qu.:  96309   3rd Qu.: 13756           
+ The Fast and the Furious&nbsp;:   3   Max.   :1689764   Max.   :656730           
+ (Other)                  :5025                                              
+         actor_3_name  facenumber_in_poster
+ Ben Mendelsohn:   8   Min.   : 0.000      
+ John Heard    :   8   1st Qu.: 0.000      
+ Steve Coogan  :   8   Median : 1.000      
+ Anne Hathaway :   7   Mean   : 1.371      
+ Jon Gries     :   7   3rd Qu.: 2.000      
+ (Other)       :4982   Max.   :43.000      
+ NA's          :  23   NA's   :13          
+                                                                           plot_keywords 
+ based on novel                                                                   :   4  
+ 1940s|child hero|fantasy world|orphan|reference to peter pan                     :   3  
+ alien friendship|alien invasion|australia|flying car|mother daughter relationship:   3  
+ animal name in title|ape abducts a woman|gorilla|island|king kong                :   3  
+ assistant|experiment|frankenstein|medical student|scientist                      :   3  
+ (Other)                                                                          :4874  
+ NA's                                                                             : 153  
+                                             movie_imdb_link
+ http://www.imdb.com/title/tt0077651/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt0232500/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt0360717/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt1976009/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt2224026/?ref_=fn_tt_tt_1:   3  
+ http://www.imdb.com/title/tt2638144/?ref_=fn_tt_tt_1:   3  
+ (Other)                                             :5025  
+ num_user_for_reviews     language       country       content_rating
+ Min.   :   1.0       English :4704   USA    :3807   R        :2118  
+ 1st Qu.:  65.0       French  :  73   UK     : 448   PG-13    :1461  
+ Median : 156.0       Spanish :  40   France : 154   PG       : 701  
+ Mean   : 272.8       Hindi   :  28   Canada : 126   Not Rated: 116  
+ 3rd Qu.: 326.0       Mandarin:  26   Germany:  97   G        : 112  
+ Max.   :5060.0       (Other) : 160   (Other): 406   (Other)  : 232  
+ NA's   :21           NA's    :  12   NA's   :   5   NA's     : 303  
+     budget            title_year   actor_2_facebook_likes   imdb_score   
+ Min.   :2.180e+02   Min.   :1916   Min.   :     0         Min.   :1.600  
+ 1st Qu.:6.000e+06   1st Qu.:1999   1st Qu.:   281         1st Qu.:5.800  
+ Median :2.000e+07   Median :2005   Median :   595         Median :6.600  
+ Mean   :3.975e+07   Mean   :2002   Mean   :  1652         Mean   :6.442  
+ 3rd Qu.:4.500e+07   3rd Qu.:2011   3rd Qu.:   918         3rd Qu.:7.200  
+ Max.   :1.222e+10   Max.   :2016   Max.   :137000         Max.   :9.500  
+ NA's   :492         NA's   :108    NA's   :13                            
+  aspect_ratio   movie_facebook_likes
+ Min.   : 1.18   Min.   :     0      
+ 1st Qu.: 1.85   1st Qu.:     0      
+ Median : 2.35   Median :   166      
+ Mean   : 2.22   Mean   :  7526      
+ 3rd Qu.: 2.35   3rd Qu.:  3000      
+ Max.   :16.00   Max.   :349000      
+ NA's   :329                         </code></pre>
+</div>
+</div>
+</section></section><section id="exercise-4-clean-data-factor-variables-1-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-4-clean-data-factor-variables-1-1">Exercise 4: Clean Data: Factor Variables 1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">count</span>(color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  color               n
+  &lt;chr&gt;           &lt;int&gt;
+1 B&amp;W                10
+2 Black and White   199
+3 COLOR              30
+4 Color            4755
+5 color              30
+6 &lt;NA&gt;               19</code></pre>
+</div>
+</div>
+</section><section id="exercise-5-clean-data-factor-variables-2-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-5-clean-data-factor-variables-2-1">Exercise 5: Clean Data: Factor Variables 2</h3>
+<section id="part-a-6" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-6">Part a</h4>
+<p>That wouldn’t be <strong>reproducible</strong>. It’s important to log all steps in our data cleaning, so that we and others know and could reproduce those steps.</p>
+</section><section id="part-b-7" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-7">Part b</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">fct_recode</span>(color,</span>
+<span id="cb28-3"><a href="#cb28-3"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"COLOR"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"color"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"B&amp;W"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"Black and White"</span>))</span>
+<span id="cb28-7"><a href="#cb28-7"></a></span>
+<span id="cb28-8"><a href="#cb28-8"></a>imdb_temp <span class="sc">|&gt;</span> </span>
+<span id="cb28-9"><a href="#cb28-9"></a>  <span class="fu">count</span>(color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  color           n
+  &lt;fct&gt;       &lt;int&gt;
+1 Black_White   209
+2 Color        4815
+3 &lt;NA&gt;           19</code></pre>
+</div>
+</div>
+</section><section id="part-c-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-4">Part c</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"COLOR"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb30-3"><a href="#cb30-3"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"color"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb30-4"><a href="#cb30-4"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"B&amp;W"</span>, <span class="st">"Black_White"</span>),</span>
+<span id="cb30-5"><a href="#cb30-5"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"Black and White"</span>, <span class="st">"Black_White"</span>))</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a>imdb_temp <span class="sc">|&gt;</span> </span>
+<span id="cb30-8"><a href="#cb30-8"></a>  <span class="fu">count</span>(color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  color           n
+  &lt;chr&gt;       &lt;int&gt;
+1 Black_White   209
+2 Color        4815
+3 &lt;NA&gt;           19</code></pre>
+</div>
+</div>
+</section></section><section id="exercise-6-clean-data-missing-data-1-1" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-6-clean-data-missing-data-1-1">Exercise 6: Clean Data: Missing Data 1</h3>
+<section id="part-a-7" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-7">Part a</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Count the total number of rows in imdb_messy</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">nrow</span>(imdb_messy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5043</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Then count the number of NAs in each column</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(imdb_messy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     ...1                     color             director_name 
+                        0                        19                       104 
+   num_critic_for_reviews                  duration   director_facebook_likes 
+                       50                        15                       104 
+   actor_3_facebook_likes              actor_2_name    actor_1_facebook_likes 
+                       23                        13                         7 
+                    gross                    genres              actor_1_name 
+                      884                         0                         7 
+              movie_title           num_voted_users cast_total_facebook_likes 
+                        0                         0                         0 
+             actor_3_name      facenumber_in_poster             plot_keywords 
+                       23                        13                       153 
+          movie_imdb_link      num_user_for_reviews                  language 
+                        0                        21                        12 
+                  country            content_rating                    budget 
+                        5                       303                       492 
+               title_year    actor_2_facebook_likes                imdb_score 
+                      108                        13                         0 
+             aspect_ratio      movie_facebook_likes 
+                      329                         0 </code></pre>
+</div>
+</div>
+</section><section id="part-c-5" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-5">Part c</h4>
+<p>These are all documentaries that don’t have any actors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(actor_1_facebook_likes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 29
+   ...1 color director_name     num_critic_for_reviews duration
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                              &lt;dbl&gt;    &lt;dbl&gt;
+1  4503 Color Léa Pool                              23       97
+2  4520 Color Harry Gantz                           12      105
+3  4721 Color U. Roberto Romano                      3       80
+4  4838 Color Pan Nalin                             15      102
+5  4946 Color Amal Al-Agroobi                       NA       62
+6  4947 Color Andrew Berends                        12       90
+7  4991 Color Jem Cohen                             12      111
+# ℹ 24 more variables: director_facebook_likes &lt;dbl&gt;,
+#   actor_3_facebook_likes &lt;dbl&gt;, actor_2_name &lt;chr&gt;,
+#   actor_1_facebook_likes &lt;dbl&gt;, gross &lt;dbl&gt;, genres &lt;chr&gt;,
+#   actor_1_name &lt;chr&gt;, movie_title &lt;chr&gt;, num_voted_users &lt;dbl&gt;,
+#   cast_total_facebook_likes &lt;dbl&gt;, actor_3_name &lt;chr&gt;,
+#   facenumber_in_poster &lt;dbl&gt;, plot_keywords &lt;chr&gt;, movie_imdb_link &lt;chr&gt;,
+#   num_user_for_reviews &lt;dbl&gt;, language &lt;chr&gt;, country &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+</section></section><section id="exercise-7-clean-missing-data-2" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-7-clean-missing-data-2">Exercise 7: Clean: Missing Data 2</h3>
+<section id="part-a-8" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-8">Part a</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(duration, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `mean(duration, na.rm = TRUE)`
+                           &lt;dbl&gt;
+1                           107.</code></pre>
+</div>
+</div>
+<p>Follow-up:</p>
+<p>We just remove the NAs from the calculation. No need to entirely remove the related movies from the dataset.</p>
+</section><section id="part-b-8" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-8">Part b</h4>
+<p>This gets rid of any movie with any NAs. There are only 3756 movies left! This approach is heavy-handed. It’s typically only a good idea when we need complete info on every variable for every part of our analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>imdb_temp <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(imdb_messy)</span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="fu">nrow</span>(imdb_temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3756</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(imdb_temp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     ...1                     color             director_name 
+                        0                         0                         0 
+   num_critic_for_reviews                  duration   director_facebook_likes 
+                        0                         0                         0 
+   actor_3_facebook_likes              actor_2_name    actor_1_facebook_likes 
+                        0                         0                         0 
+                    gross                    genres              actor_1_name 
+                        0                         0                         0 
+              movie_title           num_voted_users cast_total_facebook_likes 
+                        0                         0                         0 
+             actor_3_name      facenumber_in_poster             plot_keywords 
+                        0                         0                         0 
+          movie_imdb_link      num_user_for_reviews                  language 
+                        0                         0                         0 
+                  country            content_rating                    budget 
+                        0                         0                         0 
+               title_year    actor_2_facebook_likes                imdb_score 
+                        0                         0                         0 
+             aspect_ratio      movie_facebook_likes 
+                        0                         0 </code></pre>
+</div>
+</div>
+</section><section id="part-c-6" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c-6">Part c</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">ggplot</span>(imdb_messy, <span class="fu">aes</span>(<span class="at">x =</span> duration, <span class="at">fill =</span> color)) <span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ica-data-import_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We keep most of the movies!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Approach 1</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">select</span>(duration, color) <span class="sc">|&gt;</span> </span>
+<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="fu">dim</span>(imdb_temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5010    2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># Approach 2</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duration), <span class="sc">!</span><span class="fu">is.na</span>(color))</span>
+<span id="cb47-4"><a href="#cb47-4"></a><span class="fu">dim</span>(imdb_temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5010   29</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Plot</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="fu">ggplot</span>(imdb_temp, <span class="fu">aes</span>(<span class="at">x =</span> duration, <span class="at">fill =</span> color)) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ica-data-import_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="part-d-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-d-1">Part d</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">mutate</span>(<span class="at">actor_1_facebook_likes =</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a>         <span class="fu">replace_na</span>(actor_1_facebook_likes, <span class="dv">0</span>))</span>
+<span id="cb50-4"><a href="#cb50-4"></a></span>
+<span id="cb50-5"><a href="#cb50-5"></a>imdb_temp <span class="sc">|&gt;</span> </span>
+<span id="cb50-6"><a href="#cb50-6"></a>  <span class="fu">summarize</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(actor_1_facebook_likes)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `sum(is.na(actor_1_facebook_likes))`
+                                 &lt;int&gt;
+1                                    0</code></pre>
+</div>
+</div>
+</section></section></details>
+
+<!-- -->
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>Particularly important questions about how it was collected include <strong>who</strong>: Is it a sample of a larger data set? If so, how the sampling was done? Randomly? All cases during a specific time frame? All data for a selected set of users?, <strong>when</strong>: Is this current data? Historical? What events may have had an impact?, <strong>what</strong>: What variables were measured? How was it measured? Self-reported through a questionnaire? Directly?, <strong>why</strong>: Who funded the data collection? What was the purposes? To whose benefit was the data collected? Answers to such questions strongly impact the conclusions you will be able to draw from the data.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../ica/ica-strings.html" class="pagination-link" aria-label="Strings">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Strings</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb52" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb52-1"><a href="#cb52-1"></a><span class="co">---</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="an">title:</span><span class="co"> "Data Import"</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="an">number-sections:</span><span class="co"> true</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb52-5"><a href="#cb52-5"></a><span class="co">  warning: false</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a><span class="an">fig-env:</span><span class="co"> 'figure'</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a><span class="an">fig-pos:</span><span class="co"> 'h'</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a><span class="an">fig-align:</span><span class="co"> center</span></span>
+<span id="cb52-9"><a href="#cb52-9"></a><span class="an">code-fold:</span><span class="co"> false</span></span>
+<span id="cb52-10"><a href="#cb52-10"></a><span class="co">---</span></span>
+<span id="cb52-11"><a href="#cb52-11"></a></span>
+<span id="cb52-12"><a href="#cb52-12"></a></span>
+<span id="cb52-13"><a href="#cb52-13"></a>::: {.callout-caution title="Learning Goals"}</span>
+<span id="cb52-14"><a href="#cb52-14"></a></span>
+<span id="cb52-15"><a href="#cb52-15"></a>Get a glimpse into how to...</span>
+<span id="cb52-16"><a href="#cb52-16"></a></span>
+<span id="cb52-17"><a href="#cb52-17"></a><span class="ss">-   </span>find existing data sets</span>
+<span id="cb52-18"><a href="#cb52-18"></a><span class="ss">-   </span>save data sets locally</span>
+<span id="cb52-19"><a href="#cb52-19"></a><span class="ss">-   </span>load data into RStudio</span>
+<span id="cb52-20"><a href="#cb52-20"></a><span class="ss">-   </span>do some preliminary data checking and cleaning steps before further wrangling / visualization:</span>
+<span id="cb52-21"><a href="#cb52-21"></a><span class="ss">    -   </span>make sure variables are properly formatted</span>
+<span id="cb52-22"><a href="#cb52-22"></a><span class="ss">    -   </span>deal with missing values</span>
+<span id="cb52-23"><a href="#cb52-23"></a></span>
+<span id="cb52-24"><a href="#cb52-24"></a>**NOTE:** These skills are best learned through practice. We'll just scratch the surface here.</span>
+<span id="cb52-25"><a href="#cb52-25"></a></span>
+<span id="cb52-26"><a href="#cb52-26"></a>:::</span>
+<span id="cb52-27"><a href="#cb52-27"></a></span>
+<span id="cb52-28"><a href="#cb52-28"></a></span>
+<span id="cb52-29"><a href="#cb52-29"></a>::: {.callout-note title="Additional Resources"}</span>
+<span id="cb52-30"><a href="#cb52-30"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Using the import wizard (YouTube)</span><span class="co">](https://www.youtube.com/watch?v=GtCsjtZBNp4)</span> by Lisa Lendway</span>
+<span id="cb52-31"><a href="#cb52-31"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">data import cheat sheet (pdf)</span><span class="co">](https://github.com/rstudio/cheatsheets/raw/main/data-import.pdf)</span>\</span>
+<span id="cb52-32"><a href="#cb52-32"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">`readr` documentation (html)</span><span class="co">](https://readr.tidyverse.org/)</span></span>
+<span id="cb52-33"><a href="#cb52-33"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Data import (html)</span><span class="co">](https://r4ds.hadley.nz/data-import.html)</span> by Wickham and Grolemund</span>
+<span id="cb52-34"><a href="#cb52-34"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Missing data (html)</span><span class="co">](https://r4ds.hadley.nz/missing-values.html)</span> by Wickham and Grolemund</span>
+<span id="cb52-35"><a href="#cb52-35"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Data intake (html)</span><span class="co">](https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-intake)</span> by Baumer, Kaplan, and Horton</span>
+<span id="cb52-36"><a href="#cb52-36"></a>:::</span>
+<span id="cb52-37"><a href="#cb52-37"></a></span>
+<span id="cb52-38"><a href="#cb52-38"></a></span>
+<span id="cb52-39"><a href="#cb52-39"></a></span>
+<span id="cb52-40"><a href="#cb52-40"></a><span class="fu">## Review</span></span>
+<span id="cb52-41"><a href="#cb52-41"></a></span>
+<span id="cb52-42"><a href="#cb52-42"></a>**WHERE ARE WE?**</span>
+<span id="cb52-43"><a href="#cb52-43"></a></span>
+<span id="cb52-44"><a href="#cb52-44"></a>We've thus far focused on data preparation and visualization:</span>
+<span id="cb52-45"><a href="#cb52-45"></a></span>
+<span id="cb52-46"><a href="#cb52-46"></a><span class="al">![](https://mac-stat.github.io/images/112/legos.png)</span></span>
+<span id="cb52-47"><a href="#cb52-47"></a></span>
+<span id="cb52-48"><a href="#cb52-48"></a>What's coming up?</span>
+<span id="cb52-49"><a href="#cb52-49"></a></span>
+<span id="cb52-50"><a href="#cb52-50"></a><span class="ss">-   </span>In the last few weeks we'll focus on data storytelling through the completion of a course project.</span>
+<span id="cb52-51"><a href="#cb52-51"></a></span>
+<span id="cb52-52"><a href="#cb52-52"></a><span class="ss">-   </span>This week we'll address the other gaps in the workflow: data collection and analysis. We'll do so in the context of starting a data project...</span>
+<span id="cb52-53"><a href="#cb52-53"></a></span>
+<span id="cb52-54"><a href="#cb52-54"></a></span>
+<span id="cb52-55"><a href="#cb52-55"></a><span class="fu">## Data Import</span></span>
+<span id="cb52-56"><a href="#cb52-56"></a></span>
+<span id="cb52-57"><a href="#cb52-57"></a><span class="fu">### Starting Data Project {-}</span></span>
+<span id="cb52-58"><a href="#cb52-58"></a></span>
+<span id="cb52-59"><a href="#cb52-59"></a>Any data science project consists of two phases:</span>
+<span id="cb52-60"><a href="#cb52-60"></a></span>
+<span id="cb52-61"><a href="#cb52-61"></a><span class="ss">1.  </span>Data Collection\</span>
+<span id="cb52-62"><a href="#cb52-62"></a>    A data project starts with data! Thus far, you've either been given data, or used TidyTuesday data. In this unit:</span>
+<span id="cb52-63"><a href="#cb52-63"></a></span>
+<span id="cb52-64"><a href="#cb52-64"></a><span class="ss">    -   </span>We *WILL* explore how to find data, save data, import this data into RStudio, and do some preliminary data cleaning.</span>
+<span id="cb52-65"><a href="#cb52-65"></a><span class="ss">    -   </span>We will *NOT* discuss how to collect data from scratch (e.g. via experiment, observational study, or survey).</span>
+<span id="cb52-66"><a href="#cb52-66"></a></span>
+<span id="cb52-67"><a href="#cb52-67"></a><span class="ss">2.  </span>Data Analysis\</span>
+<span id="cb52-68"><a href="#cb52-68"></a>    Once we have data, we need to do some analysis. In this unit...</span>
+<span id="cb52-69"><a href="#cb52-69"></a></span>
+<span id="cb52-70"><a href="#cb52-70"></a><span class="ss">    -   </span>We *WILL* bring together our wrangling &amp; visualization tools to discuss **exploratory data analysis (EDA)**. EDA is the process of getting to know our data, obtaining insights from data, and using these insights to formulate, refine, and explore research questions.</span>
+<span id="cb52-71"><a href="#cb52-71"></a><span class="ss">    -   </span>We will *NOT* explore other types of analysis, such as modeling &amp; prediction--if interested, take STAT 155 and 253 to learn more about these topics.</span>
+<span id="cb52-72"><a href="#cb52-72"></a></span>
+<span id="cb52-73"><a href="#cb52-73"></a>**NOTE:** These skills are best learned through practice. We'll just scratch the surface here.</span>
+<span id="cb52-74"><a href="#cb52-74"></a></span>
+<span id="cb52-75"><a href="#cb52-75"></a></span>
+<span id="cb52-76"><a href="#cb52-76"></a></span>
+<span id="cb52-77"><a href="#cb52-77"></a><span class="fu">### File Formats {-}</span></span>
+<span id="cb52-78"><a href="#cb52-78"></a></span>
+<span id="cb52-79"><a href="#cb52-79"></a>Before exploring how to find, store, import, check, and clean data, it's important to recognize that **data can be stored in various formats**. We've been working with <span class="in">`.csv`</span> files. In the background, these have "comma-separated values" (csv):</span>
+<span id="cb52-80"><a href="#cb52-80"></a></span>
+<span id="cb52-81"><a href="#cb52-81"></a></span>
+<span id="cb52-82"><a href="#cb52-82"></a><span class="al">![](https://mac-stat.github.io/images/112/bikes_csv.png)</span>{width="50%"}</span>
+<span id="cb52-83"><a href="#cb52-83"></a></span>
+<span id="cb52-84"><a href="#cb52-84"></a></span>
+<span id="cb52-85"><a href="#cb52-85"></a>But there are many other common file types. For example, the following are compatible with R:</span>
+<span id="cb52-86"><a href="#cb52-86"></a></span>
+<span id="cb52-87"><a href="#cb52-87"></a><span class="ss">-   </span>Excel files: <span class="in">`.xls`</span>, <span class="in">`.xlsx`</span></span>
+<span id="cb52-88"><a href="#cb52-88"></a><span class="ss">-   </span>R "data serialization" files: <span class="in">`.rds`</span></span>
+<span id="cb52-89"><a href="#cb52-89"></a><span class="ss">-   </span>files with tab-separated values: <span class="in">`.tsv`</span></span>
+<span id="cb52-90"><a href="#cb52-90"></a></span>
+<span id="cb52-91"><a href="#cb52-91"></a><span class="al">![](https://mac-stat.github.io/images/112/bikes_tsv.png)</span>{width="50%"}</span>
+<span id="cb52-92"><a href="#cb52-92"></a></span>
+<span id="cb52-93"><a href="#cb52-93"></a></span>
+<span id="cb52-94"><a href="#cb52-94"></a></span>
+<span id="cb52-95"><a href="#cb52-95"></a><span class="fu">### STEP 1: Find Data {.unnumbered}</span></span>
+<span id="cb52-96"><a href="#cb52-96"></a></span>
+<span id="cb52-97"><a href="#cb52-97"></a>Check the <span class="co">[</span><span class="ot">Datasets</span><span class="co">](99-data-repo.qmd)</span> page for information about how to find a dataset that fits your needs.</span>
+<span id="cb52-98"><a href="#cb52-98"></a></span>
+<span id="cb52-99"><a href="#cb52-99"></a></span>
+<span id="cb52-100"><a href="#cb52-100"></a></span>
+<span id="cb52-101"><a href="#cb52-101"></a><span class="fu">### STEP 2: Save Data Locally {.unnumbered}</span></span>
+<span id="cb52-102"><a href="#cb52-102"></a></span>
+<span id="cb52-103"><a href="#cb52-103"></a>Unless we're just doing a quick, one-off data analysis, it's important to store a local copy of a data file, i.e. save the data file to our own machine.</span>
+<span id="cb52-104"><a href="#cb52-104"></a></span>
+<span id="cb52-105"><a href="#cb52-105"></a>Mainly, we shouldn't rely on another person / institution to store a data file online, in the same place, forever!</span>
+<span id="cb52-106"><a href="#cb52-106"></a></span>
+<span id="cb52-107"><a href="#cb52-107"></a>::: {.callout-tip title="Recommendations when Saving Data"}</span>
+<span id="cb52-108"><a href="#cb52-108"></a></span>
+<span id="cb52-109"><a href="#cb52-109"></a>When saving your data, make sure they are</span>
+<span id="cb52-110"><a href="#cb52-110"></a></span>
+<span id="cb52-111"><a href="#cb52-111"></a><span class="ss">-   </span>in a nice format, eg, a <span class="in">`csv`</span> file format</span>
+<span id="cb52-112"><a href="#cb52-112"></a><span class="ss">-   </span>where you'll be able to find it again</span>
+<span id="cb52-113"><a href="#cb52-113"></a><span class="ss">-   </span>ideally, within a folder that's *dedicated* to the related project / assignment</span>
+<span id="cb52-114"><a href="#cb52-114"></a><span class="ss">-   </span>alongside the qmd file(s) where you'll record your analysis of the data</span>
+<span id="cb52-115"><a href="#cb52-115"></a></span>
+<span id="cb52-116"><a href="#cb52-116"></a>:::</span>
+<span id="cb52-117"><a href="#cb52-117"></a></span>
+<span id="cb52-118"><a href="#cb52-118"></a></span>
+<span id="cb52-119"><a href="#cb52-119"></a></span>
+<span id="cb52-120"><a href="#cb52-120"></a><span class="fu">### STEP 3: Import Data to RStudio {.unnumbered}</span></span>
+<span id="cb52-121"><a href="#cb52-121"></a></span>
+<span id="cb52-122"><a href="#cb52-122"></a>Once we have a local copy of our data file, we need to get it into RStudio! This process depends on 2 things: (1) the file *type* (e.g. .csv); and (2) the file *location*, i.e. where it's stored on your computer.</span>
+<span id="cb52-123"><a href="#cb52-123"></a></span>
+<span id="cb52-124"><a href="#cb52-124"></a></span>
+<span id="cb52-125"><a href="#cb52-125"></a></span>
+<span id="cb52-126"><a href="#cb52-126"></a>**1. FILE TYPE**</span>
+<span id="cb52-127"><a href="#cb52-127"></a></span>
+<span id="cb52-128"><a href="#cb52-128"></a>The file type indicates which *function* we'll need to import it. The table below lists some common import functions and when to use them.</span>
+<span id="cb52-129"><a href="#cb52-129"></a></span>
+<span id="cb52-130"><a href="#cb52-130"></a>| Function       | Data file type                                            |</span>
+<span id="cb52-131"><a href="#cb52-131"></a>|----------------|-------------------------------------------------------|</span>
+<span id="cb52-132"><a href="#cb52-132"></a>| <span class="in">`read_csv()`</span>   | .csv - you can save Excel files and Google Sheets as .csv |</span>
+<span id="cb52-133"><a href="#cb52-133"></a>| <span class="in">`read_delim()`</span> | other delimited formats (tab, space, etc.)                |</span>
+<span id="cb52-134"><a href="#cb52-134"></a>| <span class="in">`read_sheet()`</span> | Google Sheet                                              |</span>
+<span id="cb52-135"><a href="#cb52-135"></a>| <span class="in">`st_read()`</span>    | spatial data shapefile                                    |</span>
+<span id="cb52-136"><a href="#cb52-136"></a></span>
+<span id="cb52-137"><a href="#cb52-137"></a>NOTE: In comparison to <span class="in">`read.csv`</span>, <span class="in">`read_csv`</span> is faster when importing large data files and can more easily parse complicated datasets, eg, with dates, times, percentages.</span>
+<span id="cb52-138"><a href="#cb52-138"></a></span>
+<span id="cb52-139"><a href="#cb52-139"></a></span>
+<span id="cb52-140"><a href="#cb52-140"></a></span>
+<span id="cb52-141"><a href="#cb52-141"></a>**2. FILE LOCATION**</span>
+<span id="cb52-142"><a href="#cb52-142"></a></span>
+<span id="cb52-143"><a href="#cb52-143"></a>To import the data, we apply the appropriate function from above to the **file path**.</span>
+<span id="cb52-144"><a href="#cb52-144"></a></span>
+<span id="cb52-145"><a href="#cb52-145"></a>A file path is an address to where the file is stored on our computer or the web.</span>
+<span id="cb52-146"><a href="#cb52-146"></a></span>
+<span id="cb52-147"><a href="#cb52-147"></a>Consider "1600 Grand Ave, St. Paul, MN 55105". Think about how different parts of the address give increasingly more specific information about the location. "St. Paul, MN 55105" tells us the city and smaller region within the city, "Grand Ave" tells us the street, and "1600" tells us the specific location on the street.</span>
+<span id="cb52-148"><a href="#cb52-148"></a></span>
+<span id="cb52-149"><a href="#cb52-149"></a>In the example below, the file path is **absolute** where it tells us the location giving more and more specific information as you read it from left to right.</span>
+<span id="cb52-150"><a href="#cb52-150"></a></span>
+<span id="cb52-151"><a href="#cb52-151"></a><span class="ss">-   </span>"\~", on an Apple computer, tells you that you are looking in the user's home directory.</span>
+<span id="cb52-152"><a href="#cb52-152"></a><span class="ss">-   </span>"Desktop" tells you to go to the Desktop within that home directory.</span>
+<span id="cb52-153"><a href="#cb52-153"></a><span class="ss">-   </span>"112" tells you that you are looking in the 112 folder on the Desktop.</span>
+<span id="cb52-154"><a href="#cb52-154"></a><span class="ss">-   </span>"data" tells you to next go in the data folder in the 112 folder.</span>
+<span id="cb52-155"><a href="#cb52-155"></a><span class="ss">-   </span>"my_data.csv" tells you that you are looking for a file called my_data.csv location within the data folder.</span>
+<span id="cb52-156"><a href="#cb52-156"></a></span>
+<span id="cb52-157"><a href="#cb52-157"></a></span>
+<span id="cb52-158"><a href="#cb52-158"></a><span class="in">```{r eval = FALSE}</span></span>
+<span id="cb52-159"><a href="#cb52-159"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb52-160"><a href="#cb52-160"></a><span class="in">my_data &lt;- read_csv("~/Desktop/112/data/my_data.csv")</span></span>
+<span id="cb52-161"><a href="#cb52-161"></a><span class="in">```</span></span>
+<span id="cb52-162"><a href="#cb52-162"></a></span>
+<span id="cb52-163"><a href="#cb52-163"></a></span>
+<span id="cb52-164"><a href="#cb52-164"></a>Absolute file paths should *only* be used when reading files hosted on the web.  Otherwise, **relative** file paths should be used.  **Relative** file paths as the name suggest is relative to the file where the data file is read.</span>
+<span id="cb52-165"><a href="#cb52-165"></a></span>
+<span id="cb52-166"><a href="#cb52-166"></a><span class="in">```{r eval = FALSE}</span></span>
+<span id="cb52-167"><a href="#cb52-167"></a><span class="in"># assume the code containing this script is under a folder called /src which</span></span>
+<span id="cb52-168"><a href="#cb52-168"></a><span class="in"># is at the same level of the /data folder</span></span>
+<span id="cb52-169"><a href="#cb52-169"></a></span>
+<span id="cb52-170"><a href="#cb52-170"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb52-171"><a href="#cb52-171"></a><span class="in">my_data &lt;- read_csv("../data/my_data.csv")</span></span>
+<span id="cb52-172"><a href="#cb52-172"></a><span class="in">```</span></span>
+<span id="cb52-173"><a href="#cb52-173"></a></span>
+<span id="cb52-174"><a href="#cb52-174"></a></span>
+<span id="cb52-175"><a href="#cb52-175"></a></span>
+<span id="cb52-176"><a href="#cb52-176"></a><span class="fu">### STEP 4: Check &amp; Clean Data {.unnumbered}</span></span>
+<span id="cb52-177"><a href="#cb52-177"></a></span>
+<span id="cb52-178"><a href="#cb52-178"></a>Once the data is loaded, ask yourself a few questions:</span>
+<span id="cb52-179"><a href="#cb52-179"></a></span>
+<span id="cb52-180"><a href="#cb52-180"></a>What's the structure of the data?</span>
+<span id="cb52-181"><a href="#cb52-181"></a></span>
+<span id="cb52-182"><a href="#cb52-182"></a><span class="ss">-   </span>Use <span class="in">`str()`</span> to learn about the numbers of variables and observations as well as the classes or types of variables (date, location, string, factor, number, boolean, etc.)</span>
+<span id="cb52-183"><a href="#cb52-183"></a><span class="ss">-   </span>Use <span class="in">`head()`</span> to view the top of the data table</span>
+<span id="cb52-184"><a href="#cb52-184"></a><span class="ss">-   </span>Use <span class="in">`View()`</span> to view the data in a spreadsheet-like viewer, use this command in the Console but don't include it in your <span class="in">`qmd`</span> files since it will prevent your project from rendering.</span>
+<span id="cb52-185"><a href="#cb52-185"></a></span>
+<span id="cb52-186"><a href="#cb52-186"></a>Is there anything goofy that we need to clean before we can analyze the data?</span>
+<span id="cb52-187"><a href="#cb52-187"></a></span>
+<span id="cb52-188"><a href="#cb52-188"></a><span class="ss">-   </span>Is it in a tidy format?</span>
+<span id="cb52-189"><a href="#cb52-189"></a><span class="ss">-   </span>How many rows are there? What does the row mean? What is an observation?</span>
+<span id="cb52-190"><a href="#cb52-190"></a><span class="ss">-   </span>Is there consistent formatting for categorical variables?</span>
+<span id="cb52-191"><a href="#cb52-191"></a><span class="ss">-   </span>Is there missing data that needs to be addressed?</span>
+<span id="cb52-192"><a href="#cb52-192"></a></span>
+<span id="cb52-193"><a href="#cb52-193"></a></span>
+<span id="cb52-194"><a href="#cb52-194"></a><span class="fu">### STEP 5: Understand Data {.unnumbered}</span></span>
+<span id="cb52-195"><a href="#cb52-195"></a></span>
+<span id="cb52-196"><a href="#cb52-196"></a>Start by understanding the data that is available to you. If you have a codebook, you have struck gold! If not (the more common case), you'll need to do some detective work that often involves talking to people.</span>
+<span id="cb52-197"><a href="#cb52-197"></a></span>
+<span id="cb52-198"><a href="#cb52-198"></a>At this stage, ask yourself:</span>
+<span id="cb52-199"><a href="#cb52-199"></a></span>
+<span id="cb52-200"><a href="#cb52-200"></a><span class="ss">-   </span>Where does my data come from? How was it collected?<span class="ot">[^15-data-import-1]</span></span>
+<span id="cb52-201"><a href="#cb52-201"></a><span class="ss">-   </span>Is there a codebook? If not, how can I learn more about it?</span>
+<span id="cb52-202"><a href="#cb52-202"></a><span class="ss">-   </span>Are there people I can reach out to who have experience with this data?</span>
+<span id="cb52-203"><a href="#cb52-203"></a></span>
+<span id="cb52-204"><a href="#cb52-204"></a><span class="ot">[^15-data-import-1]: </span>Particularly important questions about how it was collected include **who**: Is it a sample of a larger data set? If so, how the sampling was done? Randomly? All cases during a specific time frame? All data for a selected set of users?, **when**: Is this current data? Historical? What events may have had an impact?, **what**: What variables were measured? How was it measured? Self-reported through a questionnaire? Directly?, **why**: Who funded the data collection? What was the purposes? To whose benefit was the data collected? Answers to such questions strongly impact the conclusions you will be able to draw from the data.</span>
+<span id="cb52-205"><a href="#cb52-205"></a></span>
+<span id="cb52-206"><a href="#cb52-206"></a><span class="fu">## Exercises</span></span>
+<span id="cb52-207"><a href="#cb52-207"></a></span>
+<span id="cb52-208"><a href="#cb52-208"></a>Suppose our goal is to work with data on movie reviews, and that we've already gone through the work to find a dataset. The <span class="in">`imdb_5000_messy.csv`</span> file is posted on Moodle. Let's work with it!</span>
+<span id="cb52-209"><a href="#cb52-209"></a></span>
+<span id="cb52-210"><a href="#cb52-210"></a></span>
+<span id="cb52-211"><a href="#cb52-211"></a><span class="fu">### Exercise 1: Save Data Locally {.unnumbered}</span></span>
+<span id="cb52-212"><a href="#cb52-212"></a></span>
+<span id="cb52-213"><a href="#cb52-213"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-214"><a href="#cb52-214"></a></span>
+<span id="cb52-215"><a href="#cb52-215"></a>On your laptop:</span>
+<span id="cb52-216"><a href="#cb52-216"></a></span>
+<span id="cb52-217"><a href="#cb52-217"></a><span class="ss">-   </span>Download the "imdb_5000_messy.csv" file from Moodle</span>
+<span id="cb52-218"><a href="#cb52-218"></a><span class="ss">-   </span>Move it to the *data* folder in your portfolio repository</span>
+<span id="cb52-219"><a href="#cb52-219"></a></span>
+<span id="cb52-220"><a href="#cb52-220"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-221"><a href="#cb52-221"></a></span>
+<span id="cb52-222"><a href="#cb52-222"></a>Hot tip: After saving your data file, it's important to record appropriate citations and info in either a new qmd (eg: "imdb_5000_messy_README.qmd") or in the qmd where you'll analyze the data. These citations should include:</span>
+<span id="cb52-223"><a href="#cb52-223"></a></span>
+<span id="cb52-224"><a href="#cb52-224"></a><span class="ss">-   </span>the data *source*, i.e. where you *found* the data</span>
+<span id="cb52-225"><a href="#cb52-225"></a><span class="ss">-   </span>the data *creator*, i.e. who / what group *collected* the original data</span>
+<span id="cb52-226"><a href="#cb52-226"></a><span class="ss">-   </span>possibly a data *codebook*, i.e. descriptions of the data variables</span>
+<span id="cb52-227"><a href="#cb52-227"></a></span>
+<span id="cb52-228"><a href="#cb52-228"></a>To this end, check out where we originally got our IMDB data:</span>
+<span id="cb52-229"><a href="#cb52-229"></a></span>
+<span id="cb52-230"><a href="#cb52-230"></a>https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata</span>
+<span id="cb52-231"><a href="#cb52-231"></a></span>
+<span id="cb52-232"><a href="#cb52-232"></a>After visiting that website, take some quick notes here on the data *source* and *creator*.</span>
+<span id="cb52-233"><a href="#cb52-233"></a></span>
+<span id="cb52-234"><a href="#cb52-234"></a><span class="at">&gt; The data was collected from TMDb by the reviewers at Kaggle.com.</span></span>
+<span id="cb52-235"><a href="#cb52-235"></a></span>
+<span id="cb52-236"><a href="#cb52-236"></a><span class="fu">### Exercise 2: Import Data to RStudio {.unnumbered}</span></span>
+<span id="cb52-237"><a href="#cb52-237"></a></span>
+<span id="cb52-238"><a href="#cb52-238"></a>Now that we have a local copy of our data file, let's get it into RStudio! Remember that this process depends on 2 things: the file *type* and *location*. Since our file *type* is a csv, we can import it using `read_csv()`. But we have to supply the file *location* through a file path. To this end, we can either use an **absolute file path** or a **relative file path**.</span>
+<span id="cb52-239"><a href="#cb52-239"></a></span>
+<span id="cb52-240"><a href="#cb52-240"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-241"><a href="#cb52-241"></a></span>
+<span id="cb52-242"><a href="#cb52-242"></a>An absolute file path describes the location of a file starting from the root or home directory. How we refer to the user root directory depends upon your machine:</span>
+<span id="cb52-243"><a href="#cb52-243"></a></span>
+<span id="cb52-244"><a href="#cb52-244"></a><span class="ss">-   </span>On a Mac: <span class="in">`~`</span></span>
+<span id="cb52-245"><a href="#cb52-245"></a><span class="ss">-   </span>On Windows: typically <span class="in">`C:\`</span></span>
+<span id="cb52-246"><a href="#cb52-246"></a></span>
+<span id="cb52-247"><a href="#cb52-247"></a>Then the complete file path to the IMDB data file in the data folder, depending on your machine an where you created your portfolio project, can be:</span>
+<span id="cb52-248"><a href="#cb52-248"></a></span>
+<span id="cb52-249"><a href="#cb52-249"></a><span class="ss">-   </span>On a Mac: <span class="in">`~/Desktop/portfolio/data/imdb_5000_messy.csv`</span></span>
+<span id="cb52-250"><a href="#cb52-250"></a><span class="ss">-   </span>On Windows: <span class="in">`C:\Desktop\portfolio\data\imdb_5000_messy.csv`</span> or <span class="in">`C:\\Desktop\\portfolio\\data\\imdb_5000_messy.csv`</span></span>
+<span id="cb52-251"><a href="#cb52-251"></a></span>
+<span id="cb52-252"><a href="#cb52-252"></a>Putting this together, use <span class="in">`read_csv()`</span> with the appropriate absolute file path to import your data into RStudio. Save this as <span class="in">`imdb_messy`</span>.</span>
+<span id="cb52-253"><a href="#cb52-253"></a></span>
+<span id="cb52-256"><a href="#cb52-256"></a><span class="in">```{r}</span></span>
+<span id="cb52-257"><a href="#cb52-257"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb52-258"><a href="#cb52-258"></a>imdb_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"..</span><span class="sc">\\</span><span class="st">data</span><span class="sc">\\</span><span class="st">imdb_5000_messy.csv"</span>)</span>
+<span id="cb52-259"><a href="#cb52-259"></a><span class="in">```</span></span>
+<span id="cb52-260"><a href="#cb52-260"></a></span>
+<span id="cb52-261"><a href="#cb52-261"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-262"><a href="#cb52-262"></a></span>
+<span id="cb52-263"><a href="#cb52-263"></a>Absolute file paths can get really long, depending upon our number of sub-folders, and they should not be used when sharing code with other and instead **relative file paths** should be used.  A **relative file path** describes the location of a file from the current "working directory", i.e. where RStudio would currently look for on your computer. Check what your working directory is *inside this qmd*:</span>
+<span id="cb52-264"><a href="#cb52-264"></a></span>
+<span id="cb52-267"><a href="#cb52-267"></a><span class="in">```{r}</span></span>
+<span id="cb52-268"><a href="#cb52-268"></a><span class="co"># This should be the folder where you stored this qmd!</span></span>
+<span id="cb52-269"><a href="#cb52-269"></a><span class="fu">getwd</span>()</span>
+<span id="cb52-270"><a href="#cb52-270"></a><span class="in">```</span></span>
+<span id="cb52-271"><a href="#cb52-271"></a></span>
+<span id="cb52-272"><a href="#cb52-272"></a>Next, check what the working directory is for the *console* by typing `getwd()` in the *console*. This is probably different, meaning that the relative file paths that will work in your qmd won't work in the console! You can either exclusively work inside your qmd, or change the working directory in your console, by navigating to the following in the upper toolbar: Session <span class="sc">\&gt;</span> Set Working Directory <span class="sc">\&gt;</span> To Source File location.</span>
+<span id="cb52-273"><a href="#cb52-273"></a></span>
+<span id="cb52-274"><a href="#cb52-274"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-275"><a href="#cb52-275"></a></span>
+<span id="cb52-276"><a href="#cb52-276"></a>As a good practice, we created a <span class="in">`data`</span> folder and saved our data file (<span class="in">`imdb_5000_messy.csv`</span>) into.</span>
+<span id="cb52-277"><a href="#cb52-277"></a></span>
+<span id="cb52-278"><a href="#cb52-278"></a>Since our .qmd analysis and .csv data live in the same project, we don't have to write out *absolute file paths* that go all the way to the root directory. We can use *relative file paths* that start from where our code file exists to where the data file exist:</span>
+<span id="cb52-279"><a href="#cb52-279"></a></span>
+<span id="cb52-280"><a href="#cb52-280"></a><span class="ss">-   </span>On a Mac: <span class="in">`../data/imdb_5000_messy.csv`</span></span>
+<span id="cb52-281"><a href="#cb52-281"></a><span class="ss">-   </span>On Windows: <span class="in">`..\data\imdb_5000_messy.csv`</span> or <span class="in">`..\\data\\imdb_5000_messy.csv`</span></span>
+<span id="cb52-282"><a href="#cb52-282"></a></span>
+<span id="cb52-283"><a href="#cb52-283"></a>**NOTE**: <span class="in">`..`</span> means go up one level in the file hierarchy, ie, go to the parent folder/directory.</span>
+<span id="cb52-284"><a href="#cb52-284"></a></span>
+<span id="cb52-285"><a href="#cb52-285"></a>Putting this together, use <span class="in">`read_csv()`</span> with the appropriate relative file path to import your data into RStudio. Save this as <span class="in">`imdb_temp`</span> (<span class="in">`temp`</span> for "temporary"). Convince yourself that this worked, i.e. you get the same dataset as <span class="in">`imdb_messy`</span>.</span>
+<span id="cb52-286"><a href="#cb52-286"></a></span>
+<span id="cb52-289"><a href="#cb52-289"></a><span class="in">```{r}</span></span>
+<span id="cb52-290"><a href="#cb52-290"></a>imdb_temp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"C:/Users/dwmjc/Desktop/School/Spring 2025/COMP112/portfolio-MarvinC21/data/imdb_5000_messy.csv"</span>)</span>
+<span id="cb52-291"><a href="#cb52-291"></a><span class="in">```</span></span>
+<span id="cb52-292"><a href="#cb52-292"></a></span>
+<span id="cb52-293"><a href="#cb52-293"></a>::: {.callout-tip title="File Paths"}</span>
+<span id="cb52-294"><a href="#cb52-294"></a></span>
+<span id="cb52-295"><a href="#cb52-295"></a>Absolute file paths should be used when referring to files hosed on the web, eg, <span class="in">`https://mac-stat.github.io/data/kiva_partners2.csv`</span>.  In all other instances, relative file paths should be used.</span>
+<span id="cb52-296"><a href="#cb52-296"></a></span>
+<span id="cb52-297"><a href="#cb52-297"></a>:::</span>
+<span id="cb52-298"><a href="#cb52-298"></a></span>
+<span id="cb52-299"><a href="#cb52-299"></a><span class="fu">#### Part d: OPTIONAL {.unnumbered}</span></span>
+<span id="cb52-300"><a href="#cb52-300"></a></span>
+<span id="cb52-301"><a href="#cb52-301"></a>Sometimes, we don't want to import the *entire* dataset. For example, we might want to...</span>
+<span id="cb52-302"><a href="#cb52-302"></a></span>
+<span id="cb52-303"><a href="#cb52-303"></a><span class="ss">-   </span>skips some rows, eg, if they're just "filler"</span>
+<span id="cb52-304"><a href="#cb52-304"></a><span class="ss">-   </span>only import the *first* "n" rows, eg, if the dataset is really large</span>
+<span id="cb52-305"><a href="#cb52-305"></a><span class="ss">-   </span>only import a *random* subset of "n" rows, eg, if the dataset is really large</span>
+<span id="cb52-306"><a href="#cb52-306"></a></span>
+<span id="cb52-307"><a href="#cb52-307"></a>The "data import cheat sheet" at the top of this qmd, or Google, are handy resources here. As one example...</span>
+<span id="cb52-308"><a href="#cb52-308"></a></span>
+<span id="cb52-311"><a href="#cb52-311"></a><span class="in">```{r}</span></span>
+<span id="cb52-312"><a href="#cb52-312"></a><span class="co"># Try importing only the first 5 rows</span></span>
+<span id="cb52-313"><a href="#cb52-313"></a><span class="fu">read_csv</span>(<span class="st">"../data/imdb_5000_messy.csv"</span>, <span class="at">n_max =</span> <span class="dv">5</span>)</span>
+<span id="cb52-314"><a href="#cb52-314"></a><span class="in">```</span></span>
+<span id="cb52-315"><a href="#cb52-315"></a></span>
+<span id="cb52-316"><a href="#cb52-316"></a>::: {.callout-tip title="Commenting/Uncommenting Code"}</span>
+<span id="cb52-317"><a href="#cb52-317"></a></span>
+<span id="cb52-318"><a href="#cb52-318"></a>To comment/uncomment several lines of code at once, highlight them then click &lt;kbd&gt;ctrl/cmd+shift+c&lt;/kbd&gt;.</span>
+<span id="cb52-319"><a href="#cb52-319"></a></span>
+<span id="cb52-320"><a href="#cb52-320"></a>:::</span>
+<span id="cb52-321"><a href="#cb52-321"></a></span>
+<span id="cb52-322"><a href="#cb52-322"></a></span>
+<span id="cb52-323"><a href="#cb52-323"></a><span class="fu">### Exercise 3: Check Data {.unnumbered}</span></span>
+<span id="cb52-324"><a href="#cb52-324"></a></span>
+<span id="cb52-325"><a href="#cb52-325"></a>After importing new data into RStudio, you MUST do some quick checks of the data. Here are two first steps that are especially useful.</span>
+<span id="cb52-326"><a href="#cb52-326"></a></span>
+<span id="cb52-327"><a href="#cb52-327"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-328"><a href="#cb52-328"></a></span>
+<span id="cb52-329"><a href="#cb52-329"></a>Open <span class="in">`imdb_messy`</span> in the spreadsheet-like viewer by typing <span class="in">`View(imdb_messy)`</span> in the console. Sort this "spreadsheet" by different variables by clicking on the arrows next to the variable names. Do you notice anything unexpected?</span>
+<span id="cb52-330"><a href="#cb52-330"></a></span>
+<span id="cb52-331"><a href="#cb52-331"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-332"><a href="#cb52-332"></a></span>
+<span id="cb52-333"><a href="#cb52-333"></a>Do a quick <span class="in">`summary()`</span> of each variable in the dataset. *One* way to do this is below:</span>
+<span id="cb52-334"><a href="#cb52-334"></a></span>
+<span id="cb52-337"><a href="#cb52-337"></a><span class="in">```{r}</span></span>
+<span id="cb52-338"><a href="#cb52-338"></a>imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb52-339"><a href="#cb52-339"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span>  <span class="co"># convert characters to factors in order to summarize</span></span>
+<span id="cb52-340"><a href="#cb52-340"></a>  <span class="fu">summary</span>()</span>
+<span id="cb52-341"><a href="#cb52-341"></a><span class="in">```</span></span>
+<span id="cb52-342"><a href="#cb52-342"></a></span>
+<span id="cb52-343"><a href="#cb52-343"></a>Follow-up:</span>
+<span id="cb52-344"><a href="#cb52-344"></a></span>
+<span id="cb52-345"><a href="#cb52-345"></a><span class="ss">-   </span>What type of info is provided on quantitative variables?</span>
+<span id="cb52-346"><a href="#cb52-346"></a></span>
+<span id="cb52-347"><a href="#cb52-347"></a><span class="at">&gt; Numerical summaries</span></span>
+<span id="cb52-348"><a href="#cb52-348"></a></span>
+<span id="cb52-349"><a href="#cb52-349"></a><span class="ss">-   </span>What type of info is provided on categorical variables?</span>
+<span id="cb52-350"><a href="#cb52-350"></a></span>
+<span id="cb52-351"><a href="#cb52-351"></a><span class="at">&gt; All categories and counts for each category</span></span>
+<span id="cb52-352"><a href="#cb52-352"></a></span>
+<span id="cb52-353"><a href="#cb52-353"></a><span class="ss">-   </span>What stands out to you in these summaries? Is there anything you'd need to clean before using this data?</span>
+<span id="cb52-354"><a href="#cb52-354"></a></span>
+<span id="cb52-355"><a href="#cb52-355"></a><span class="fu">### Exercise 4: Clean Data: Factor Variables 1 {.unnumbered}</span></span>
+<span id="cb52-356"><a href="#cb52-356"></a></span>
+<span id="cb52-357"><a href="#cb52-357"></a>If you didn't already in Exercise 3, check out the <span class="in">`color`</span> variable in the <span class="in">`imdb_messy`</span> dataset.</span>
+<span id="cb52-358"><a href="#cb52-358"></a></span>
+<span id="cb52-359"><a href="#cb52-359"></a><span class="ss">-   </span>What's goofy about this / what do we need to fix?</span>
+<span id="cb52-360"><a href="#cb52-360"></a><span class="ss">-   </span>More specifically, what different categories does the <span class="in">`color`</span> variable take, and how many movies fall into each of these categories?</span>
+<span id="cb52-361"><a href="#cb52-361"></a></span>
+<span id="cb52-364"><a href="#cb52-364"></a><span class="in">```{r}</span></span>
+<span id="cb52-365"><a href="#cb52-365"></a>imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb52-366"><a href="#cb52-366"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span></span>
+<span id="cb52-367"><a href="#cb52-367"></a>  <span class="fu">select</span>(color) <span class="sc">|&gt;</span></span>
+<span id="cb52-368"><a href="#cb52-368"></a>  <span class="fu">summary</span>()</span>
+<span id="cb52-369"><a href="#cb52-369"></a><span class="in">```</span></span>
+<span id="cb52-370"><a href="#cb52-370"></a></span>
+<span id="cb52-371"><a href="#cb52-371"></a></span>
+<span id="cb52-372"><a href="#cb52-372"></a></span>
+<span id="cb52-373"><a href="#cb52-373"></a><span class="fu">### Exercise 5: Clean Data: Factor Variables 2 {.unnumbered}</span></span>
+<span id="cb52-374"><a href="#cb52-374"></a></span>
+<span id="cb52-375"><a href="#cb52-375"></a>When working with categorical variables like <span class="in">`color`</span>, the categories must be "clean", i.e. consistent and in the correct format. Let's make that happen.</span>
+<span id="cb52-376"><a href="#cb52-376"></a></span>
+<span id="cb52-377"><a href="#cb52-377"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-378"><a href="#cb52-378"></a></span>
+<span id="cb52-379"><a href="#cb52-379"></a>We *could* open the .csv file in, say, Excel or Google sheets, clean up the <span class="in">`color`</span> variable, save a clean copy, and then reimport that into RStudio. BUT that would be the wrong thing to do. Why is it important to use R code, which we then save inside this qmd, to clean our data?</span>
+<span id="cb52-380"><a href="#cb52-380"></a></span>
+<span id="cb52-381"><a href="#cb52-381"></a><span class="at">&gt; To not modify anyone's work at the source</span></span>
+<span id="cb52-382"><a href="#cb52-382"></a></span>
+<span id="cb52-383"><a href="#cb52-383"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-384"><a href="#cb52-384"></a></span>
+<span id="cb52-385"><a href="#cb52-385"></a>Let's use R code to change the <span class="in">`color`</span> variable so that it appropriately combines the various categories into only 2: <span class="in">`Color`</span> and <span class="in">`Black_White`</span>. We've learned a couple sets of string-related tools that could be handy here. First, starting with the <span class="in">`imdb_messy`</span> data, change the <span class="in">`color`</span> variable using one of the functions we learned in the **Factors** lesson.</span>
+<span id="cb52-386"><a href="#cb52-386"></a></span>
+<span id="cb52-387"><a href="#cb52-387"></a><span class="in">`fct_relevel()`</span>, <span class="in">`fct_recode()`</span>, <span class="in">`fct_reorder()`</span></span>
+<span id="cb52-388"><a href="#cb52-388"></a></span>
+<span id="cb52-389"><a href="#cb52-389"></a>Store your results in <span class="in">`imdb_temp`</span> (don't overwrite <span class="in">`imdb_messy`</span>). To check your work, print out a <span class="in">`count()`</span> table of the <span class="in">`color`</span> variable in <span class="in">`imdb_temp`</span>.</span>
+<span id="cb52-390"><a href="#cb52-390"></a></span>
+<span id="cb52-393"><a href="#cb52-393"></a><span class="in">```{r}</span></span>
+<span id="cb52-394"><a href="#cb52-394"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb52-395"><a href="#cb52-395"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">fct_recode</span>(color, </span>
+<span id="cb52-396"><a href="#cb52-396"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"color"</span>,</span>
+<span id="cb52-397"><a href="#cb52-397"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"COLOR"</span>,</span>
+<span id="cb52-398"><a href="#cb52-398"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"B&amp;W"</span>,</span>
+<span id="cb52-399"><a href="#cb52-399"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"Black and White"</span>)) </span>
+<span id="cb52-400"><a href="#cb52-400"></a></span>
+<span id="cb52-401"><a href="#cb52-401"></a><span class="fu">count</span>(imdb_temp, color)</span>
+<span id="cb52-402"><a href="#cb52-402"></a><span class="in">```</span></span>
+<span id="cb52-403"><a href="#cb52-403"></a></span>
+<span id="cb52-404"><a href="#cb52-404"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-405"><a href="#cb52-405"></a></span>
+<span id="cb52-406"><a href="#cb52-406"></a>Repeat Part b using one of our string functions from the **String** lesson:</span>
+<span id="cb52-407"><a href="#cb52-407"></a></span>
+<span id="cb52-408"><a href="#cb52-408"></a><span class="in">`str_replace()`</span>, <span class="in">`str_replace_all()`</span>, <span class="in">`str_to_lower()`</span>, <span class="in">`str_sub()`</span>, <span class="in">`str_length()`</span>, <span class="in">`str_detect()`</span></span>
+<span id="cb52-409"><a href="#cb52-409"></a></span>
+<span id="cb52-412"><a href="#cb52-412"></a><span class="in">```{r}</span></span>
+<span id="cb52-413"><a href="#cb52-413"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb52-414"><a href="#cb52-414"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"color"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb52-415"><a href="#cb52-415"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"COLOR"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb52-416"><a href="#cb52-416"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"B&amp;W"</span>, <span class="st">"Black_White"</span>),</span>
+<span id="cb52-417"><a href="#cb52-417"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"Black and White"</span>, <span class="st">"Black_White"</span>))</span>
+<span id="cb52-418"><a href="#cb52-418"></a></span>
+<span id="cb52-419"><a href="#cb52-419"></a><span class="fu">count</span>(imdb_temp, color)</span>
+<span id="cb52-420"><a href="#cb52-420"></a><span class="in">```</span></span>
+<span id="cb52-421"><a href="#cb52-421"></a></span>
+<span id="cb52-422"><a href="#cb52-422"></a></span>
+<span id="cb52-423"><a href="#cb52-423"></a><span class="fu">### Exercise 6: Clean Data: Missing Data 1 {.unnumbered}</span></span>
+<span id="cb52-424"><a href="#cb52-424"></a></span>
+<span id="cb52-425"><a href="#cb52-425"></a>Throughout these exercises, you've probably noticed that there's a bunch of missing data. This is encoded as <span class="in">`NA`</span> (not available) in R. There are a few questions to address about missing data:</span>
+<span id="cb52-426"><a href="#cb52-426"></a></span>
+<span id="cb52-427"><a href="#cb52-427"></a><span class="ss">-   </span>*How many* values are missing data? What's the volume of the missingness?</span>
+<span id="cb52-428"><a href="#cb52-428"></a><span class="ss">-   </span>*Why* are some values missing?</span>
+<span id="cb52-429"><a href="#cb52-429"></a><span class="ss">-   </span>*What* should we do about the missing values?</span>
+<span id="cb52-430"><a href="#cb52-430"></a></span>
+<span id="cb52-431"><a href="#cb52-431"></a>Let's consider the first 2 questions in this exercise.</span>
+<span id="cb52-432"><a href="#cb52-432"></a></span>
+<span id="cb52-433"><a href="#cb52-433"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-434"><a href="#cb52-434"></a></span>
+<span id="cb52-435"><a href="#cb52-435"></a>As a first step, let's simply understand the *volume* of NAs. Specifically:</span>
+<span id="cb52-436"><a href="#cb52-436"></a></span>
+<span id="cb52-439"><a href="#cb52-439"></a><span class="in">```{r}</span></span>
+<span id="cb52-440"><a href="#cb52-440"></a><span class="co"># Count the total number of rows in imdb_messy</span></span>
+<span id="cb52-441"><a href="#cb52-441"></a><span class="fu">nrow</span>(imdb_messy)</span>
+<span id="cb52-442"><a href="#cb52-442"></a></span>
+<span id="cb52-443"><a href="#cb52-443"></a><span class="co"># Then count the number of NAs in each column</span></span>
+<span id="cb52-444"><a href="#cb52-444"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(imdb_messy))</span>
+<span id="cb52-445"><a href="#cb52-445"></a></span>
+<span id="cb52-446"><a href="#cb52-446"></a><span class="co"># Then count the number of NAs in a specific column</span></span>
+<span id="cb52-447"><a href="#cb52-447"></a><span class="co">#imdb_messy |&gt; </span></span>
+<span id="cb52-448"><a href="#cb52-448"></a><span class="co">#  ___(___(is.na(actor_1_facebook_likes)))</span></span>
+<span id="cb52-449"><a href="#cb52-449"></a><span class="in">```</span></span>
+<span id="cb52-450"><a href="#cb52-450"></a></span>
+<span id="cb52-451"><a href="#cb52-451"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-452"><a href="#cb52-452"></a></span>
+<span id="cb52-453"><a href="#cb52-453"></a>As a second step, let's think about *why* some values are missing. Study the individual observations with NAs carefully. Why do you think they are missing? Are certain films more likely to have more NAs than others?</span>
+<span id="cb52-454"><a href="#cb52-454"></a></span>
+<span id="cb52-455"><a href="#cb52-455"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-456"><a href="#cb52-456"></a></span>
+<span id="cb52-457"><a href="#cb52-457"></a>Consider a more specific example. Obtain a dataset of movies that are missing data on <span class="in">`actor_1_facebook_likes`</span>. Then explain why you think there are NAs. HINT: <span class="in">`is.na(___)`</span></span>
+<span id="cb52-458"><a href="#cb52-458"></a></span>
+<span id="cb52-461"><a href="#cb52-461"></a><span class="in">```{r}</span></span>
+<span id="cb52-462"><a href="#cb52-462"></a><span class="in">```</span></span>
+<span id="cb52-463"><a href="#cb52-463"></a></span>
+<span id="cb52-464"><a href="#cb52-464"></a></span>
+<span id="cb52-465"><a href="#cb52-465"></a></span>
+<span id="cb52-466"><a href="#cb52-466"></a><span class="fu">### Exercise 7: Clean Data: Missing Data 2 {.unnumbered}</span></span>
+<span id="cb52-467"><a href="#cb52-467"></a></span>
+<span id="cb52-468"><a href="#cb52-468"></a>Next, let's think about what to *do* about the missing values. There is no perfect or universal approach here. Rather, we must think carefully about...</span>
+<span id="cb52-469"><a href="#cb52-469"></a></span>
+<span id="cb52-470"><a href="#cb52-470"></a><span class="ss">-   </span>Why the values are missing?</span>
+<span id="cb52-471"><a href="#cb52-471"></a><span class="ss">-   </span>What we want to do with our data?</span>
+<span id="cb52-472"><a href="#cb52-472"></a><span class="ss">-   </span>What is the impact of removing or replacing missing data on our work / conclusions?</span>
+<span id="cb52-473"><a href="#cb52-473"></a></span>
+<span id="cb52-474"><a href="#cb52-474"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-475"><a href="#cb52-475"></a></span>
+<span id="cb52-476"><a href="#cb52-476"></a>Calculate the average duration of a film. THINK: How can we deal with the NA's?</span>
+<span id="cb52-477"><a href="#cb52-477"></a></span>
+<span id="cb52-480"><a href="#cb52-480"></a><span class="in">```{r}</span></span>
+<span id="cb52-481"><a href="#cb52-481"></a><span class="in">```</span></span>
+<span id="cb52-482"><a href="#cb52-482"></a></span>
+<span id="cb52-483"><a href="#cb52-483"></a>Follow-up:</span>
+<span id="cb52-484"><a href="#cb52-484"></a></span>
+<span id="cb52-485"><a href="#cb52-485"></a>How are the NAs dealt with here? Did we have to create and save a new dataset in order to do this analysis?</span>
+<span id="cb52-486"><a href="#cb52-486"></a></span>
+<span id="cb52-487"><a href="#cb52-487"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-488"><a href="#cb52-488"></a></span>
+<span id="cb52-489"><a href="#cb52-489"></a>Try out the <span class="in">`drop_na()`</span> function:</span>
+<span id="cb52-490"><a href="#cb52-490"></a></span>
+<span id="cb52-493"><a href="#cb52-493"></a><span class="in">```{r}</span></span>
+<span id="cb52-494"><a href="#cb52-494"></a><span class="co"># imdb_temp &lt;- drop_na(imdb_messy)</span></span>
+<span id="cb52-495"><a href="#cb52-495"></a><span class="in">```</span></span>
+<span id="cb52-496"><a href="#cb52-496"></a></span>
+<span id="cb52-497"><a href="#cb52-497"></a>Follow-up questions:</span>
+<span id="cb52-498"><a href="#cb52-498"></a></span>
+<span id="cb52-499"><a href="#cb52-499"></a><span class="ss">-   </span>What did <span class="in">`drop_na()`</span> do? How many data points are left?</span>
+<span id="cb52-500"><a href="#cb52-500"></a><span class="ss">-   </span>In what situations might this function be a good idea?</span>
+<span id="cb52-501"><a href="#cb52-501"></a><span class="ss">-   </span>In what situations might this function be a bad idea?</span>
+<span id="cb52-502"><a href="#cb52-502"></a></span>
+<span id="cb52-503"><a href="#cb52-503"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-504"><a href="#cb52-504"></a></span>
+<span id="cb52-505"><a href="#cb52-505"></a><span class="in">`drop_na()`</span> removes data points that have *any* NA values, even if we don't care about the variable(s) for which data is missing. This can result in losing a lot of data points that *do* have data on the variables we actually care about! For example, suppose we only want to explore the relationship between film <span class="in">`duration`</span> and whether it's in <span class="in">`color`</span>. Check out a plot:</span>
+<span id="cb52-506"><a href="#cb52-506"></a></span>
+<span id="cb52-509"><a href="#cb52-509"></a><span class="in">```{r}</span></span>
+<span id="cb52-510"><a href="#cb52-510"></a><span class="co"># ggplot(imdb_messy, aes(x = duration, fill = color)) + </span></span>
+<span id="cb52-511"><a href="#cb52-511"></a><span class="co">#   geom_density()</span></span>
+<span id="cb52-512"><a href="#cb52-512"></a><span class="in">```</span></span>
+<span id="cb52-513"><a href="#cb52-513"></a></span>
+<span id="cb52-514"><a href="#cb52-514"></a>Follow-up:</span>
+<span id="cb52-515"><a href="#cb52-515"></a></span>
+<span id="cb52-516"><a href="#cb52-516"></a><span class="ss">-   </span>Create a new dataset with *only* and *all* movies that have complete info on <span class="in">`duration`</span> and <span class="in">`color`</span>. HINT: You could use <span class="in">`!is.na(___)`</span> or <span class="in">`drop_na()`</span> (differently than above)</span>
+<span id="cb52-517"><a href="#cb52-517"></a><span class="ss">-   </span>Use this new dataset to create a new and improved plot.</span>
+<span id="cb52-518"><a href="#cb52-518"></a><span class="ss">-   </span>How many movies remain in your new dataset? Hence why this is better than using the dataset from part b?</span>
+<span id="cb52-519"><a href="#cb52-519"></a></span>
+<span id="cb52-522"><a href="#cb52-522"></a><span class="in">```{r}</span></span>
+<span id="cb52-523"><a href="#cb52-523"></a><span class="in">```</span></span>
+<span id="cb52-524"><a href="#cb52-524"></a></span>
+<span id="cb52-525"><a href="#cb52-525"></a><span class="fu">#### Part d {.unnumbered}</span></span>
+<span id="cb52-526"><a href="#cb52-526"></a></span>
+<span id="cb52-527"><a href="#cb52-527"></a>In some cases, missing data is more *non*-data than *unknown* data. For example, the films with NAs for `actor_1_facebook_likes` actually have *0* Facebook likes--they don't even have actors! In these cases, we can *replace* the NAs with a 0. Use the <span class="in">`replace_na()`</span> function to create a new dataset (<span class="in">`imdb_temp`</span>) that replaces the NAs in <span class="in">`actor_1_facebook_likes`</span> with 0. You'll have to check out the help file for this function.</span>
+<span id="cb52-528"><a href="#cb52-528"></a></span>
+<span id="cb52-531"><a href="#cb52-531"></a><span class="in">```{r}</span></span>
+<span id="cb52-532"><a href="#cb52-532"></a><span class="in">```</span></span>
+<span id="cb52-533"><a href="#cb52-533"></a></span>
+<span id="cb52-534"><a href="#cb52-534"></a></span>
+<span id="cb52-535"><a href="#cb52-535"></a><span class="fu">### Exercise 8: New Data + Projects {.unnumbered}</span></span>
+<span id="cb52-536"><a href="#cb52-536"></a></span>
+<span id="cb52-537"><a href="#cb52-537"></a>Let's practice the above ideas while also planting some seeds for the course project. Each group will pick and analyze their own dataset. The people you're sitting with today aren't necessarily your project groups! BUT do some brainstorming together:</span>
+<span id="cb52-538"><a href="#cb52-538"></a></span>
+<span id="cb52-539"><a href="#cb52-539"></a><span class="ss">-   </span>Share with each other: What are some personal hobbies or passions or things you've been thinking about or things you'd like to learn more about? Don't think too hard about this! Just share what's at the top of mind today.</span>
+<span id="cb52-540"><a href="#cb52-540"></a></span>
+<span id="cb52-541"><a href="#cb52-541"></a><span class="ss">-   </span>Each individual: Find a dataset online that's related to one of the topics you shared in the above prompt.</span>
+<span id="cb52-542"><a href="#cb52-542"></a><span class="ss">-   </span>Discuss what data you found with your group!</span>
+<span id="cb52-543"><a href="#cb52-543"></a><span class="ss">-   </span>Load the data into RStudio, perform some basic checks, and perform some preliminary cleaning, as necessary.</span>
+<span id="cb52-544"><a href="#cb52-544"></a></span>
+<span id="cb52-545"><a href="#cb52-545"></a></span>
+<span id="cb52-546"><a href="#cb52-546"></a></span>
+<span id="cb52-547"><a href="#cb52-547"></a><span class="fu">## Solutions</span></span>
+<span id="cb52-548"><a href="#cb52-548"></a></span>
+<span id="cb52-549"><a href="#cb52-549"></a>&lt;details&gt;</span>
+<span id="cb52-550"><a href="#cb52-550"></a></span>
+<span id="cb52-551"><a href="#cb52-551"></a>&lt;summary&gt;Click for Solutions&lt;/summary&gt;</span>
+<span id="cb52-552"><a href="#cb52-552"></a></span>
+<span id="cb52-553"><a href="#cb52-553"></a><span class="in">```{r echo = FALSE}</span></span>
+<span id="cb52-554"><a href="#cb52-554"></a><span class="in">imdb_messy &lt;- read_csv("../data/imdb_5000_messy.csv")</span></span>
+<span id="cb52-555"><a href="#cb52-555"></a><span class="in">```</span></span>
+<span id="cb52-556"><a href="#cb52-556"></a></span>
+<span id="cb52-557"><a href="#cb52-557"></a><span class="fu">### Exercise 3: Check Data {.unnumbered}</span></span>
+<span id="cb52-558"><a href="#cb52-558"></a></span>
+<span id="cb52-559"><a href="#cb52-559"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-560"><a href="#cb52-560"></a></span>
+<span id="cb52-561"><a href="#cb52-561"></a>There are many NA's, the <span class="in">`color`</span> variable is goofy...</span>
+<span id="cb52-562"><a href="#cb52-562"></a></span>
+<span id="cb52-565"><a href="#cb52-565"></a><span class="in">```{r}</span></span>
+<span id="cb52-566"><a href="#cb52-566"></a>imdb_messy <span class="sc">|&gt;</span></span>
+<span id="cb52-567"><a href="#cb52-567"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">|&gt;</span>  <span class="co"># convert characters to factors in order to summarize</span></span>
+<span id="cb52-568"><a href="#cb52-568"></a>  <span class="fu">summary</span>()</span>
+<span id="cb52-569"><a href="#cb52-569"></a><span class="in">```</span></span>
+<span id="cb52-570"><a href="#cb52-570"></a></span>
+<span id="cb52-571"><a href="#cb52-571"></a></span>
+<span id="cb52-572"><a href="#cb52-572"></a></span>
+<span id="cb52-573"><a href="#cb52-573"></a><span class="fu">### Exercise 4: Clean Data: Factor Variables 1 {.unnumbered}</span></span>
+<span id="cb52-574"><a href="#cb52-574"></a></span>
+<span id="cb52-577"><a href="#cb52-577"></a><span class="in">```{r}</span></span>
+<span id="cb52-578"><a href="#cb52-578"></a>imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-579"><a href="#cb52-579"></a>  <span class="fu">count</span>(color)</span>
+<span id="cb52-580"><a href="#cb52-580"></a><span class="in">```</span></span>
+<span id="cb52-581"><a href="#cb52-581"></a></span>
+<span id="cb52-582"><a href="#cb52-582"></a></span>
+<span id="cb52-583"><a href="#cb52-583"></a></span>
+<span id="cb52-584"><a href="#cb52-584"></a><span class="fu">### Exercise 5: Clean Data: Factor Variables 2 {.unnumbered}</span></span>
+<span id="cb52-585"><a href="#cb52-585"></a></span>
+<span id="cb52-586"><a href="#cb52-586"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-587"><a href="#cb52-587"></a></span>
+<span id="cb52-588"><a href="#cb52-588"></a>That wouldn't be **reproducible**. It's important to log all steps in our data cleaning, so that we and others know and could reproduce those steps.</span>
+<span id="cb52-589"><a href="#cb52-589"></a></span>
+<span id="cb52-590"><a href="#cb52-590"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-591"><a href="#cb52-591"></a></span>
+<span id="cb52-594"><a href="#cb52-594"></a><span class="in">```{r}</span></span>
+<span id="cb52-595"><a href="#cb52-595"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-596"><a href="#cb52-596"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">fct_recode</span>(color,</span>
+<span id="cb52-597"><a href="#cb52-597"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"COLOR"</span>,</span>
+<span id="cb52-598"><a href="#cb52-598"></a>                            <span class="st">"Color"</span> <span class="ot">=</span> <span class="st">"color"</span>,</span>
+<span id="cb52-599"><a href="#cb52-599"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"B&amp;W"</span>,</span>
+<span id="cb52-600"><a href="#cb52-600"></a>                            <span class="st">"Black_White"</span> <span class="ot">=</span> <span class="st">"Black and White"</span>))</span>
+<span id="cb52-601"><a href="#cb52-601"></a></span>
+<span id="cb52-602"><a href="#cb52-602"></a>imdb_temp <span class="sc">|&gt;</span> </span>
+<span id="cb52-603"><a href="#cb52-603"></a>  <span class="fu">count</span>(color)</span>
+<span id="cb52-604"><a href="#cb52-604"></a><span class="in">```</span></span>
+<span id="cb52-605"><a href="#cb52-605"></a></span>
+<span id="cb52-606"><a href="#cb52-606"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-607"><a href="#cb52-607"></a></span>
+<span id="cb52-610"><a href="#cb52-610"></a><span class="in">```{r}</span></span>
+<span id="cb52-611"><a href="#cb52-611"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-612"><a href="#cb52-612"></a>  <span class="fu">mutate</span>(<span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"COLOR"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb52-613"><a href="#cb52-613"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"color"</span>, <span class="st">"Color"</span>),</span>
+<span id="cb52-614"><a href="#cb52-614"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"B&amp;W"</span>, <span class="st">"Black_White"</span>),</span>
+<span id="cb52-615"><a href="#cb52-615"></a>         <span class="at">color =</span> <span class="fu">str_replace</span>(color, <span class="st">"Black and White"</span>, <span class="st">"Black_White"</span>))</span>
+<span id="cb52-616"><a href="#cb52-616"></a></span>
+<span id="cb52-617"><a href="#cb52-617"></a>imdb_temp <span class="sc">|&gt;</span> </span>
+<span id="cb52-618"><a href="#cb52-618"></a>  <span class="fu">count</span>(color)</span>
+<span id="cb52-619"><a href="#cb52-619"></a><span class="in">```</span></span>
+<span id="cb52-620"><a href="#cb52-620"></a></span>
+<span id="cb52-621"><a href="#cb52-621"></a></span>
+<span id="cb52-622"><a href="#cb52-622"></a></span>
+<span id="cb52-623"><a href="#cb52-623"></a><span class="fu">### Exercise 6: Clean Data: Missing Data 1 {.unnumbered}</span></span>
+<span id="cb52-624"><a href="#cb52-624"></a></span>
+<span id="cb52-625"><a href="#cb52-625"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-626"><a href="#cb52-626"></a></span>
+<span id="cb52-629"><a href="#cb52-629"></a><span class="in">```{r}</span></span>
+<span id="cb52-630"><a href="#cb52-630"></a><span class="co"># Count the total number of rows in imdb_messy</span></span>
+<span id="cb52-631"><a href="#cb52-631"></a><span class="fu">nrow</span>(imdb_messy)</span>
+<span id="cb52-632"><a href="#cb52-632"></a></span>
+<span id="cb52-633"><a href="#cb52-633"></a><span class="co"># Then count the number of NAs in each column</span></span>
+<span id="cb52-634"><a href="#cb52-634"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(imdb_messy))</span>
+<span id="cb52-635"><a href="#cb52-635"></a><span class="in">```</span></span>
+<span id="cb52-636"><a href="#cb52-636"></a></span>
+<span id="cb52-637"><a href="#cb52-637"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-638"><a href="#cb52-638"></a></span>
+<span id="cb52-639"><a href="#cb52-639"></a>These are all documentaries that don't have any actors.</span>
+<span id="cb52-640"><a href="#cb52-640"></a></span>
+<span id="cb52-643"><a href="#cb52-643"></a><span class="in">```{r}</span></span>
+<span id="cb52-644"><a href="#cb52-644"></a>imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-645"><a href="#cb52-645"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(actor_1_facebook_likes))</span>
+<span id="cb52-646"><a href="#cb52-646"></a><span class="in">```</span></span>
+<span id="cb52-647"><a href="#cb52-647"></a></span>
+<span id="cb52-648"><a href="#cb52-648"></a></span>
+<span id="cb52-649"><a href="#cb52-649"></a></span>
+<span id="cb52-650"><a href="#cb52-650"></a><span class="fu">### Exercise 7: Clean: Missing Data 2 {.unnumbered}</span></span>
+<span id="cb52-651"><a href="#cb52-651"></a></span>
+<span id="cb52-652"><a href="#cb52-652"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb52-653"><a href="#cb52-653"></a></span>
+<span id="cb52-656"><a href="#cb52-656"></a><span class="in">```{r}</span></span>
+<span id="cb52-657"><a href="#cb52-657"></a>imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-658"><a href="#cb52-658"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(duration, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb52-659"><a href="#cb52-659"></a><span class="in">```</span></span>
+<span id="cb52-660"><a href="#cb52-660"></a></span>
+<span id="cb52-661"><a href="#cb52-661"></a>Follow-up:</span>
+<span id="cb52-662"><a href="#cb52-662"></a></span>
+<span id="cb52-663"><a href="#cb52-663"></a>We just remove the NAs from the calculation. No need to entirely remove the related movies from the dataset.</span>
+<span id="cb52-664"><a href="#cb52-664"></a></span>
+<span id="cb52-665"><a href="#cb52-665"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb52-666"><a href="#cb52-666"></a></span>
+<span id="cb52-667"><a href="#cb52-667"></a>This gets rid of any movie with any NAs. There are only 3756 movies left! This approach is heavy-handed. It's typically only a good idea when we need complete info on every variable for every part of our analysis.</span>
+<span id="cb52-668"><a href="#cb52-668"></a></span>
+<span id="cb52-671"><a href="#cb52-671"></a><span class="in">```{r}</span></span>
+<span id="cb52-672"><a href="#cb52-672"></a>imdb_temp <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(imdb_messy)</span>
+<span id="cb52-673"><a href="#cb52-673"></a><span class="fu">nrow</span>(imdb_temp)</span>
+<span id="cb52-674"><a href="#cb52-674"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(imdb_temp))</span>
+<span id="cb52-675"><a href="#cb52-675"></a><span class="in">```</span></span>
+<span id="cb52-676"><a href="#cb52-676"></a></span>
+<span id="cb52-677"><a href="#cb52-677"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb52-678"><a href="#cb52-678"></a></span>
+<span id="cb52-681"><a href="#cb52-681"></a><span class="in">```{r}</span></span>
+<span id="cb52-682"><a href="#cb52-682"></a><span class="fu">ggplot</span>(imdb_messy, <span class="fu">aes</span>(<span class="at">x =</span> duration, <span class="at">fill =</span> color)) <span class="sc">+</span></span>
+<span id="cb52-683"><a href="#cb52-683"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb52-684"><a href="#cb52-684"></a><span class="in">```</span></span>
+<span id="cb52-685"><a href="#cb52-685"></a></span>
+<span id="cb52-686"><a href="#cb52-686"></a>We keep most of the movies!</span>
+<span id="cb52-687"><a href="#cb52-687"></a></span>
+<span id="cb52-690"><a href="#cb52-690"></a><span class="in">```{r}</span></span>
+<span id="cb52-691"><a href="#cb52-691"></a><span class="co"># Approach 1</span></span>
+<span id="cb52-692"><a href="#cb52-692"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-693"><a href="#cb52-693"></a>  <span class="fu">select</span>(duration, color) <span class="sc">|&gt;</span> </span>
+<span id="cb52-694"><a href="#cb52-694"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb52-695"><a href="#cb52-695"></a><span class="fu">dim</span>(imdb_temp)</span>
+<span id="cb52-696"><a href="#cb52-696"></a></span>
+<span id="cb52-697"><a href="#cb52-697"></a><span class="co"># Approach 2</span></span>
+<span id="cb52-698"><a href="#cb52-698"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-699"><a href="#cb52-699"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duration), <span class="sc">!</span><span class="fu">is.na</span>(color))</span>
+<span id="cb52-700"><a href="#cb52-700"></a><span class="fu">dim</span>(imdb_temp)</span>
+<span id="cb52-701"><a href="#cb52-701"></a></span>
+<span id="cb52-702"><a href="#cb52-702"></a><span class="co"># Plot</span></span>
+<span id="cb52-703"><a href="#cb52-703"></a><span class="fu">ggplot</span>(imdb_temp, <span class="fu">aes</span>(<span class="at">x =</span> duration, <span class="at">fill =</span> color)) <span class="sc">+</span></span>
+<span id="cb52-704"><a href="#cb52-704"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb52-705"><a href="#cb52-705"></a><span class="in">```</span></span>
+<span id="cb52-706"><a href="#cb52-706"></a></span>
+<span id="cb52-707"><a href="#cb52-707"></a><span class="fu">#### Part d {.unnumbered}</span></span>
+<span id="cb52-708"><a href="#cb52-708"></a></span>
+<span id="cb52-711"><a href="#cb52-711"></a><span class="in">```{r}</span></span>
+<span id="cb52-712"><a href="#cb52-712"></a>imdb_temp <span class="ot">&lt;-</span> imdb_messy <span class="sc">|&gt;</span> </span>
+<span id="cb52-713"><a href="#cb52-713"></a>  <span class="fu">mutate</span>(<span class="at">actor_1_facebook_likes =</span></span>
+<span id="cb52-714"><a href="#cb52-714"></a>         <span class="fu">replace_na</span>(actor_1_facebook_likes, <span class="dv">0</span>))</span>
+<span id="cb52-715"><a href="#cb52-715"></a></span>
+<span id="cb52-716"><a href="#cb52-716"></a>imdb_temp <span class="sc">|&gt;</span> </span>
+<span id="cb52-717"><a href="#cb52-717"></a>  <span class="fu">summarize</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(actor_1_facebook_likes)))</span>
+<span id="cb52-718"><a href="#cb52-718"></a><span class="in">```</span></span>
+<span id="cb52-719"><a href="#cb52-719"></a></span>
+<span id="cb52-720"><a href="#cb52-720"></a>&lt;/details&gt;</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
