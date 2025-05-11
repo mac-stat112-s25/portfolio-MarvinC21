@@ -33,6 +33,10 @@ book:
       - bw/bw-exam-1.qmd
       - bw/bw-exam-2.qmd
       - bw/bw-solo-project.qmd
+      
+    - part: "Summary Sheets"
+      chapters:
+      - bw/bw-uni.qmd
 
     - part: "In-class Activities"
       chapters: 

@@ -3,6 +3,10 @@ title: "Solo Project"
 format: html
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
 ```{r}
 library(tidyverse)
 library(rnaturalearth)
@@ -87,6 +91,8 @@ all_ages_by_state <- congress_bipart |> # Average ages of all congress members b
 
 
 ```{r}
+#|fig-alt: "A chloropleth map of the contiguous United States depicting the average ages of all congress members of the 118th Congress, active from 2023 to 2025. The map shows that the oldest congressmembers on average work in the Northwest portion of the United States, and in the upper parts of New England. The states with lowest average ages are New Mexico, New York, Colorado, and Kansas."
+
 ggplot() +
   geom_sf(data = states |> 
             filter(!(postal %in% c("HI", "AK"))) |>
@@ -95,10 +101,12 @@ ggplot() +
           color = 'white') +
   scale_fill_gradient(low = 'lavenderblush2', high = 'orchid4') +
   theme_void() +
-  labs(title = "Average Age of Congress Members in the 118th Congress by State", fill = "Average Age (yrs)")
+  labs(title = "Average Age of Congress Members in the 118th Congress by State", fill = "Average Age (yrs)", caption = "Visualization by Marvin C. 2025, data sourced from the fivethirtyeight Github repository.")
 ```
 
 ```{r}
+#|fig-alt: "A chloropleth map of the contiguous United States depicting the average age of Democrats in the 118th Congress, which was active from 2023 to 2025. The states of North and South Dakota, Iowa, Idaho, Utah, Wyoming, Kansas, Oklahoma, Arkansas have no data associated with them. The highest average age by fair is in South Carolina, with the South generally having higher averages ages overall. The lowest averages seem to be in Kansas and Kentucky."
+
 ggplot() +
   geom_sf(data = states |> 
             left_join(dem_ages_by_state, join_by("postal" == "state_abbrev")) |>
@@ -107,10 +115,12 @@ ggplot() +
           color = 'white') +
   scale_fill_gradient(low = 'lightsteelblue1', high = 'royalblue4') +
   theme_void() +
-  labs(title = "Average Age of Congress Democrats in the 118th Congress by State", fill = "Average Age (yrs)")
+  labs(title = "Average Age of Congress Democrats in the 118th Congress by State", fill = "Average Age (yrs)", caption = "Visualization by Marvin C. 2025, data sourced from the fivethirtyeight Github repository.")
 ```
 
 ```{r}
+#|fig-alt: "A chloropleth map of the contiguous United States depicting the average age of Republicans in the 118th Congress, which was active from 2023 to 2025. The states of Vermont, Massachusetts, Rhode Island, New Mexico, Connecticut, New Hampshire, and Delaware have no data associated with them. The highest average ages are in Maine and Idaho, with the highest average age being found in the pacific northwest and the lowest being in New York."
+
 ggplot() +
   geom_sf(data = states |> 
             left_join(rep_ages_by_state, join_by("postal" == "state_abbrev")) |>
@@ -119,7 +129,7 @@ ggplot() +
           color = 'white') +
   scale_fill_gradient(low = 'lightpink', high = 'firebrick4') +
   theme_void() +
-  labs(title = "Average Age of Congress Republicans in the 118th Congress by State", fill = "Average Age (yrs)")
+  labs(title = "Average Age of Congress Republicans in the 118th Congress by State", fill = "Average Age (yrs)", caption = "Visualization by Marvin C. 2025, data sourced from the fivethirtyeight Github repository.")
 ```
 
 # Summary

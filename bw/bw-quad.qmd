@@ -12,8 +12,8 @@ data("diamonds")
 ```
 
 ```{r}
-#|fig-cap: "Visualization created by Marvin C., 2025 using RStudio's sample dataset"
-#|fig-alt: "A facet-wrapped scatterplot relating the price of diamonds to three categories: cut, color, and weight. The graph shows that as weight increases, price also increases, and that higher color grades and better cuts scale faster in price."
+#| fig-cap: "Visualization created by Marvin C., 2025 using RStudio's sample dataset"
+#| fig-alt: "A facet-wrapped scatterplot relating the price of diamonds to three categories: cut, color, and weight. The graph shows that as weight increases, price also increases, and that higher color grades and better cuts scale faster in price."
 
 diamonds %>%
   ggplot(aes(y = price, x = carat, color = color)) +
@@ -23,7 +23,8 @@ diamonds %>%
   labs(x = "Diamond Weight (Carats)", 
        y = "Price ($)", 
        color = "Color Grade",
-       title = "Price of Diamonds Related to its Weight, Cut and Color") +
+       title = "Price of Diamonds Related to its Weight, Cut and Color",
+       caption = "Data: ggplot2 diamonds sample dataset by Marvin C.") +
   theme_bw() +
   scale_y_continuous(expand = c(0, 0), 
                      limits = c(0, 20000)) + 
