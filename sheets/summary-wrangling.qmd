@@ -3,6 +3,6 @@ title: "Wrangling"
 format: html
 ---
 
-![Front](summary-wrangling-front.pdf){width="8in" height = "10in"}
+![Front](summary-wrangling-front.pdf){width="6.36in" height="9.1in"}
 
-![Back](summary-wrangling-back.pdf){width="8in" height = "10in"}
+![Back](summary-wrangling-back.pdf){width="6.3in" height="5.4in"}
