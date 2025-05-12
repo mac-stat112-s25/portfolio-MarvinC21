@@ -333,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/quarto-demo.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/quarto-demo.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">My first Quarto document</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">11</span>&nbsp; <span class="chapter-title">My first Quarto document</span>
-</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -378,8 +378,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">11.4</span> Exercise 3: Chunks</h2>
 <p>Quarto isn’t a mind reader – we must distinguish R code from text. We do so by putting code inside an <strong>R chunk</strong>:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">100</span>, <span class="at">to =</span> <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">100</span>, <span class="at">to =</span> <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code> [1]  100  150  200  250  300  350  400  450  500  550  600  650  700  750  800
 [16]  850  900  950 1000</code></pre>
 </div>
@@ -391,13 +391,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></section><section id="exercise-4-practice" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="exercise-4-practice">
 <span class="header-section-number">11.5</span> Exercise 4: Practice</h2>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 10 10 10 10</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>four_tens <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>four_tens <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">4</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="fu">sum</span>(four_tens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 40</code></pre>
 </div>
 </div>
@@ -411,36 +411,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Put the code in a chunk and fix it.</p>
 <p>Rep(x = 1, times = 10) seq(from=100,to=1000,length=20) theNumberofStudentsinthisclass&lt;-27</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">rep</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">times =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">rep</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">times =</span> <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code> [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">100</span>,<span class="at">to=</span><span class="dv">1000</span>,<span class="at">length=</span><span class="dv">20</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">100</span>,<span class="at">to=</span><span class="dv">1000</span>,<span class="at">length=</span><span class="dv">20</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code> [1]  100.0000  147.3684  194.7368  242.1053  289.4737  336.8421  384.2105
  [8]  431.5789  478.9474  526.3158  573.6842  621.0526  668.4211  715.7895
 [15]  763.1579  810.5263  857.8947  905.2632  952.6316 1000.0000</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>num_students <span class="ot">&lt;-</span> <span class="dv">27</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>num_students <span class="ot">&lt;-</span> <span class="dv">27</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="exercise-6-comments" class="level2" data-number="11.7"><h2 data-number="11.7" class="anchored" data-anchor-id="exercise-6-comments">
 <span class="header-section-number">11.7</span> Exercise 6: Comments</h2>
 <p>Run the chunk below. Notice that R ignores anything in a line starting with a pound sign (<code>#</code>). If we took the <code>#</code> away we’d get an error!</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># This is a comment</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># This is a comment</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="dv">4</span> <span class="sc">+</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 9</code></pre>
 </div>
 </div>
 <p>We’ll utilize this feature to <strong>comment our code</strong>, i.e.&nbsp;leave short notes about what our code is doing. Below, replace the <code>???</code> with an appropriate comment.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Storing a temperature in celsius and converting it to fahrenheit to be stored as well</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Storing a temperature in celsius and converting it to fahrenheit to be stored as well</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a>temperature_c <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a>temperature_f <span class="ot">&lt;-</span> temperature_c <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span> <span class="sc">+</span> <span class="dv">32</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a>temperature_f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="cell-output cell-output-stdout">
 <pre><code>[1] 50</code></pre>
 </div>
 </div>
