@@ -320,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question"><span class="header-section-number">6.1</span> Research Question</a></li>
+<li><a href="#grand-research-question" id="toc-grand-research-question" class="nav-link active" data-scroll-target="#grand-research-question"><span class="header-section-number">6.1</span> Grand Research Question</a></li>
   <li><a href="#understanding-the-data" id="toc-understanding-the-data" class="nav-link" data-scroll-target="#understanding-the-data"><span class="header-section-number">6.2</span> Understanding the Data</a></li>
   <li><a href="#variable-exploration" id="toc-variable-exploration" class="nav-link" data-scroll-target="#variable-exploration"><span class="header-section-number">6.3</span> Variable Exploration</a></li>
   <li><a href="#answering-grand-rq" id="toc-answering-grand-rq" class="nav-link" data-scroll-target="#answering-grand-rq"><span class="header-section-number">6.4</span> Answering Grand RQ</a></li>
@@ -351,8 +351,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4"></a></span>
 <span id="cb1-5"><a href="#cb1-5"></a>fc <span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">'2020-02-18'</span>)<span class="sc">$</span>food_consumption</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="research-question" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="research-question">
-<span class="header-section-number">6.1</span> Research Question</h2>
+<section id="grand-research-question" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="grand-research-question">
+<span class="header-section-number">6.1</span> Grand Research Question</h2>
 <p>What does the consumption of each food category in each country look like?</p>
 </section><section id="understanding-the-data" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="understanding-the-data">
 <span class="header-section-number">6.2</span> Understanding the Data</h2>
@@ -454,6 +454,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 6 Argentina Eggs                11.4          10.5 </code></pre>
 </div>
 </div>
+<p>Our observations appear to be groups of food category and country. That means that for every country there is 11 observations for each food group.</p>
 </section><section id="variable-exploration" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="variable-exploration">
 <span class="header-section-number">6.3</span> Variable Exploration</h2>
 <div class="cell">
@@ -524,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year.</p>
+<p>It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year. Countries of lower economic status tend to have lower consumption overall, the most consumed food cate</p>
 
 
 <!-- -->
@@ -1172,7 +1173,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb19-13"><a href="#cb19-13"></a>fc <span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">'2020-02-18'</span>)<span class="sc">$</span>food_consumption</span>
 <span id="cb19-14"><a href="#cb19-14"></a><span class="in">```</span></span>
 <span id="cb19-15"><a href="#cb19-15"></a></span>
-<span id="cb19-16"><a href="#cb19-16"></a><span class="fu">## Research Question</span></span>
+<span id="cb19-16"><a href="#cb19-16"></a><span class="fu">## Grand Research Question</span></span>
 <span id="cb19-17"><a href="#cb19-17"></a></span>
 <span id="cb19-18"><a href="#cb19-18"></a>What does the consumption of each food category in each country look like?</span>
 <span id="cb19-19"><a href="#cb19-19"></a></span>
@@ -1196,68 +1197,70 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb19-39"><a href="#cb19-39"></a><span class="fu">head</span>(fc)</span>
 <span id="cb19-40"><a href="#cb19-40"></a><span class="in">```</span></span>
 <span id="cb19-41"><a href="#cb19-41"></a></span>
-<span id="cb19-42"><a href="#cb19-42"></a><span class="fu">## Variable Exploration</span></span>
+<span id="cb19-42"><a href="#cb19-42"></a>Our observations appear to be groups of food category and country. That means that for every country there is 11 observations for each food group.</span>
 <span id="cb19-43"><a href="#cb19-43"></a></span>
-<span id="cb19-46"><a href="#cb19-46"></a><span class="in">```{r}</span></span>
-<span id="cb19-47"><a href="#cb19-47"></a><span class="co"># Removing variable that is not pertinent to our investigation</span></span>
-<span id="cb19-48"><a href="#cb19-48"></a>fc <span class="ot">&lt;-</span> <span class="fu">select</span>(fc, <span class="sc">-</span>co2_emmission)</span>
-<span id="cb19-49"><a href="#cb19-49"></a><span class="in">```</span></span>
-<span id="cb19-50"><a href="#cb19-50"></a></span>
-<span id="cb19-51"><a href="#cb19-51"></a>**Individual variable exploration (not including country or food_cat for obvious reasons)**</span>
+<span id="cb19-44"><a href="#cb19-44"></a><span class="fu">## Variable Exploration</span></span>
+<span id="cb19-45"><a href="#cb19-45"></a></span>
+<span id="cb19-48"><a href="#cb19-48"></a><span class="in">```{r}</span></span>
+<span id="cb19-49"><a href="#cb19-49"></a><span class="co"># Removing variable that is not pertinent to our investigation</span></span>
+<span id="cb19-50"><a href="#cb19-50"></a>fc <span class="ot">&lt;-</span> <span class="fu">select</span>(fc, <span class="sc">-</span>co2_emmission)</span>
+<span id="cb19-51"><a href="#cb19-51"></a><span class="in">```</span></span>
 <span id="cb19-52"><a href="#cb19-52"></a></span>
-<span id="cb19-55"><a href="#cb19-55"></a><span class="in">```{r}</span></span>
-<span id="cb19-56"><a href="#cb19-56"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb19-57"><a href="#cb19-57"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> consumption)) <span class="sc">+</span></span>
-<span id="cb19-58"><a href="#cb19-58"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb19-59"><a href="#cb19-59"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Food Consumption (kg/person/year)"</span>)</span>
-<span id="cb19-60"><a href="#cb19-60"></a><span class="in">```</span></span>
-<span id="cb19-61"><a href="#cb19-61"></a></span>
-<span id="cb19-62"><a href="#cb19-62"></a>From the histogram, we can see that it is most common for food to be consumed at a rate between 0 and 100 kilograms per person per year, however, consumption rates can reach as high as 350 kilograms per person per year.</span>
+<span id="cb19-53"><a href="#cb19-53"></a>**Individual variable exploration (not including country or food_cat for obvious reasons)**</span>
+<span id="cb19-54"><a href="#cb19-54"></a></span>
+<span id="cb19-57"><a href="#cb19-57"></a><span class="in">```{r}</span></span>
+<span id="cb19-58"><a href="#cb19-58"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb19-59"><a href="#cb19-59"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> consumption)) <span class="sc">+</span></span>
+<span id="cb19-60"><a href="#cb19-60"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb19-61"><a href="#cb19-61"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Food Consumption (kg/person/year)"</span>)</span>
+<span id="cb19-62"><a href="#cb19-62"></a><span class="in">```</span></span>
 <span id="cb19-63"><a href="#cb19-63"></a></span>
-<span id="cb19-64"><a href="#cb19-64"></a>**Exploring relationships between variables**</span>
+<span id="cb19-64"><a href="#cb19-64"></a>From the histogram, we can see that it is most common for food to be consumed at a rate between 0 and 100 kilograms per person per year, however, consumption rates can reach as high as 350 kilograms per person per year.</span>
 <span id="cb19-65"><a href="#cb19-65"></a></span>
-<span id="cb19-68"><a href="#cb19-68"></a><span class="in">```{r}</span></span>
-<span id="cb19-69"><a href="#cb19-69"></a><span class="co"># Consumption by food category</span></span>
-<span id="cb19-70"><a href="#cb19-70"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb19-71"><a href="#cb19-71"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> food_category, <span class="at">y =</span> consumption)) <span class="sc">+</span></span>
-<span id="cb19-72"><a href="#cb19-72"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb19-73"><a href="#cb19-73"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
-<span id="cb19-74"><a href="#cb19-74"></a></span>
-<span id="cb19-75"><a href="#cb19-75"></a><span class="co"># Consumption by country</span></span>
-<span id="cb19-76"><a href="#cb19-76"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb19-77"><a href="#cb19-77"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> consumption)) <span class="sc">+</span></span>
-<span id="cb19-78"><a href="#cb19-78"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb19-79"><a href="#cb19-79"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>country) <span class="sc">+</span></span>
-<span id="cb19-80"><a href="#cb19-80"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
-<span id="cb19-81"><a href="#cb19-81"></a><span class="in">```</span></span>
-<span id="cb19-82"><a href="#cb19-82"></a></span>
-<span id="cb19-83"><a href="#cb19-83"></a>From the visualizations, we can see that the most consumed food category is milk and cheese, the second highest is wheat and wheat derivatives.</span>
-<span id="cb19-84"><a href="#cb19-84"></a>The lowest seems to be soybeans and then lamb and goat.</span>
-<span id="cb19-85"><a href="#cb19-85"></a>The second visualization is too difficult to interpret.</span>
-<span id="cb19-86"><a href="#cb19-86"></a></span>
-<span id="cb19-87"><a href="#cb19-87"></a><span class="fu">## Answering Grand RQ</span></span>
+<span id="cb19-66"><a href="#cb19-66"></a>**Exploring relationships between variables**</span>
+<span id="cb19-67"><a href="#cb19-67"></a></span>
+<span id="cb19-70"><a href="#cb19-70"></a><span class="in">```{r}</span></span>
+<span id="cb19-71"><a href="#cb19-71"></a><span class="co"># Consumption by food category</span></span>
+<span id="cb19-72"><a href="#cb19-72"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb19-73"><a href="#cb19-73"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> food_category, <span class="at">y =</span> consumption)) <span class="sc">+</span></span>
+<span id="cb19-74"><a href="#cb19-74"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb19-75"><a href="#cb19-75"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
+<span id="cb19-76"><a href="#cb19-76"></a></span>
+<span id="cb19-77"><a href="#cb19-77"></a><span class="co"># Consumption by country</span></span>
+<span id="cb19-78"><a href="#cb19-78"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb19-79"><a href="#cb19-79"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> consumption)) <span class="sc">+</span></span>
+<span id="cb19-80"><a href="#cb19-80"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb19-81"><a href="#cb19-81"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>country) <span class="sc">+</span></span>
+<span id="cb19-82"><a href="#cb19-82"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
+<span id="cb19-83"><a href="#cb19-83"></a><span class="in">```</span></span>
+<span id="cb19-84"><a href="#cb19-84"></a></span>
+<span id="cb19-85"><a href="#cb19-85"></a>From the visualizations, we can see that the most consumed food category is milk and cheese, the second highest is wheat and wheat derivatives.</span>
+<span id="cb19-86"><a href="#cb19-86"></a>The lowest seems to be soybeans and then lamb and goat.</span>
+<span id="cb19-87"><a href="#cb19-87"></a>The second visualization is too difficult to interpret.</span>
 <span id="cb19-88"><a href="#cb19-88"></a></span>
-<span id="cb19-91"><a href="#cb19-91"></a><span class="in">```{r}</span></span>
-<span id="cb19-92"><a href="#cb19-92"></a><span class="co">#| fig-height: 15</span></span>
-<span id="cb19-93"><a href="#cb19-93"></a><span class="co">#| fig-width: 40</span></span>
-<span id="cb19-94"><a href="#cb19-94"></a><span class="co">#| fig-alt: "A group of histograms, facet-wrapped by food category, that depict the level of consumption in term of kilograms per person per year in 130 countries. Difficult to distinguish any noticeable patterns."</span></span>
-<span id="cb19-95"><a href="#cb19-95"></a></span>
-<span id="cb19-96"><a href="#cb19-96"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb19-97"><a href="#cb19-97"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> consumption)) <span class="sc">+</span></span>
-<span id="cb19-98"><a href="#cb19-98"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb19-99"><a href="#cb19-99"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>food_category) <span class="sc">+</span></span>
-<span id="cb19-100"><a href="#cb19-100"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
-<span id="cb19-101"><a href="#cb19-101"></a>    <span class="at">angle =</span> <span class="dv">45</span>, </span>
-<span id="cb19-102"><a href="#cb19-102"></a>    <span class="at">vjust =</span> <span class="dv">1</span>, </span>
-<span id="cb19-103"><a href="#cb19-103"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
-<span id="cb19-104"><a href="#cb19-104"></a>    <span class="at">size =</span> <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb19-105"><a href="#cb19-105"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country"</span>, </span>
-<span id="cb19-106"><a href="#cb19-106"></a>       <span class="at">y =</span> <span class="st">"Food Consumption (kg/person/year)"</span>,</span>
-<span id="cb19-107"><a href="#cb19-107"></a>       <span class="at">title =</span> <span class="st">"Food Consumption by category of food for each country"</span>,</span>
-<span id="cb19-108"><a href="#cb19-108"></a>       <span class="at">caption =</span> <span class="st">"Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on food consumption"</span>)</span>
-<span id="cb19-109"><a href="#cb19-109"></a><span class="in">```</span></span>
-<span id="cb19-110"><a href="#cb19-110"></a></span>
-<span id="cb19-111"><a href="#cb19-111"></a>It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year.</span>
+<span id="cb19-89"><a href="#cb19-89"></a><span class="fu">## Answering Grand RQ</span></span>
+<span id="cb19-90"><a href="#cb19-90"></a></span>
+<span id="cb19-93"><a href="#cb19-93"></a><span class="in">```{r}</span></span>
+<span id="cb19-94"><a href="#cb19-94"></a><span class="co">#| fig-height: 15</span></span>
+<span id="cb19-95"><a href="#cb19-95"></a><span class="co">#| fig-width: 40</span></span>
+<span id="cb19-96"><a href="#cb19-96"></a><span class="co">#| fig-alt: "A group of histograms, facet-wrapped by food category, that depict the level of consumption in term of kilograms per person per year in 130 countries. Difficult to distinguish any noticeable patterns."</span></span>
+<span id="cb19-97"><a href="#cb19-97"></a></span>
+<span id="cb19-98"><a href="#cb19-98"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb19-99"><a href="#cb19-99"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> consumption)) <span class="sc">+</span></span>
+<span id="cb19-100"><a href="#cb19-100"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb19-101"><a href="#cb19-101"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>food_category) <span class="sc">+</span></span>
+<span id="cb19-102"><a href="#cb19-102"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb19-103"><a href="#cb19-103"></a>    <span class="at">angle =</span> <span class="dv">45</span>, </span>
+<span id="cb19-104"><a href="#cb19-104"></a>    <span class="at">vjust =</span> <span class="dv">1</span>, </span>
+<span id="cb19-105"><a href="#cb19-105"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb19-106"><a href="#cb19-106"></a>    <span class="at">size =</span> <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb19-107"><a href="#cb19-107"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country"</span>, </span>
+<span id="cb19-108"><a href="#cb19-108"></a>       <span class="at">y =</span> <span class="st">"Food Consumption (kg/person/year)"</span>,</span>
+<span id="cb19-109"><a href="#cb19-109"></a>       <span class="at">title =</span> <span class="st">"Food Consumption by category of food for each country"</span>,</span>
+<span id="cb19-110"><a href="#cb19-110"></a>       <span class="at">caption =</span> <span class="st">"Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on food consumption"</span>)</span>
+<span id="cb19-111"><a href="#cb19-111"></a><span class="in">```</span></span>
+<span id="cb19-112"><a href="#cb19-112"></a></span>
+<span id="cb19-113"><a href="#cb19-113"></a>It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year. Countries of lower economic status tend to have lower consumption overall, the most consumed food cate</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
