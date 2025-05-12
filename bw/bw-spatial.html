@@ -339,9 +339,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header><div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure"><p><img src="bw-spatial_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="A map of the United States detailing the number of Starbucks per 10,000 people using 2018 census data through a color gradient. Black dots are used to plot the locations of all Starbucks in the US. Clearly, the more populated areas of the US have a higher number of Starbucks, while simultaneously having a low ratio of Starbucks per 10,000 people." width="672"></p>
-<figcaption>Visualization Created by Marvin C, 2025</figcaption></figure>
+</figure>
 </div>
 </div>
 </div>
@@ -1022,24 +1022,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-44"><a href="#cb1-44"></a><span class="in">```</span></span>
 <span id="cb1-45"><a href="#cb1-45"></a></span>
 <span id="cb1-48"><a href="#cb1-48"></a><span class="in">```{r}</span></span>
-<span id="cb1-49"><a href="#cb1-49"></a><span class="co">#| fig-cap: "Visualization Created by Marvin C, 2025"</span></span>
-<span id="cb1-50"><a href="#cb1-50"></a><span class="co">#| fig-alt: "A map of the United States detailing the number of Starbucks per 10,000 people using 2018 census data through a color gradient. Black dots are used to plot the locations of all Starbucks in the US. Clearly, the more populated areas of the US have a higher number of Starbucks, while simultaneously having a low ratio of Starbucks per 10,000 people."</span></span>
-<span id="cb1-51"><a href="#cb1-51"></a></span>
-<span id="cb1-52"><a href="#cb1-52"></a>starbucks_with_2018_pop_est <span class="sc">%&gt;%</span></span>
-<span id="cb1-53"><a href="#cb1-53"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">map_id =</span> state_name, <span class="at">fill =</span> starbucks_per_10000)) <span class="sc">+</span></span>
-<span id="cb1-54"><a href="#cb1-54"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> states_map) <span class="sc">+</span></span>
-<span id="cb1-55"><a href="#cb1-55"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb1-56"><a href="#cb1-56"></a>    <span class="at">data =</span>  starbucks_contiguous_us,</span>
-<span id="cb1-57"><a href="#cb1-57"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude),</span>
-<span id="cb1-58"><a href="#cb1-58"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-59"><a href="#cb1-59"></a>    <span class="at">alpha =</span> <span class="fl">0.2</span>,</span>
-<span id="cb1-60"><a href="#cb1-60"></a>    <span class="at">size =</span> <span class="fl">0.05</span></span>
-<span id="cb1-61"><a href="#cb1-61"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-62"><a href="#cb1-62"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states_map<span class="sc">$</span>long, <span class="at">y =</span> states_map<span class="sc">$</span>lat) <span class="sc">+</span></span>
-<span id="cb1-63"><a href="#cb1-63"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb1-64"><a href="#cb1-64"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"magma"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb1-65"><a href="#cb1-65"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">" The Number of Starbucks per 10,000 People in the US Using 2018 Census Data"</span>, <span class="at">fill =</span> <span class="st">"Starbucks per 10,000 People"</span>)</span>
-<span id="cb1-66"><a href="#cb1-66"></a><span class="in">```</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a><span class="co">#| fig-alt: "A map of the United States detailing the number of Starbucks per 10,000 people using 2018 census data through a color gradient. Black dots are used to plot the locations of all Starbucks in the US. Clearly, the more populated areas of the US have a higher number of Starbucks, while simultaneously having a low ratio of Starbucks per 10,000 people."</span></span>
+<span id="cb1-50"><a href="#cb1-50"></a></span>
+<span id="cb1-51"><a href="#cb1-51"></a>starbucks_with_2018_pop_est <span class="sc">%&gt;%</span></span>
+<span id="cb1-52"><a href="#cb1-52"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">map_id =</span> state_name, <span class="at">fill =</span> starbucks_per_10000)) <span class="sc">+</span></span>
+<span id="cb1-53"><a href="#cb1-53"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> states_map) <span class="sc">+</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb1-55"><a href="#cb1-55"></a>    <span class="at">data =</span>  starbucks_contiguous_us,</span>
+<span id="cb1-56"><a href="#cb1-56"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span> Latitude),</span>
+<span id="cb1-57"><a href="#cb1-57"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-58"><a href="#cb1-58"></a>    <span class="at">alpha =</span> <span class="fl">0.2</span>,</span>
+<span id="cb1-59"><a href="#cb1-59"></a>    <span class="at">size =</span> <span class="fl">0.05</span></span>
+<span id="cb1-60"><a href="#cb1-60"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-61"><a href="#cb1-61"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> states_map<span class="sc">$</span>long, <span class="at">y =</span> states_map<span class="sc">$</span>lat) <span class="sc">+</span></span>
+<span id="cb1-62"><a href="#cb1-62"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb1-63"><a href="#cb1-63"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"magma"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-64"><a href="#cb1-64"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">" The Number of Starbucks per 10,000 People in the US Using 2018 Census Data"</span>, <span class="at">fill =</span> <span class="st">""</span>, <span class="at">caption =</span> <span class="st">"Visualization Created by Marvin C, 2025, data sourced from Macalester Statistics department datasets"</span>)</span>
+<span id="cb1-65"><a href="#cb1-65"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
