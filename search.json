@@ -69,7 +69,7 @@
     "href": "bw/bw-exam-1.html#answering-grand-rq",
     "title": "\n6  Exam 1\n",
     "section": "\n6.4 Answering Grand RQ",
-    "text": "6.4 Answering Grand RQ\n\nfc |&gt;\n  ggplot(aes(x = country, y = consumption)) +\n  geom_boxplot() +\n  facet_wrap(~food_category) +\n  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))",
+    "text": "6.4 Answering Grand RQ\n\nfc |&gt;\n  ggplot(aes(x = country, y = consumption)) +\n  geom_boxplot() +\n  facet_wrap(~food_category) +\n  theme(axis.text.x = element_text(\n    angle = 45, \n    vjust = 1, \n    hjust = 1,\n    size = 5)) +\n  labs(x = \"Country\", \n       y = \"Food Consumption (kg/person/year)\",\n       title = \"Food Consumption by category of food for each country\",\n       caption = \"Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on food consumption\")\n\n\n\n\n\n\n\nIt is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year.",
     "crumbs": [
       "Best Work",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Exam 1</span>"
