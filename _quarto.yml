@@ -34,9 +34,10 @@ book:
       - bw/bw-exam-2.qmd
       - bw/bw-solo-project.qmd
       
-    - part: "Summary Sheets"
+    - part: "Summary"
       chapters:
-      - bw/bw-uni.qmd
+      - sheets/summary-viz.qmd
+      - sheets/summary-wrangling.qmd
 
     - part: "In-class Activities"
       chapters: 
@@ -67,10 +68,13 @@ format:
     code-link: true
     code-line-numbers: true
     code-tools: true
+    code-fold: true
 
 execute:
   cache: false
   freeze: auto
+  message: false
+  warning: false
 
 editor: 
   markdown:

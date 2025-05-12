@@ -1,8 +1,99 @@
 ---
-title: "Exam 1 Visualizations"
+title: "Exam 1"
+code-fold: false
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(rnaturalearth)
+
+fc <- tt_load('2020-02-18')$food_consumption
 ```
 
+## Research Question
+
+What does the consumption of each food category in each country look like?
+
+## Understanding the Data
+
+```{r}
+# Let's find out how many observations/variables we're working with
+dim(fc)
+
+# Looking at information on variables
+names(fc)
+
+str(fc)
+
+# What are the categories of our categorical variables
+unique(fc$country)
+
+unique(fc$food_category)
+
+# Peek at the dataset
+head(fc)
+```
+
+## Variable Exploration
+
+```{r}
+# Removing variable that is not pertinent to our investigation
+fc <- select(fc, -co2_emmission)
+```
+
+**Individual variable exploration (not including country or food_cat for obvious reasons)**
+
+```{r}
+fc |>
+  ggplot(aes(x = consumption)) +
+  geom_histogram() +
+  labs(x = "Food Consumption (kg/person/year)")
+```
+
+From the histogram, we can see that it is most common for food to be consumed at a rate between 0 and 100 kilograms per person per year, however, consumption rates can reach as high as 350 kilograms per person per year.
+
+**Exploring relationships between variables**
+
+```{r}
+# Consumption by food category
+fc |>
+  ggplot(aes(x = food_category, y = consumption)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+# Consumption by country
+fc |>
+  ggplot(aes(x = consumption)) +
+  geom_histogram() +
+  facet_wrap(~country) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+```
+
+From the visualizations, we can see that the most consumed food category is milk and cheese, the second highest is wheat and wheat derivatives.
+The lowest seems to be soybeans and then lamb and goat.
+The second visualization is too difficult to interpret.
+
+## Answering Grand RQ
+
+```{r}
+#| fig-height: 15
+#| fig-width: 40
+#| fig-alt: "A group of histograms, facet-wrapped by food category, that depict the level of consumption in term of kilograms per person per year in 130 countries. Difficult to distinguish any noticeable patterns."
+
+fc |>
+  ggplot(aes(x = country, y = consumption)) +
+  geom_boxplot() +
+  facet_wrap(~food_category) +
+  theme(axis.text.x = element_text(
+    angle = 45, 
+    vjust = 1, 
+    hjust = 1,
+    size = 5)) +
+  labs(x = "Country", 
+       y = "Food Consumption (kg/person/year)",
+       title = "Food Consumption by category of food for each country",
+       caption = "Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on food consumption")
+```
+
+It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year.

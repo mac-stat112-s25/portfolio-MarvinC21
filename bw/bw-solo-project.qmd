@@ -1,5 +1,6 @@
 ---
 title: "Solo Project"
+code-fold: true
 format: html
 ---
 
