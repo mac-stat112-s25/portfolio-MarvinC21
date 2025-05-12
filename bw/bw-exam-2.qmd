@@ -2,3 +2,185 @@
 title: "Exam 2"
 format: html
 ---
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+```
+
+```{r}
+fc <- tt_load('2020-02-18')$food_consumption
+```
+
+## Inspecting the Data
+
+```{r}
+# What variables should we expect to be working with?
+str(fc)
+```
+
+```{r}
+# What does our dataset look like?
+head(fc, 22)
+```
+
+The observations in the data seem like they're countries and food groups, so an observation for each possible combination of food category and country.
+
+**Inspecting individual variables**
+
+```{r}
+# What are our categories?
+distinct(fc, country)
+
+distinct(fc, food_category)
+```
+
+There are 130 unique countries and 11 unique food categories. One issue that may arise when creating visualizations is that the food category names are too long and specific, so we should shorten them without loss of information.
+
+**Fixing the food_category variable**
+
+```{r}
+# Shortening longer variable names
+fcc <- fc |>
+  mutate(food_category = str_replace(food_category, " & Goat", ""),
+         food_category = str_replace(food_category, "Milk - inc. cheese", "Dairy"),
+         food_category = str_replace(food_category, "Wheat and Wheat Products", "Wheat"),
+         food_category = str_replace(food_category, "Nuts inc. Peanut Butter", "Nuts"))
+```
+
+```{r}
+# Assuring relabeled values appear as expected
+fcc |> distinct(food_category)
+```
+
+## Countries with the Highest Consumption
+
+**Research Question 1:** Which 5 countries consume the most food?
+
+```{r}
+# Wrangling cleaned dataset to answer question
+fcc |>
+  group_by(country) |>
+  summarize(total_consumption = sum(consumption)) |>
+  arrange(desc(total_consumption)) |>
+  head(5)
+```
+ 
+The top 5 countries in terms of food consumption are, in order from greatest to least, Finland, Lithuania, Sweden, Netherlands, and Albania.
+
+```{r}
+#| fig-alt: "A column chart depicting the top 5 countries in the world in terms of their total food consumption. The top 5 countries, in order from least to greatest, are Albania, Netherlands, Sweden, Lithuania, and Finland. The values range from 532.73 to 639.79 kilograms per person per year"
+
+# Visualizing the wrangled dataset
+fcc |>
+  group_by(country) |>
+  summarize(total_consumption = sum(consumption)) |>
+  arrange(desc(total_consumption)) |>
+  head(5) |>
+  ggplot(aes(x = country, y = total_consumption)) +
+  geom_col() +
+  scale_y_continuous(breaks = seq(500, 650, 50)) +
+  coord_cartesian(ylim = c(500, 650)) +
+  labs(x = "Country", 
+       y = "Total Consumption (kg/person/year)", 
+       title = "Top 5 Countries by Total Food Consumption",
+       caption = "Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on global food consumption")
+```
+
+## Most Consuming Countries of Each Food Category
+
+**Research Question 2:** What are the top 5 countries in terms of consumption of each food group?
+
+```{r}
+# Wrangling dataset to answer our question
+fcc |>
+  group_by(food_category, country) |>
+  summarize(total_consumption = sum(consumption)) |>
+  slice_max(n = 5, order_by = total_consumption)
+```
+
+```{r}
+#| fig-alt: "A group of column charts where each column chart represents a different food group and depicts the top 5 countries that consume that food group. No particular trends to note, other than the fact that dairy, wheat, and rice are consumed at much greater than other food groups."
+
+fcc |>
+  group_by(food_category, country) |>
+  summarize(total_consumption = sum(consumption)) |>
+  slice_max(n = 5, order_by = total_consumption) |>
+  ggplot(aes(x = country, 
+             y = total_consumption)) +
+  geom_col(width = 0.3) +
+  facet_wrap(~food_category,
+             ncol = 4,
+             scales = "free_x") +
+  theme(axis.text.x = element_text(angle = 25, vjust = 1.1, hjust=0.8)) +
+  labs(x = "Country", 
+       y = "Total Consumption (kg/person/year)", 
+       title = "Top 5 Countries Consuming each Food Group",
+       caption = "Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on global food consumption")
+```
+
+The graphs and table both answer our question.
+
+## Food Consumption Map
+
+**Research Question 3:** What does the consumption of each food look like?
+
+```{r}
+# Loading necessary information to answer question
+world <- ne_countries(returnclass = "sf")
+```
+
+**Viz Attempt 1**
+
+```{r}
+world |>
+  select(name, geometry) |>
+  left_join(fcc |> select(-co2_emmission),
+            join_by(name == country)) |>
+  ggplot() +
+  geom_sf(aes(fill = consumption)) +
+  facet_wrap(~food_category) +
+  theme(legend.position = "bottom")
+```
+
+Good first attempt. Some issues: 
+
+\- NA should not be represented
+
+\- We are missing actual data on some countries, like the US and a good chunk of Africa
+
+Let's find out what countries don't have values associated with them for our next attempt 
+
+```{r}
+world |>
+  select(name) |>
+  anti_join(fcc, join_by(name == country)) |>
+  st_drop_geometry() |>
+  arrange(name)
+```
+
+**Viz Attempt 2**
+
+```{r}
+world |>
+  select(name, geometry) |>
+  mutate(name = ifelse(name == "United States of America", "USA", name)) |>
+  mutate(name = ifelse(name == "Bosnia and Herz.", "Bosnia and Herzegovina", name)) |>
+  mutate(name = ifelse(name == "Czechia", "Czech Republic", name)) |>
+  mutate(name = ifelse(name == "Taiwan", "Taiwan. ROC", name)) |>
+  left_join(fcc |> select(-co2_emmission),
+            join_by(name == country)) |>
+  pivot_wider(names_from = food_category,
+              values_from = consumption) |>
+  select(-"NA") |>
+  pivot_longer(cols = c(-name, -geometry),
+               names_to = "food_category",
+               values_to = "consumption") |>
+  ggplot() +
+  geom_sf(aes(fill = consumption)) +
+  facet_wrap(~food_category) +
+  theme(legend.position = "bottom")
+```
+

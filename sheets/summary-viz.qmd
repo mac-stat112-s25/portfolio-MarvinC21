@@ -3,3 +3,6 @@ title: "Visualizations"
 format: html
 ---
 
+![Front](summary-viz-front.pdf){width="8in" height = "10in"}
+
+![Back](summary-viz-back.pdf){width="8in" height = "10in"}

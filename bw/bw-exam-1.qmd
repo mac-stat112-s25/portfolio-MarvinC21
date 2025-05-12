@@ -11,7 +11,7 @@ library(rnaturalearth)
 fc <- tt_load('2020-02-18')$food_consumption
 ```
 
-## Research Question
+## Grand Research Question
 
 What does the consumption of each food category in each country look like?
 
@@ -34,6 +34,8 @@ unique(fc$food_category)
 # Peek at the dataset
 head(fc)
 ```
+
+Our observations appear to be groups of food category and country. That means that for every country there is 11 observations for each food group.
 
 ## Variable Exploration
 
@@ -96,4 +98,4 @@ fc |>
        caption = "Visualization by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on food consumption")
 ```
 
-It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year.
+It is difficult to format this, but an interesting thing to note is that Finland has the highest consumption of milk and cheese, with nearly 400 kilograms per person per year. Countries of lower economic status tend to have lower consumption overall, the most consumed food cate
