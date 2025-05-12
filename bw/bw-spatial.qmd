@@ -40,7 +40,6 @@ starbucks_contiguous_us <- starbucks |>
 ```
 
 ```{r}
-#| fig-cap: "Visualization Created by Marvin C, 2025"
 #| fig-alt: "A map of the United States detailing the number of Starbucks per 10,000 people using 2018 census data through a color gradient. Black dots are used to plot the locations of all Starbucks in the US. Clearly, the more populated areas of the US have a higher number of Starbucks, while simultaneously having a low ratio of Starbucks per 10,000 people."
 
 starbucks_with_2018_pop_est %>%
@@ -56,5 +55,5 @@ ggplot(aes(map_id = state_name, fill = starbucks_per_10000)) +
   expand_limits(x = states_map$long, y = states_map$lat) +
   theme_map() +
   scale_fill_viridis_c(option = "magma", direction = -1) +
-  labs(title = " The Number of Starbucks per 10,000 People in the US Using 2018 Census Data", fill = "Starbucks per 10,000 People")
+  labs(title = " The Number of Starbucks per 10,000 People in the US Using 2018 Census Data", fill = "", caption = "Visualization Created by Marvin C, 2025, data sourced from Macalester Statistics department datasets")
 ```
