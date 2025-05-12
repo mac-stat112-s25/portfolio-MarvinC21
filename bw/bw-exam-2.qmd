@@ -8,6 +8,7 @@ library(tidytuesdayR)
 library(tidyverse)
 library(rnaturalearth)
 library(sf)
+library(viridis)
 ```
 
 ```{r}
@@ -182,5 +183,49 @@ world |>
   geom_sf(aes(fill = consumption)) +
   facet_wrap(~food_category) +
   theme(legend.position = "bottom")
+```
+
+This is a better visualization, but there is still an issue: the color scale makes it so that instead of looking at the consumption of each food category *individually*, we see them in relation to each other. We can solve this by instead taking the averages of the consumption of each food category, and standardizing the scale. That way we can see if each country consumes an average, more than average, or less than average amount of that food group.
+
+First, let's look at some numerical summaries to get an idea of this: 
+
+```{r}
+fcc |>
+  group_by(food_category) |>
+  summarize(min = min(consumption), 
+            max = max(consumption), 
+            range = max - min, 
+            mean = mean(consumption, na.rm = TRUE),
+            sd = sd(consumption, na.rm = TRUE))
+```
+
+**Final Viz Attempt**
+
+```{r}
+#| fig-alt: "A set of chloropeth maps facet-wrapped by 11 food categories. The fill color represents the average consumption of that food group throughout the world, and we can see that dairy is by far the most consumed product in the world, especially in Europe and America. Wheat is trailing 2nd in the world."
+world |>
+  select(name, geometry) |>
+  mutate(name = ifelse(name == "United States of America", "USA", name)) |>
+  mutate(name = ifelse(name == "Bosnia and Herz.", "Bosnia and Herzegovina", name)) |>
+  mutate(name = ifelse(name == "Czechia", "Czech Republic", name)) |>
+  mutate(name = ifelse(name == "Taiwan", "Taiwan. ROC", name)) |>
+  left_join(
+    fcc |>
+      select(-co2_emmission) |>
+      group_by(food_category) |>
+      mutate(consumption = consumption - (mean(consumption) / sd(consumption))),
+    join_by(name == country)) |>
+  pivot_wider(names_from = food_category, values_from = consumption) |>
+  select(-"NA") |>
+  pivot_longer(cols = c(-name, -geometry),
+               names_to = "food_category",
+               values_to = "consumption") |>
+  ggplot() +
+  geom_sf(aes(fill = consumption)) +
+  facet_wrap(~food_category) +
+  theme(legend.position = "bottom") +
+  scale_fill_viridis() +
+  labs(title = "Consumption of Different Food Categories Throughout the World",
+       caption = "Visualization created by Marvin C. (2025), data sourced from TidyTuesday's February 2020 dataset on food consumption")
 ```
 
